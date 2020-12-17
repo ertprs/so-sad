@@ -105,7 +105,7 @@ At *23:30* this bot will be shut down for the safety of this bot.
     
     else if (msg.body == '!turnoff'){
         if (msg.from == '6285841392048@c.us' || msg.author.includes('6285841392048')){
-            client.logout();
+            client.destroy();
         } else {
             msg.reply('Maaf kamu bukan pemilik bot ini!');
         }
