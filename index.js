@@ -1,11 +1,32 @@
 const { Client } = require('whatsapp-web.js');
+const fs = require('fs-extra');
 
-const client = new Client({ puppeteer: { headless: true, args: [
+const SESSION_FILE_PATH = './db/session.json';
+let sessionCfg;
+if (fs.existsSync(SESSION_FILE_PATH)) {
+    sessionCfg = require(SESSION_FILE_PATH);
+}
+
+const client = new Client({ puppeteer: { headless: true, 
+    args: [
     '--no-sandbox'
-],}});
+], 
+session: sessionCfg
+
+}});
 
 client.on('qr', (qr) => {
     console.log(qr);
+});
+
+client.on('authenticated', (session) => {
+    console.log('Berhasil login!');
+    sessionCfg=session;
+    fs.writeFile(SESSION_FILE_PATH, JSON.stringify(session), function (err) {
+        if (err) {
+            console.error(err);
+        }
+    });
 });
 
 client.on('ready', () => {
@@ -23,7 +44,7 @@ Group Admin Only :
 Contoh : !promote @sadbot
 *!demote*  Untuk menjadikan admin sebagai member.
 Contoh : !demote @sadbot
-*!customwelcome _pendingggg, will be available later!!!! ;)_
+*!customwelcome* _pendingggg, will be available later!!!! ;)_
 
 Owner Bot Only :
 *!turnoff*
