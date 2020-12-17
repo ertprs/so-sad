@@ -96,6 +96,7 @@ Owner Bot Only
 });
 
 client.on('group_join', async (notification) => {
+    const botno = notification.chatId.split('@')[0];
     let number = await notification.id.remote;
     client.sendMessage(number, `Halo perkenalkan aku adalah sad bot, selamat datang di grup ini!`);
 
@@ -124,6 +125,7 @@ client.on('group_join', async (notification) => {
 });
 
 client.on('group_leave', async (notification) => {
+    const botno = notification.chatId.split('@')[0];
     let number = await notification.id.remote;
     client.sendMessage(number, `Selamat tinggal teman :(`);
 
