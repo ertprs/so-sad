@@ -14,7 +14,7 @@ client.on('ready', () => {
 
 client.on('message', async msg => {
     if (msg.body == '!help') {
-        msg.reply(msg.from, `Everyone
+        msg.reply(`Everyone
 *!mentionall*
 
 Group Admin Only
@@ -98,11 +98,53 @@ Owner Bot Only
 client.on('group_join', async (notification) => {
     let number = await notification.id.remote;
     client.sendMessage(number, `Halo perkenalkan aku adalah sad bot, selamat datang di grup ini!`);
+
+    const chats = await client.getChats();
+
+        for (i in chats) {
+            if (number == chats[i].id._serialized) {
+                chat = chats[i];
+            }
+        }
+        var participants = {};
+        var admins = {};
+        var i;
+        for (let participant of chat.participants) {
+            if (participant.id.user == botno) { continue; }
+
+            const contact = await client.getContactById(participant.id._serialized);
+            participants[contact.pushname] = participant.id.user;
+
+            if (participant.isAdmin) {
+
+                admins[contact.pushname] = participant.id.user;
+                client.sendMessage(participant.id._serialized, 'Hai admin, ada member baru di group nihh :D');
+            }
+        }
 });
 
 client.on('group_leave', async (notification) => {
     let number = await notification.id.remote;
     client.sendMessage(number, `Selamat tinggal teman :(`);
+
+    const chats = await client.getChats();
+    for (i in chats) {
+        if (number == chats[i].id._serialized) {
+            chat = chats[i];
+        }
+    }
+    var participants = {};
+    var admins = {};
+    var i;
+    for (let participant of chat.participants) {
+        if (participant.id.user == botno) { continue; }
+        const contact = await client.getContactById(participant.id._serialized);
+        participants[contact.pushname] = participant.id.user;
+        if (participant.isAdmin) {
+            admins[contact.pushname] = participant.id.user;
+            client.sendMessage(participant.id._serialized, 'Hai admin, ada member yang keluar dari grup :(');
+        }
+    }
 });
 
 client.initialize();
