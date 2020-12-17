@@ -1,7 +1,7 @@
 const { Client } = require('whatsapp-web.js');
 const fs = require('fs-extra');
 
-const SESSION_FILE_PATH = './db/session.json';
+const SESSION_FILE_PATH = './session.json';
 let sessionCfg;
 if (fs.existsSync(SESSION_FILE_PATH)) {
     sessionCfg = require(SESSION_FILE_PATH);
