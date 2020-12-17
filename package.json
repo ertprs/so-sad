@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@open-wa/wa-automate": "^3.0.13",
-    "moment-timezone": "^0.5.31"
+    "whatsapp-web.js": "^1.11.1"
   }
 }
