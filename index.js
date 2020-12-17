@@ -29,7 +29,7 @@ Owner Bot Only
     
     else if(msg.body.startsWith('!mentionall ')) {
         const chat = await msg.getChat();
-        const text = msg.body.split(' ')[1];
+        let text = msg.body.split(' ')[1];
         text += `\n`;
         let mentions = [];
         for(let participant of chat.participants) {
