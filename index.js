@@ -12,7 +12,7 @@ client.on('ready', () => {
     console.log('Bot sedang berjalan!');
 });
 
-client.on('message', msg => {
+client.on('message', async msg => {
     if (msg.body == '!help') {
         msg.reply(msg.from, `Everyone:
 *!mentionall*
