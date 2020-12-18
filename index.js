@@ -41,6 +41,8 @@ client.on('ready', () => {
 
 client.on('message', async msg => {
     let chat = await msg.getChat();
+    const quotedMsg = await msg.getQuotedMessage();
+
     if (msg.body == '!help') {
         msg.reply(`Command :
 *!mentionall* Untuk mention semua member grup.
