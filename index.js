@@ -42,6 +42,9 @@ Contoh : !promote @sadbot
 *!demote*  Untuk menjadikan admin sebagai member.
 Contoh : !demote @sadbot
 
+*!kick* Untuk mengeluarkan member.
+Contoh : !kick @sadbot.
+
 *!turnoff* Untuk mematikan bot ini ;)
 `);
     } 
@@ -98,6 +101,24 @@ Contoh : !demote @sadbot
         }
     }
     
+    else if (msg.body.startsWith('!kick ')) {
+        if (chat.isGroup) {
+                const authorId = msg.author;
+            for(let participant of chat.participants) {
+            if(participant.id._serialized === authorId && participant.isAdmin) {
+                let title = msg.mentionedIds;
+                chat.removeParticipants([...title]);
+                break;
+            } else {
+                msg.reply('Maaf perintah ini hanya bisa digunakan oleh admin grup!');
+                break;
+            }
+        }
+    } else {
+            msg.reply('Maaf perintah ini hanya bisa digunakan di dalam grup!');
+        }
+    }
+
     else if (msg.body == '!turnoff'){
         if (msg.from == '6285841392048@c.us' || msg.author.includes('6285841392048')){
             client.logout();
