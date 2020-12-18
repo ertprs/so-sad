@@ -57,29 +57,20 @@ client.on('ready', () => {
     console.log('Bot sedang berjalan!');
 });
 
-
-client.onIncomingCall(async (call) => {
-   client.sendText(call.peerJid, "Dilarang menelpon bot!");
-});
-
 client.on('message', async msg => {
     if (msg.body == '!help') {
-        msg.reply(`Everyone :
+        msg.reply(`Command :
 *!mentionall* Untuk mention semua member grup.
 Contoh : !mention absen
 
-*!owner* Untuk mengirim kontak pembuat bot ini.
-
-Group Admin Only :
 *!promote*  Untuk menjadikan member sebagai admin.
 Contoh : !promote @sadbot
 
 *!demote*  Untuk menjadikan admin sebagai member.
 Contoh : !demote @sadbot
 
-*!customwelcome* _pendingggg, will be available later!!!! ;)_
+*!customwelcome* _Pendingggg, will be available later!!!!_
 
-Owner Bot Only :
 *!turnoff*
 `);
     } 
