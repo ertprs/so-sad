@@ -73,8 +73,9 @@ Contoh : !demote @sadbot
 
     else if (msg.body.startsWith('!promote ')) {
         if (chat.isGroup) {
-            const authorId = message.author;
-        for(let participant of chat.participants) {
+            if(client.isAdmin){
+                const authorId = message.author;
+            for(let participant of chat.participants) {
             if(participant.id._serialized === authorId && participant.isAdmin) {
                 const title = msg.mentionedIds[0]
                 chat.promoteParticipants([`${title}`])
@@ -84,15 +85,20 @@ Contoh : !demote @sadbot
                 msg.reply('Maaf perintah ini hanya bisa digunakan oleh admin grup!');
                 break
             }
-        }} else{
+        }
+            } else {
+                msg.reply('Maaf bot ini bukan admin grup!');
+            }
+    } else {
             msg.reply('Maaf perintah ini hanya bisa digunakan di dalam grup!');
         }
     }
 
     else if (msg.body.startsWith('!demote ')) {
         if (chat.isGroup) {
-            const authorId = message.author;
-        for(let participant of chat.participants) {
+            if(client.isAdmin){
+                const authorId = message.author;
+            for(let participant of chat.participants) {
             if(participant.id._serialized === authorId && participant.isAdmin) {
                 let title = msg.mentionedIds[0];
                 chat.demoteParticipants([`${title}`]);
@@ -102,7 +108,11 @@ Contoh : !demote @sadbot
                 msg.reply('Maaf perintah ini hanya bisa digunakan oleh admin grup!');
                 break;
             }
-        }} else {
+        }
+            } else {
+                msg.reply('Maaf bot ini bukan admin grup!');
+            }
+    } else {
             msg.reply('Maaf perintah ini hanya bisa digunakan di dalam grup!');
         }
     }
