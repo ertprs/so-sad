@@ -42,7 +42,7 @@ Contoh : !promote @sadbot
 *!demote*  Untuk menjadikan admin sebagai member.
 Contoh : !demote @sadbot
 
-*!turnoff* Untuk mematikan bot ini.
+*!turnoff* Untuk mematikan bot ini ;)
 `);
     } 
     
@@ -62,7 +62,6 @@ Contoh : !demote @sadbot
 
     else if (msg.body.startsWith('!promote ')) {
         if (chat.isGroup) {
-            if(client.isAdmin){
                 const authorId = message.author;
             for(let participant of chat.participants) {
             if(participant.id._serialized === authorId && participant.isAdmin) {
@@ -75,9 +74,6 @@ Contoh : !demote @sadbot
                 break
             }
         }
-            } else {
-                msg.reply('Maaf bot ini bukan admin grup!');
-            }
     } else {
             msg.reply('Maaf perintah ini hanya bisa digunakan di dalam grup!');
         }
@@ -85,7 +81,6 @@ Contoh : !demote @sadbot
 
     else if (msg.body.startsWith('!demote ')) {
         if (chat.isGroup) {
-            if(client.isAdmin){
                 const authorId = message.author;
             for(let participant of chat.participants) {
             if(participant.id._serialized === authorId && participant.isAdmin) {
@@ -98,9 +93,6 @@ Contoh : !demote @sadbot
                 break;
             }
         }
-            } else {
-                msg.reply('Maaf bot ini bukan admin grup!');
-            }
     } else {
             msg.reply('Maaf perintah ini hanya bisa digunakan di dalam grup!');
         }
@@ -117,10 +109,11 @@ Contoh : !demote @sadbot
 
 client.on('group_join', async (notification) => {
     let number = await notification.id.remote;
-    client.sendMessage(number, `Halo selamat datang di grup ini, jangan lupa baca deskripsi grup ya!`);
+    client.sendMessage(number, `Halo selamat datang di grup ini, Jangan lupa baca deskripsi grup ya!`);
 });
 
 client.on('group_leave', async (notification) => {
+    let chat = await msg.getChat();
     let number = await notification.id.remote;
     client.sendMessage(number, `Selamat jalan temanku :(`);
 });
