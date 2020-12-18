@@ -10,25 +10,7 @@ if (fs.existsSync(SESSION_FILE_PATH)) {
 
 const client = new Client({ puppeteer: { headless: false,
     args: [
-        "--log-level=3",
-     
-        "--no-default-browser-check",
-        "--disable-infobars",
-        "--disable-web-security",
-        "--disable-site-isolation-trials",
-        "--no-experiments",
-        "--ignore-gpu-blacklist",
-        "--ignore-certificate-errors",
-        "--ignore-certificate-errors-spki-list",
-      
-        "--disable-extensions",
-        "--disable-default-apps",
-        "--enable-features=NetworkService",
-        "--disable-setuid-sandbox",
-        "--no-sandbox",
-      
-        "--no-first-run",
-        "--no-zygote"
+        "--no-sandbox"
       ]
 
 }, session: sessionCfg });
