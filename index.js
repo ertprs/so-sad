@@ -117,7 +117,7 @@ Contoh : !demote @sadbot
 
 client.on('group_join', async (notification) => {
     let number = await notification.id.remote;
-    client.sendMessage(number, `Halo selamat datang di grup ini, Jangan lupa baca deskripsi grup ya!`);
+    client.sendMessage(number, `Halo selamat datang di grup ini, jangan lupa baca deskripsi grup ya!`);
 });
 
 client.on('group_leave', async (notification) => {
