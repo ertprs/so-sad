@@ -59,7 +59,7 @@ Contoh : !demote @sadbot
     
     else if(msg.body.startsWith('!mentionall ')) {
         const chat = await msg.getChat();
-        let text = msg.body.split(' ')[1];
+        let text = msg.body.split("!mentionall ")[1];
         text += `\n`;
         let mentions = [];
         for(let participant of chat.participants) {
