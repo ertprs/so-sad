@@ -129,12 +129,13 @@ Contoh : !demote @sadbot
 
 client.on('group_join', async (notification) => {
     let number = await notification.id.remote;
-    client.sendMessage(number, `Halo selamat datang di grup ini, jangan lupa baca deskripsi ya!`);
+    client.sendMessage(number, `Ada member baru nih`);
+    client.sendMessage(msg.from, `Halo selamat datang di grup ${chat.name}, Jangan lupa baca deskripsi grup ya!`);
 });
 
 client.on('group_leave', async (notification) => {
     let number = await notification.id.remote;
-    client.sendMessage(number, `Selamat tinggal temanku :(`);
+    client.sendMessage(number, `Selamat jalan temanku :(`);
 });
 
 client.on('disconnected', (reason) => {
