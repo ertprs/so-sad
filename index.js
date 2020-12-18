@@ -62,7 +62,7 @@ Contoh : !demote @sadbot
 
     else if (msg.body.startsWith('!promote ')) {
         if (chat.isGroup) {
-                const authorId = message.author;
+                const authorId = msg.author;
             for(let participant of chat.participants) {
             if(participant.id._serialized === authorId && participant.isAdmin) {
                 const title = msg.mentionedIds[0]
@@ -81,7 +81,7 @@ Contoh : !demote @sadbot
 
     else if (msg.body.startsWith('!demote ')) {
         if (chat.isGroup) {
-                const authorId = message.author;
+                const authorId = msg.author;
             for(let participant of chat.participants) {
             if(participant.id._serialized === authorId && participant.isAdmin) {
                 let title = msg.mentionedIds[0];
