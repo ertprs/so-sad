@@ -1,40 +1,37 @@
 const { Client } = require('whatsapp-web.js');
 const fs = require('fs');
 const fse = require('fs-extra');
-const SESSION_FILE_PATH = "./session.json";
 
+const SESSION_FILE_PATH = './session.json';
+let sessionCfg;
 if (fs.existsSync(SESSION_FILE_PATH)) {
     sessionCfg = require(SESSION_FILE_PATH);
-  }
+}
 
-  client = new Client({	  
-    
-    puppeteer: {
-   headless: true,
-   args: [
- "--log-level=3",
- "--no-default-browser-check",
- "--disable-infobars",
- "--disable-web-security",
- "--disable-site-isolation-trials",
- "--no-experiments",
- "--ignore-gpu-blacklist",
- "--ignore-certificate-errors",
- "--ignore-certificate-errors-spki-list",
+const client = new Client({ puppeteer: { headless: false,
+    args: [
+        "--log-level=3",
+     
+        "--no-default-browser-check",
+        "--disable-infobars",
+        "--disable-web-security",
+        "--disable-site-isolation-trials",
+        "--no-experiments",
+        "--ignore-gpu-blacklist",
+        "--ignore-certificate-errors",
+        "--ignore-certificate-errors-spki-list",
+      
+        "--disable-extensions",
+        "--disable-default-apps",
+        "--enable-features=NetworkService",
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+      
+        "--no-first-run",
+        "--no-zygote"
+      ]
 
- "--disable-extensions",
- "--disable-default-apps",
- "--enable-features=NetworkService",
- "--disable-setuid-sandbox",
- "--no-sandbox",
-
- "--no-first-run",
- "--no-zygote"
-]
-   
-},	      
-session: sessionCfg
-});
+}, session: sessionCfg });
 
 client.initialize();
 
@@ -42,33 +39,28 @@ client.on('qr', (qr) => {
     console.log(qr);
 });
 
-client.on("authenticated", session => {
-    console.log('Autentikasi berhasil!');
-    sessionCfg = session;
-    fs.writeFile(SESSION_FILE_PATH, JSON.stringify(session), function(err) {
-      if (err) {
-        console.error(err);
-      }
+client.on('authenticated', (session) => {
+    console.log('Berhasil diauntentikasi!', session);
+    sessionCfg=session;
+    fs.writeFile(SESSION_FILE_PATH, JSON.stringify(session), function (err) {
+        if (err) {
+            console.error(err);
+        }
     });
-  });
-  
-  client.on("auth_failure", msg => {
-    console.log(
-      'Autentikasi gagal!'
-    );
-    fs.unlink("./session.json", function(err) {
-      if (err) return console.log(err);
-      console.log(
-          'Sesi sudah dihapus, mohon restart!'
-      );
-      process.exit(1);
-    });
-  });
-  
-  client.on("ready", () => {
+});
+
+client.on('auth_failure', msg => {
+    console.error('Autentikasi gagal!', msg);
+});
+
+client.on('ready', () => {
     console.log('Bot sedang berjalan!');
-  });
-  
+});
+
+
+client.onIncomingCall(async (call) => {
+   client.sendText(call.peerJid, "Dilarang menelpon bot!");
+});
 
 client.on('message', async msg => {
     if (msg.body == '!help') {
