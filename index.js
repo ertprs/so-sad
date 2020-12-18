@@ -126,6 +126,6 @@ client.on('group_leave', async (notification) => {
     client.sendMessage(number, `Selamat jalan temanku :(`);
 });
 
-client.on('disconnected', (reason) => {
-    console.log('Disconnect!', reason);
+client.on('disconnected', () => {
+    console.log('Disconnect!');
 });
