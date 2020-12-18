@@ -122,7 +122,7 @@ client.on('group_join', async (notification) => {
 });
 
 client.on('group_leave', async (notification) => {
-    let chat = await msg.getChat();
+    let chat = await client.getChat();
     let number = await notification.id.remote;
     client.sendMessage(number, `Selamat jalan temanku :(`);
 });
