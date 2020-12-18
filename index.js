@@ -125,3 +125,7 @@ client.on('group_leave', async (notification) => {
     let number = await notification.id.remote;
     client.sendMessage(number, `Selamat tinggal temanku :(`);
 });
+
+client.on('disconnected', (reason) => {
+    console.log('Disconnect!', reason);
+});
