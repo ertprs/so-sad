@@ -40,6 +40,7 @@ client.on('ready', () => {
 });
 
 client.on('message', async msg => {
+    let chat = await msg.getChat();
     if (msg.body == '!help') {
         msg.reply(`Command :
 *!mentionall* Untuk mention semua member grup.
@@ -51,9 +52,7 @@ Contoh : !promote @sadbot
 *!demote*  Untuk menjadikan admin sebagai member.
 Contoh : !demote @sadbot
 
-*!customwelcome* _Pendingggg, will be available later!!!!_
-
-*!turnoff*
+*!turnoff* Untuk mematikan bot ini ;)
 `);
     } 
     
