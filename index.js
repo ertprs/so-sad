@@ -42,7 +42,7 @@ Contoh : !promote @sadbot
 *!demote*  Untuk menjadikan admin sebagai member.
 Contoh : !demote @sadbot
 
-*!turnoff* Untuk mematikan bot ini ;)
+*!turnoff* Untuk mematikan bot ini.
 `);
     } 
     
