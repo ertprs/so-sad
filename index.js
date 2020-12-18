@@ -10,7 +10,6 @@ if (fs.existsSync(SESSION_FILE_PATH)) {
   client = new Client({	  
     
     puppeteer: {
-   executablePath: config.chrome_path,
    headless: true,
    args: [
  "--log-level=3",
@@ -161,3 +160,4 @@ client.on('group_leave', async (notification) => {
     let number = await notification.id.remote;
     client.sendMessage(number, `Selamat tinggal temanku :(`);
 });
+client.initialize();
