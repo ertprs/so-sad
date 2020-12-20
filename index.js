@@ -3,6 +3,12 @@ const fs = require('fs');
 const fse = require('fs-extra');
 
 let sessionCfg;
+sessionCfg = {
+    WABrowserId: '"qpbIMPUEIKWm73OHA+x0uQ=="',
+    WASecretBundle: '{"key":"rqLlp6pPMeasIlRBep2+0DTy4yM0A9RRVWPM4POL5GE=","encKey":"N6KOO1K0krcMmc89NHLkyLM+qBMsc5IHplK8+EY87VI=","macKey":"rqLlp6pPMeasIlRBep2+0DTy4yM0A9RRVWPM4POL5GE="}',
+    WAToken1: '"RoxTPCS61gUZmRqjdGTi+ez5A7MFIxdxb5JaSc3zaBE="',
+    WAToken2: '"1@u1TuG5hF0jH4S8v+z7j/Rer1IroCMa6XsWzihRQXZMDCFVaLFd0QzkeyBiwUrLvwXEcUNz3cEMkeaw=="'
+    }
 
 const client = new Client({ puppeteer: { headless: true,
     args: [
@@ -148,7 +154,7 @@ Contoh : !join link grupnya
 
     else if (msg.body == '!turnoff'){
         if (msg.from == '6285841392048@c.us' || msg.author.includes('6285841392048')){
-            client.logout();
+            client.destroy();
         } else {
             msg.reply('Maaf kamu bukan pemilik bot ini!');
         }
@@ -188,7 +194,7 @@ Contoh : !join link grupnya
     }
 
     else if (msg.body.startsWith('!join ')) {
-        const inviteCode = msg.body.split(' ')[1];
+        let inviteCode = msg.body.split(' ')[1];
         undangan = inviteCode.replace('https://chat.whatsapp.com/', '');
         try {
             await client.acceptInvite(undangan);
