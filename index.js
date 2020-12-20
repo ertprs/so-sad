@@ -2,11 +2,13 @@ const { Client } = require('whatsapp-web.js');
 const fs = require('fs');
 const fse = require('fs-extra');
 
+let sessionCfg;
+
 const client = new Client({ puppeteer: { headless: true,
     args: [
         "--no-sandbox"
-      ]
-
+      ],
+      session: sessionCfg
 }});
 
 client.initialize();
@@ -15,8 +17,9 @@ client.on('qr', (qr) => {
     console.log(qr);
 });
 
-client.on('authenticated', () => {
+client.on('authenticated', (session) => {
     console.log('Berhasil diauntentikasi!');
+    console.log(session);
 });
 
 client.on('auth_failure', () => {
@@ -33,6 +36,9 @@ client.on('message', async msg => {
 
     if (msg.body == '!help') {
         msg.reply(`Command :
+*!sendto* Untuk mengirimkan pesan ke sesorang secara anonim.
+Contoh : !sendto 62876543210 Hahahaha
+
 *!mentionall* Untuk mention semua member grup.
 Contoh : !mention absen
 
@@ -45,23 +51,41 @@ Contoh : !demote @sadbot
 *!kick* Untuk mengeluarkan member.
 Contoh : !kick @sadbot.
 
-*!turnoff* Untuk mematikan bot ini ;)
+*!subject* Untuk mengubah nama grup.
+Contoh : !subject Test
+
+*!info* Untuk menampilkan berapa percakapan yang dihandle oleh bot ini.
+
+*!turnoff* Untuk mematikan bot ini.
 `);
     } 
-    
+
     else if(msg.body.startsWith('!mentionall ')) {
-        const chat = await msg.getChat();
-        let text = msg.body.split("!mentionall ")[1];
-        text += `\n`;
-        let mentions = [];
-        for(let participant of chat.participants) {
-            const contact = await client.getContactById(participant.id._serialized);
-            mentions.push(contact);
-            text += `@${participant.id.user} `;
-            text += `\n`
+        if (chat.isGroup) {
+                const authorId = msg.author;
+            for(let participant of chat.participants) {
+            if(participant.id._serialized === authorId && participant.isAdmin) {
+                const chat = await msg.getChat();
+                let text = msg.body.split("!mentionall ")[1];
+                text += `\n`;
+                let mentions = [];
+                for(let participant of chat.participants) {
+                const contact = await client.getContactById(participant.id._serialized);
+                mentions.push(contact);
+                text += `@${participant.id.user} `;
+                text += `\n`
         }
-        chat.sendMessage(text, { mentions });
-    } 
+            chat.sendMessage(text, { mentions });
+                break;
+            } else {
+                msg.reply('Maaf perintah ini hanya bisa digunakan oleh admin grup!');
+                break;
+            }
+        }
+    } else {
+            msg.reply('Maaf perintah ini hanya bisa digunakan di dalam grup!');
+        }
+    }
 
     else if (msg.body.startsWith('!promote ')) {
         if (chat.isGroup) {
@@ -74,7 +98,7 @@ Contoh : !kick @sadbot.
                 break;
             } else {
                 msg.reply('Maaf perintah ini hanya bisa digunakan oleh admin grup!');
-                break
+                break;
             }
         }
     } else {
@@ -126,6 +150,40 @@ Contoh : !kick @sadbot.
             msg.reply('Maaf kamu bukan pemilik bot ini!');
         }
     }
+
+    else if (msg.body == '!info') {
+        const chats = await client.getChats();
+        client.sendMessage(msg.from, `Bot ini memliki ${chats.length} percakapan yang terbuka!`);
+    }
+
+    else if (msg.body.startsWith('!sendto ')) {
+        let number = msg.body.split(' ')[1];
+        let messageIndex = msg.body.indexOf(number) + number.length;
+        let message = msg.body.slice(messageIndex, msg.body.length);
+        number = number.includes('@c.us') ? number : `${number}@c.us`;
+        msg.reply('Done!');
+        client.sendMessage(number, message);
+    }
+
+    else if (msg.body.startsWith('!subject ')) {
+        if (chat.isGroup) {
+                const authorId = msg.author;
+            for(let participant of chat.participants) {
+            if(participant.id._serialized === authorId && participant.isAdmin) {
+                let newSubject = msg.body.slice(9);
+                chat.setSubject(newSubject);
+                msg.reply('Done!');
+                break;
+            } else {
+                msg.reply('Maaf perintah ini hanya bisa digunakan oleh admin grup!');
+                break;
+            }
+        }
+    } else {
+            msg.reply('Maaf perintah ini hanya bisa digunakan di dalam grup!');
+        }
+    }
+
 });
 
 client.on('group_join', async (notification) => {
