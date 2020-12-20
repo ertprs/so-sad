@@ -1,20 +1,9 @@
 const { Client } = require('whatsapp-web.js');
-const fs = require('fs');
-const fse = require('fs-extra');
-
-let sessionCfg;
-sessionCfg = {
-    WABrowserId: '"qpbIMPUEIKWm73OHA+x0uQ=="',
-    WASecretBundle: '{"key":"rqLlp6pPMeasIlRBep2+0DTy4yM0A9RRVWPM4POL5GE=","encKey":"N6KOO1K0krcMmc89NHLkyLM+qBMsc5IHplK8+EY87VI=","macKey":"rqLlp6pPMeasIlRBep2+0DTy4yM0A9RRVWPM4POL5GE="}',
-    WAToken1: '"RoxTPCS61gUZmRqjdGTi+ez5A7MFIxdxb5JaSc3zaBE="',
-    WAToken2: '"1@u1TuG5hF0jH4S8v+z7j/Rer1IroCMa6XsWzihRQXZMDCFVaLFd0QzkeyBiwUrLvwXEcUNz3cEMkeaw=="'
-    }
 
 const client = new Client({ puppeteer: { headless: true,
     args: [
         "--no-sandbox"
-      ],
-      session: sessionCfg
+      ]
 }});
 
 client.initialize();
@@ -64,8 +53,6 @@ Contoh : !subject Test
 Contoh : !join link grupnya
 
 *!info* Untuk menampilkan berapa percakapan yang dihandle oleh bot ini.
-
-*!turnoff* Untuk mematikan bot ini.
 `);
     } 
 
@@ -152,14 +139,6 @@ Contoh : !join link grupnya
         }
     }
 
-    else if (msg.body == '!turnoff'){
-        if (msg.from == '6285841392048@c.us' || msg.author.includes('6285841392048')){
-            client.destroy();
-        } else {
-            msg.reply('Maaf kamu bukan pemilik bot ini!');
-        }
-    }
-
     else if (msg.body == '!info') {
         const chats = await client.getChats();
         client.sendMessage(msg.from, `Bot ini memliki ${chats.length} percakapan yang terbuka!`);
@@ -212,7 +191,6 @@ client.on('group_join', async (notification) => {
 });
 
 client.on('group_leave', async (notification) => {
-    let chat = await msg.getChat();
     let number = await notification.id.remote;
     client.sendMessage(number, `Selamat jalan temanku :(`);
 });
