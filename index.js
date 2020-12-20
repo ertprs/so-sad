@@ -144,8 +144,8 @@ Contoh : !join link grupnya
         const groups = chats.filter(chat => chat.isGroup);
         const chatbiasa = chats.length - groups.length;
 
-        client.sendMessage(msg.from, `Total chat : ${chats.length}
-Chat grup : ${groups.length}
+        client.sendMessage(msg.from, `Bot ini telah menghandle ${chats.length} chat!
+Chat grup  : ${groups.length}
 Chat biasa : ${chatbiasa}
 `);
     }
@@ -187,6 +187,10 @@ Chat biasa : ${chatbiasa}
         } catch (e) {
             msg.reply('Sepertinya link grupnya invalid.');
         }
+    }
+
+    else if (msg.body.includes('bot')){
+        msg.reply('Aku manusia bukan robot, gimana sih :/');
     }
 
 });
