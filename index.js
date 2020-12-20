@@ -54,6 +54,9 @@ Contoh : !kick @sadbot.
 *!subject* Untuk mengubah nama grup.
 Contoh : !subject Test
 
+*!join* Agar bot bergabung dengan grup.
+Contoh : !join link grupnya
+
 *!info* Untuk menampilkan berapa percakapan yang dihandle oleh bot ini.
 
 *!turnoff* Untuk mematikan bot ini.
@@ -181,6 +184,17 @@ Contoh : !subject Test
         }
     } else {
             msg.reply('Maaf perintah ini hanya bisa digunakan di dalam grup!');
+        }
+    }
+
+    else if (msg.body.startsWith('!join ')) {
+        const inviteCode = msg.body.split(' ')[1];
+        undangan = inviteCode.replace('https://chat.whatsapp.com/', '');
+        try {
+            await client.acceptInvite(undangan);
+            msg.reply('Sudah bergabung dengan grup!');
+        } catch (e) {
+            msg.reply('Sepertinya link grupnya invalid.');
         }
     }
 
