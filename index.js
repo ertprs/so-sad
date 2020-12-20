@@ -141,7 +141,13 @@ Contoh : !join link grupnya
 
     else if (msg.body == '!info') {
         const chats = await client.getChats();
-        client.sendMessage(msg.from, `Bot ini memliki ${chats.length} percakapan yang terbuka!`);
+        const groups = chats.filter(chat => chat.isGroup);
+        const chatbiasa = chats.length - groups.length;
+
+        client.sendMessage(msg.from, `Total chat : ${chats.length}
+Chat grup : ${groups.length}
+Chat biasa : ${chatbiasa}
+`);
     }
 
     else if (msg.body.startsWith('!sendto ')) {
