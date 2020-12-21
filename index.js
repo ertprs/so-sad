@@ -39,8 +39,6 @@ client.on('message', async msg => {
     if (msg.body == '!help') {
         msg.reply(`Semua fitur tersedia untuk semua orang.
 
-*NOTE* : JANGAN SPAM YA! OKE?
-
 *!mentionall* Untuk mention semua member grup.
 Contoh : !mention absen
 
@@ -52,6 +50,9 @@ Contoh : !randomanime
 
 *!animehd* Agar botnya mengirimkan gambar anime HD.
 Contoh : !animehd
+
+*!searchimage* Agar botnya mencarikan gambar.
+Contoh : !searchimage cowok kekar ber ber nyanyi
 
 *!cewekcantik* Agar botnya mengirimkan gambar cewek cantik :v
 Contoh : !cewekcantik
@@ -65,7 +66,11 @@ Contoh : !quotes
 *!fakta* Agar botnya mengirimkan fakta.
 Contoh : !fakta
 
-*NOTE* : JANGAN SPAM YA! KALO SPAM GUA MATIIN AJA DEH :V
+*NOTE* : 
+*JANGAN SPAM YA!* 
+*JANGAN SPAM YA!*
+*JANGAN SPAM YA!*
+*KALO SPAM GUA OUT GRUP / BLOKIR NOMOR LU!*
 
 `);
     }
@@ -247,4 +252,36 @@ Contoh : !fakta
                 
                 });
                 }
+                
+                //nyari gambar
+                else if (msg.body.startsWith("!searchimage ")) {
+
+                    var nama = msg.body.split("!searchimage ")[1];
+                    var req = urlencode(nama.replace(/ /g,"+"));
+                        const imageToBase64 = require('image-to-base64');
+                    
+                        var url = "http://api.fdci.se/rep.php?gambar=" + req;
+                        
+                       axios.get(url)
+                      .then((result) => {
+                    var b = JSON.parse(JSON.stringify(result.data));
+                         
+                        var cewek =  b[Math.floor(Math.random() * b.length)];
+                        imageToBase64(cewek) // Path to the image
+                            .then(
+                                (response) => {
+                     
+                        const media = new MessageMedia('image/jpeg', response);
+                        client.sendMessage(msg.from, media, {
+                          caption: `Gambar ditemukan!`  });
+                                }
+                            )
+                            .catch(
+                                (error) => {
+                                   msg.reply(`Gambar tidak ditemukan!`); // Logs an error if there was one
+                                }
+                            )
+                        
+                        });
+                        }
 });
