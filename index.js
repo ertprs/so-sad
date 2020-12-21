@@ -1,6 +1,6 @@
 const { Client } = require('whatsapp-web.js');
 
-const client = new Client({ puppeteer: { headless: true, executablePath: "/usr/bin/google-chrome-stable",
+const client = new Client({ puppeteer: { headless: true,
     args: [
         "--no-sandbox"
       ]}
