@@ -2,6 +2,7 @@ const fs = require("fs");
 const moment = require("moment");
 const qrcode = require("qrcode-terminal"); 
 const { Client, MessageMedia } = require("whatsapp-web.js");
+const carbon = require('./modules/carbon');
 const fetch = require("node-fetch");  
 const cheerio = require("cheerio");
 const urlencode = require("urlencode");
@@ -283,5 +284,16 @@ Contoh : !fakta
                             )
                         
                         });
+                        }
+                        else if (msg.body.startsWith("!carbon ")) { // Carbon Module
+
+                            msg.delete(true)
+                            var data = await carbon.mainF(msg.body.replace("!carbon ", ""));
+                            if (data == "error") {
+                                client.sendMessage(msg.to, `Error, gagal saat membuat gambar!`);
+                            } else {
+                                client.sendMessage(msg.to, new MessageMedia(data.mimetype, data.data, data.filename), { caption: `Gambar sudah dibuat!` });
+                            }
+                
                         }
 });
