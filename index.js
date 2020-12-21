@@ -3,6 +3,8 @@ const moment = require("moment");
 const qrcode = require("qrcode-terminal"); 
 const { Client, MessageMedia } = require("whatsapp-web.js");
 const carbon = require('./modules/carbon');
+const wikipedia = require('./modules/wikipedia');
+const lirik = require('./modules/lirik');
 const fetch = require("node-fetch");  
 const cheerio = require("cheerio");
 const urlencode = require("urlencode");
@@ -293,4 +295,25 @@ Contoh : !carbon Test
                             }
                 
                         }
+        else if (msg.body.startsWith("!wikipedia ")){
+            let judul = msg.body.split("!wikipedia ")[1];
+            let hasil = wikipedia.hasil(judul);
+            hasil.replace('by: ArugaZ');
+
+            msg.reply(`Wikipedia dari : ${judul}
+
+${hasil}
+`);
+        }
+    
+        else if (msg.body.startsWith("!lirik ")){
+            let judul = msg.body.split("!lirik ")[1];
+            let hasil = lirik.hasil(judul);
+
+            msg.reply(`Lirik dari : ${judul}
+
+${hasil}
+`);
+        }
+    
 });
