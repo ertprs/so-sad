@@ -53,12 +53,12 @@ Contoh : !randomanime
 Contoh : !animehd
 
 *!searchimage* Agar botnya mencarikan gambar.
-Contoh : !searchimage cowok kekar ber ber nyanyi
+Contoh : !searchimage cowok indo
 
-*!cewekcantik* Agar botnya mengirimkan gambar cewek cantik :v
+*!cewekcantik* Agar botnya mengirimkan gambar cewek cantik.
 Contoh : !cewekcantik
 
-*!cowokganteng* Agar botnya mengirimkan gambar cowok ganteng, kaya pembuat bot ini :V
+*!cowokganteng* Agar botnya mengirimkan gambar cowok ganteng.
 Contoh : !cowokganteng
 
 *!quotes* Agar botnya mengirimkan quotes.
@@ -67,11 +67,11 @@ Contoh : !quotes
 *!fakta* Agar botnya mengirimkan fakta.
 Contoh : !fakta
 
+*!carbon* Untuk membuat gambar kode kode gitu.
+Contoh : !carbon Test
+
 *NOTE* : 
-*JANGAN SPAM YA!* 
-*JANGAN SPAM YA!*
-*JANGAN SPAM YA!*
-*KALO SPAM GUA OUT GRUP / BLOKIR NOMOR LU!*
+*KALO SPAM GUA MUTE!!*
 
 `);
     }
@@ -121,7 +121,7 @@ Contoh : !fakta
                 (response) => {
         const media = new MessageMedia('image/jpeg', response);
         client.sendMessage(msg.from, media, {
-        caption: `Silahkan dinikmati :D` });
+        caption: `Gambar sudah ditemukan!` });
                 }
             )
             .catch(
@@ -147,9 +147,7 @@ Contoh : !fakta
                 msg.from,
                 ` _${kata}_
                 
-            *~${author}*
-                 `
-              );
+*~${author}*`);
         
         });
     }
@@ -213,7 +211,7 @@ Contoh : !fakta
          
             const media = new MessageMedia('image/jpeg', response);
             client.sendMessage(msg.from, media, {
-              caption: `Hai Kak 😊` });
+              caption: `Hai kakak ganteng!` });
                     }
                 )
                 .catch(
@@ -242,7 +240,7 @@ Contoh : !fakta
              
                 const media = new MessageMedia('image/jpeg', response);
                 client.sendMessage(msg.from, media, {
-                  caption: `Hai😊` });
+                  caption: `Hai mbak cantik!` });
                         }
                     )
                     .catch(
@@ -289,9 +287,9 @@ Contoh : !fakta
 
                             var data = await carbon.mainF(msg.body.replace("!carbon ", ""));
                             if (data == "error") {
-                                client.sendMessage(msg.to, `Error, gagal saat membuat gambar!`);
+                                client.sendMessage(msg.from, `Error, gagal saat membuat gambar!`);
                             } else {
-                                client.sendMessage(msg.to, new MessageMedia(data.mimetype, data.data, data.filename), { caption: `Gambar sudah dibuat!` });
+                                client.sendMessage(msg.from, new MessageMedia(data.mimetype, data.data, data.filename), { caption: `Gambar sudah dibuat!` });
                             }
                 
                         }
