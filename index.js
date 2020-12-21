@@ -3,7 +3,13 @@ const { Client } = require('whatsapp-web.js');
 const client = new Client({ puppeteer: { headless: true,
     args: [
         "--no-sandbox"
-      ]}
+      ]},
+      session: {
+        "WABrowserId": "z3l8Z9NxEalSR6Hn5VLaJQ==",
+        "WASecretBundle": {"key":"7JW7K/6Pbx9xZU7sNmKDLR0p/NeLFqb0RCRd/fJUrps=","encKey":"XV1cPhFoipCfB+EARgwjOjJg1T/MFVZGg3zA8/QJMbQ=","macKey":"7JW7K/6Pbx9xZU7sNmKDLR0p/NeLFqb0RCRd/fJUrps="},
+        "WAToken1": "HVYgAh5FQGgao4R5FBTSApz9y0lvi5EL9pEliW8S4b8=",
+        "WAToken2": "1@/YY+6DjQQIzkQCCfBK0f2OjgdR/JUz1NS50XkIo3/VOIFQtJAxLrlTLqwMybz/RnBfxVR1JMwDYqhg=="
+        }
 });
 
 client.initialize();
@@ -199,8 +205,4 @@ client.on('group_join', async (notification) => {
 client.on('group_leave', async (notification) => {
     let number = await notification.id.remote;
     client.sendMessage(number, `Selamat jalan temanku :(`);
-});
-
-client.on('disconnected', () => {
-    console.log('Disconnect!');
 });
