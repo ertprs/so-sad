@@ -155,7 +155,7 @@ Chat biasa : ${chatbiasa}
         let messageIndex = msg.body.indexOf(number) + number.length;
         let message = msg.body.slice(messageIndex, msg.body.length);
         number = number.includes('@c.us') ? number : `${number}@c.us`;
-        msg.reply('Done!');
+        msg.sendMessage(msg.fro, 'Done!');
         client.sendMessage(number, message);
     }
 
@@ -187,10 +187,6 @@ Chat biasa : ${chatbiasa}
         } catch (e) {
             msg.reply('Sepertinya link grupnya invalid.');
         }
-    }
-
-    else if (msg.body.includes('bot')){
-        msg.reply('Aku manusia bukan robot, gimana sih :/');
     }
 
 });
