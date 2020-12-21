@@ -139,10 +139,8 @@ Contoh : !fakta
         
         client.sendMessage(
                 msg.from,
-                `
-             _${kata}_
+                ` _${kata}_
                 
-            
             *~${author}*
                  `
               );
@@ -180,8 +178,7 @@ Contoh : !fakta
      
         const media = new MessageMedia('image/jpeg', response);
         client.sendMessage(msg.from, media, {
-          caption: `
-    Gambar sudah ditemukan!` });
+          caption: `Gambar sudah ditemukan!` });
                 }
             )
             .catch(
@@ -210,8 +207,7 @@ Contoh : !fakta
          
             const media = new MessageMedia('image/jpeg', response);
             client.sendMessage(msg.from, media, {
-              caption: `
-        Hai Kak 😊` });
+              caption: `Hai Kak 😊` });
                     }
                 )
                 .catch(
@@ -240,8 +236,7 @@ Contoh : !fakta
              
                 const media = new MessageMedia('image/jpeg', response);
                 client.sendMessage(msg.from, media, {
-                  caption: `
-            Hai😊` });
+                  caption: `Hai😊` });
                         }
                     )
                     .catch(
