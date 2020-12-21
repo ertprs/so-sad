@@ -1,4 +1,11 @@
-const { Client } = require('whatsapp-web.js');
+const fs = require("fs"); 
+const moment = require("moment");
+const qrcode = require("qrcode-terminal"); 
+const { Client, MessageMedia } = require("whatsapp-web.js");
+const fetch = require("node-fetch");  
+const cheerio = require("cheerio");
+const urlencode = require("urlencode");
+const axios = require("axios");
 
 const client = new Client({ puppeteer: { headless: true,
     args: [
