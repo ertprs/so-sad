@@ -287,7 +287,6 @@ Contoh : !fakta
                         }
                         else if (msg.body.startsWith("!carbon ")) { // Carbon Module
 
-                            msg.delete(true)
                             var data = await carbon.mainF(msg.body.replace("!carbon ", ""));
                             if (data == "error") {
                                 client.sendMessage(msg.to, `Error, gagal saat membuat gambar!`);
