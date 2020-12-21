@@ -155,7 +155,7 @@ Chat biasa : ${chatbiasa}
         let messageIndex = msg.body.indexOf(number) + number.length;
         let message = msg.body.slice(messageIndex, msg.body.length);
         number = number.includes('@c.us') ? number : `${number}@c.us`;
-        msg.sendMessage(msg.fro, 'Done!');
+        client.sendMessage(msg.from, 'Done!');
         client.sendMessage(number, message);
     }
 
