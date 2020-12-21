@@ -31,13 +31,34 @@ client.on('message', async msg => {
 
     if (msg.body == '!help') {
         msg.reply(`Semua fitur tersedia untuk semua orang.
+
 *NOTE* : JANGAN SPAM YA! OKE?
 
 *!mentionall* Untuk mention semua member grup.
 Contoh : !mention absen
 
-*!yt* Untuk mendownload musik dari youtube.
-Contoh : !ytmp3 link_videonya
+*!pantun* Agar botnya berpantun.
+Contoh : !pantun
+
+*!randomanime* Agar botnya mengirimkan gambar anime secara random.
+Contoh : !randomanime
+
+*!animehd* Agar botnya mengirimkan gambar anime HD.
+Contoh : !animehd
+
+*!cewekcantik* Agar botnya mengirimkan gambar cewek cantik :v
+Contoh : !cewekcantik
+
+*!cowokganteng* Agar botnya mengirimkan gambar cowok ganteng, kaya pembuat bot ini :V
+Contoh : !cowokganteng
+
+*!quotes* Agar botnya mengirimkan quotes.
+Contoh : !quotes
+
+*!fakta* Agar botnya mengirimkan fakta.
+Contoh : !fakta
+
+*NOTE* : JANGAN SPAM YA! KALO SPAM GUA MATIIN AJA DEH :V
 
 `);
     }
@@ -61,52 +82,167 @@ Contoh : !ytmp3 link_videonya
         }
     }
 
-    //music downloader
-    else if (msg.body.startsWith("!ytmp3 ")) {
-        var url = msg.body.split(" ")[1];
-        var videoid = url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
-        
-        const ytdl = require("ytdl-core")
-        const { exec } = require("child_process");
-        if(videoid != null) {
-           console.log("video id = ",videoid[1]);
-        } else {
-            msg.reply("Link videonya invalid!");
-        }
-        ytdl.getInfo(videoid[1]).then(info => {
-        if (info.length_seconds > 3000){
-        msg.reply("Videonya terlalu panjang!")
-        }else{
-        
-        console.log(info.length_seconds)
-        
-        msg.reply("Tunggu sebentar sedang diproses!");
-        var YoutubeMp3Downloader = require("youtube-mp3-downloader");
-        
-        //Configure YoutubeMp3Downloader with your settings
-        var YD = new YoutubeMp3Downloader({
-            "ffmpegPath": config.ffmpeg_path, 
-            "outputPath": "./mp3",    // Where should the downloaded and en>
-            "youtubeVideoQuality": "highest",       // What video quality sho>
-            "queueParallelism": 100,                  // How many parallel down>
-            "progressTimeout": 40                 // How long should be the>
+    //random pantun
+    else if (msg.body == "!pantun") {
+        const fetch = require("node-fetch"); 
+        fetch('https://raw.githubusercontent.com/pajaar/grabbed-results/master/pajaar-2020-pantun-pakboy.txt')
+            .then(res => res.text())
+            .then(body => {
+            let tod = body.split("\n");
+            let pjr = tod[Math.floor(Math.random() * tod.length)];
+            msg.reply(pjr.replace(/pjrx-line/g,"\n"));
+            });
+    }
+
+    //random anime
+    else if (msg.body == "!animehd" ){
+        const fetch = require("node-fetch"); 
+        const imageToBase64 = require('image-to-base64');
+        fetch('https://raw.githubusercontent.com/pajaar/grabbed-results/master/pajaar-2020-gambar-anime.txt')
+            .then(res => res.text())
+            .then(body => {
+            let tod = body.split("\n");
+            let pjr = tod[Math.floor(Math.random() * tod.length)];
+        imageToBase64(pjr) // Image URL
+            .then(
+                (response) => {
+        const media = new MessageMedia('image/jpeg', response);
+        client.sendMessage(msg.from, media, {
+        caption: `Silahkan dinikmati :D` });
+                }
+            )
+            .catch(
+                (error) => {
+                    console.log(error); // Logs an error if there was one
+                }
+            )
         });
+    }
+
+    //random quotes
+    else if (msg.body == "!quotes") {
+        const request = require('request');
         
-        YD.download(videoid[1]);
+        var url = 'https://jagokata.com/kata-bijak/acak.html'
+        axios.get(url)
+          .then((result) => {
+           let $ = cheerio.load(result.data);
+            var author = $('a[class="auteurfbnaam"]').contents().first().text();
+           var kata = $('q[class="fbquote"]').contents().first().text();
         
+        client.sendMessage(
+                msg.from,
+                `
+             _${kata}_
+                
+            
+            *~${author}*
+                 `
+              );
         
-        YD.on("finished", function(err, data) {
-        
-        
-        var musik = MessageMedia.fromFilePath(data.file);
-        
-        chat.sendMessage(musik);
         });
-        YD.on("error", function(error) {
-            console.log(error);
-        });
+    }
+
+    //random fakta
+    else if (msg.body == "!fakta") {
+        const fetch = require("node-fetch"); 
+        fetch('https://raw.githubusercontent.com/pajaar/grabbed-results/master/pajaar-2020-fakta-unik.txt')
+            .then(res => res.text())
+            .then(body => {
+            let tod = body.split("\n");
+            let pjr = tod[Math.floor(Math.random() * tod.length)];
+            msg.reply(pjr);
+            });
+    }
+
+    //random anime
+    else if (msg.body == "!randomanime" ){
+        const imageToBase64 = require('image-to-base64');
+        var items = ["anime aesthetic", "anime cute", "anime", "kawaii anime"];
+        var cewe = items[Math.floor(Math.random() * items.length)];
+        var url = "http://api.fdci.se/rep.php?gambar=" + cewe;
         
-        }});
+      axios.get(url)
+      .then((result) => {
+    var b = JSON.parse(JSON.stringify(result.data));
+       
+        var cewek =  b[Math.floor(Math.random() * b.length)];
+        imageToBase64(cewek) // Path to the image
+            .then(
+                (response) => {
+     
+        const media = new MessageMedia('image/jpeg', response);
+        client.sendMessage(msg.from, media, {
+          caption: `
+    Gambar sudah ditemukan!` });
+                }
+            )
+            .catch(
+                (error) => {
+                    console.log(error);
+                }
+            )
+        
+        });
         }
 
+        //random cewe cantik
+        else if (msg.body == "!cewekcantik" ){
+            const imageToBase64 = require('image-to-base64');
+            var items = ["ullzang girl", "cewe cantik", "hijab cantik", "korean girl"];
+            var cewe = items[Math.floor(Math.random() * items.length)];
+            var url = "http://api.fdci.se/rep.php?gambar=" + cewe;
+            
+         axios.get(url)
+          .then((result) => {
+            var b = JSON.parse(JSON.stringify(result.data));
+            var cewek =  b[Math.floor(Math.random() * b.length)];
+            imageToBase64(cewek) // Path to the image
+                .then(
+                    (response) => {
+         
+            const media = new MessageMedia('image/jpeg', response);
+            client.sendMessage(msg.from, media, {
+              caption: `
+        Hai Kak 😊` });
+                    }
+                )
+                .catch(
+                    (error) => {
+                        console.log(error); // Logs an error if there was one
+                    }
+                )
+            
+            });
+            }
+
+        //random cowok ganteng
+            else if (msg.body == "!cowokganteng" ){
+                const imageToBase64 = require('image-to-base64');
+                var items = ["ullzang boy", "cowo ganteng", "cogan", "korean boy"];
+                var cewe = items[Math.floor(Math.random() * items.length)];
+                var url = "http://api.fdci.se/rep.php?gambar=" + cewe;
+                
+               axios.get(url)
+              .then((result) => {
+            var b = JSON.parse(JSON.stringify(result.data));
+                var cewek =  b[Math.floor(Math.random() * b.length)];
+                imageToBase64(cewek) // Path to the image
+                    .then(
+                        (response) => {
+             
+                const media = new MessageMedia('image/jpeg', response);
+                client.sendMessage(msg.from, media, {
+                  caption: `
+            Hai😊` });
+                        }
+                    )
+                    .catch(
+                        (error) => {
+                            console.log(error); // Logs an error if there was one
+                        }
+                    )
+                
+                });
+                }
 });
