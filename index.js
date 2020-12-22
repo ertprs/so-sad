@@ -6,7 +6,34 @@ const carbon = require('./modules/carbon');
 const fetch = require("node-fetch");  
 const cheerio = require("cheerio");
 const urlencode = require("urlencode");
+const NetworkSpeed = require('network-speed');
 const axios = require("axios");
+
+
+const testNetworkSpeed = new NetworkSpeed();
+
+function getNetworkDownloadSpeed() {
+  const baseUrl = 'http://eu.httpbin.org/stream-bytes/500000';
+  const fileSizeInBytes = 500000;
+  const speed = testNetworkSpeed.checkDownloadSpeed(baseUrl, fileSizeInBytes);
+  return speed;
+}
+
+function getNetworkUploadSpeed() {
+  const options = {
+    hostname: 'www.google.com',
+    port: 80,
+    path: '/catchers/544b09b4599c1d0200000289',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const fileSizeInBytes = 2000000
+  const speed = testNetworkSpeed.checkUploadSpeed(options, fileSizeInBytes);
+  return speed;
+}
+
 
 
 
@@ -134,6 +161,9 @@ Contoh : !wiki soekarno
 
 *!lirik* Untuk menampilkan lirik.
 Contoh : !lirik menepi
+
+*!speedtest* Untuk menampilkan kecepatan internet di server bot.
+Contoh : !speedtest
 
 Fitur yang tersedia hanya untuk admin grup :
 
@@ -387,13 +417,23 @@ Contoh : !mention absen
                 msg.reply('Dalam pengembangan, mungkin bentar lagi!');
             }
 
+        //kecepatan internet di server bot
         else if(msg.body == '!speedtest'){
             msg.reply(`*KECEPATAN INTERNET DI SERVER BOT*
 
+Server location: Ashburn (IAD)
+Your IP: 54.83.103.118 (US)
+Latency: 5.78 ms
+100kB speed: 178.38 Mbps
+1MB speed: 358.14 Mbps
+10MB speed: 456.25 Mbps
+25MB speed: 473.42 Mbps
+100MB speed: 485.97 Mbps
+Download speed: 481.36 Mbps
+Upload speed: 136.43 Mbps
 
-
+Last checked 14:50 22/12/2020
 `);
         }
-        
 
 });
