@@ -9,17 +9,17 @@ const urlencode = require("urlencode");
 const NetworkSpeed = require('network-speed');
 const axios = require("axios");
 
+
 const testNetworkSpeed = new NetworkSpeed();
 
-async function getNetworkDownloadSpeed() {
+function getNetworkDownloadSpeed() {
   const baseUrl = 'http://eu.httpbin.org/stream-bytes/500000';
   const fileSizeInBytes = 500000;
-  const speed = await testNetworkSpeed.checkDownloadSpeed(baseUrl, fileSizeInBytes);
-  console.log(`Download Speed: ${JSON.stringify(speed)}`);
+  const speed = testNetworkSpeed.checkDownloadSpeed(baseUrl, fileSizeInBytes);
   return speed;
 }
 
-async function getNetworkUploadSpeed() {
+function getNetworkUploadSpeed() {
   const options = {
     hostname: 'www.google.com',
     port: 80,
@@ -30,13 +30,51 @@ async function getNetworkUploadSpeed() {
     },
   };
   const fileSizeInBytes = 2000000
-  const speed = await testNetworkSpeed.checkUploadSpeed(options, fileSizeInBytes);
-  console.log(`Upload Speed: ${JSON.stringify(speed)}`);
+  const speed = testNetworkSpeed.checkUploadSpeed(options, fileSizeInBytes);
   return speed;
 }
 
-let download = getNetworkDownloadSpeed();
-let upload = getNetworkUploadSpeed();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -376,15 +414,15 @@ Contoh : !mention absen
                 msg.reply('Dalam pengembangan, mungkin bentar lagi!');
             }
 
-            else if(msg.body == '!speedtest'){
-                download = JSON.stringify(download);
-                upload = JSON.stringify(upload);
+        else if(msg.body == '!speedtest'){
+            const upload = getNetworkUploadSpeed();
+            const download = getNetworkDownloadSpeed();
 
-                msg.reply(`
-Upload: ${upload}
-Download: ${download}
+            msg.reply(`*KECEPATAN INTERNET DI SERVER BOT*
+Upload : ${JSON.stringify(upload)}
+Download : ${JSON.stringify(download)}
+
 `);
-            }
+        }
 
-            
 });
