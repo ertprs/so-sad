@@ -3,7 +3,6 @@ const moment = require("moment");
 const qrcode = require("qrcode-terminal"); 
 const { Client, MessageMedia } = require("whatsapp-web.js");
 const carbon = require('./modules/carbon');
-const rugazapi = require('./modules/rugazapi');
 const fetch = require("node-fetch");  
 const cheerio = require("cheerio");
 const urlencode = require("urlencode");
