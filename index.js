@@ -11,16 +11,18 @@ const axios = require("axios");
 
 const testNetworkSpeed = new NetworkSpeed();
 
+getNetworkDownloadSpeed();
 
-function getNetworkDownloadSpeed() {
+async function getNetworkDownloadSpeed() {
   const baseUrl = 'http://eu.httpbin.org/stream-bytes/50000000';
   const fileSizeInBytes = 50000000;
   const speed = await testNetworkSpeed.checkDownloadSpeed(baseUrl, fileSizeInBytes);
-  return speed;
+  console.log(speed);
 }
 
+getNetworkUploadSpeed();
 
-function getNetworkUploadSpeed() {
+async function getNetworkUploadSpeed() {
   const options = {
     hostname: 'www.google.com',
     port: 80,
@@ -32,12 +34,8 @@ function getNetworkUploadSpeed() {
   };
   const fileSizeInBytes = 2000000
   const speed = await testNetworkSpeed.checkUploadSpeed(options, fileSizeInBytes);
-  return speed;
+  console.log(speed);
 }
-
-
-const upload = getNetworkUploadSpeed();
-const download = getNetworkDownloadSpeed();
 
 
 
@@ -131,10 +129,6 @@ Fitur yang tersedia hanya untuk admin grup :
 *!mentionall* Untuk mention semua member grup.
 Contoh : !mention absen
 
-*--------------------------------------------*
-*!author* : Untuk menampilkan nomor pembuat bot ini.
-*!speedtest* : Untuk menampilkan kecepatan internet di server bot.
-*--------------------------------------------*
 
 *NOTE* : 
 *KALO SPAM GUA MUTE!!!*
@@ -373,9 +367,6 @@ Contoh : !mention absen
                             }
                 
                         }
-            else if(msg.body == '!author'){
-                client.sendMessage(msg.from, 'https://api.whatsapp.com/send?phone=6285841392048&text=Hai');
-            }
 
             else if(msg.body.startsWith('!wiki ')){
                 msg.reply('Dalam pengembangan, mungkin bentar lagi!');
@@ -383,15 +374,5 @@ Contoh : !mention absen
 
             else if(msg.body.startsWith('!lirik ')){
                 msg.reply('Dalam pengembangan, mungkin bentar lagi!');
-            }
-
-            else if(msg.body == '!speedtest'){
-                const upload = getNetworkUploadSpeed();
-                const download = getNetworkDownloadSpeed();
-
-                msg.reply(`Kecepatan internet di server bot:
-Upload : ${upload}
-Download : ${download}
-`)
             }
 });
