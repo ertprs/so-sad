@@ -37,6 +37,8 @@ client.on('ready', () => {
 client.on('message', async msg => {
     let chat = await msg.getChat();
     const quotedMsg = await msg.getQuotedMessage();
+    const Contact = client.getContacts();
+
 
     if (msg.body == '!help') {
         msg.reply(`Fitur tersedia untuk semua orang :
@@ -68,23 +70,25 @@ Contoh : !fakta
 *!carbon* Untuk membuat gambar kode kode gitu.
 Contoh : !carbon Test
 
-Fitur yang tersedia hanya untuk admin grup :
-
-*!mentionall* Untuk mention semua member grup.
-Contoh : !mention absen
-
-
 *!wiki* Untuk menampilkan wikipedia.
 Contoh : !wiki soekarno
 
 *!lirik* Untuk menampilkan lirik.
 Contoh : !lirik menepi
 
+Fitur yang tersedia hanya untuk admin grup :
+
+*!mentionall* Untuk mention semua member grup.
+Contoh : !mention absen
+
+*--------------------------------------------*
 *NOTE* : 
 *KALO SPAM GUA MUTE!!!*
 
 *!author* : Untuk menampilkan kontak author.
 Contoh : !author
+
+*--------------------------------------------*
 
 `);
     }
@@ -307,7 +311,7 @@ Contoh : !author
                 
                         }
             else if(msg.body == '!author'){
-                client.sendMessage(msg.from, Contact().name('Andika'));
+                client.sendMessage(msg.from, Contact.name['Andika']);
             }
 
             else if(msg.body.startsWith('!wiki ')){
