@@ -85,7 +85,6 @@ Contoh : !mention absen
 
 *--------------------------------------------*
 *!author* : Untuk menampilkan nomor pembuat bot ini.
-Contoh : !author
 *--------------------------------------------*
 
 *NOTE* : 
@@ -99,17 +98,29 @@ Contoh : !author
     //mentionall member
     else if(msg.body.startsWith('!mentionall ')) {
         if (chat.isGroup) {
-                const chat = await msg.getChat();
-                let text = msg.body.split("!mentionall ")[1];
-                text += `\n`;
-                let mentions = [];
+            let chat = await message.getChat();
+            if (chat.isGroup) {
+                    const authorId = message.author;
                 for(let participant of chat.participants) {
-                const contact = await client.getContactById(participant.id._serialized);
-                mentions.push(contact);
-                text += `@${participant.id.user} `;
-                text += `\n`
-        }
-            chat.sendMessage(text, { mentions });
+                    if(participant.id._serialized === authorId && !participant.isAdmin) {
+                        message.reply('Maaf perintah ini hanya dapat digunakan oleh admin grup!');
+                        break;
+                    } else {
+                        const chat = await msg.getChat();
+                        let text = msg.body.split("!mentionall ")[1];
+                        text += `\n`;
+                        let mentions = [];
+                        for(let participant of chat.participants) {
+                        const contact = await client.getContactById(participant.id._serialized);
+                        mentions.push(contact);
+                        text += `@${participant.id.user} `;
+                        text += `\n`
+                    }
+                    chat.sendMessage(text, { mentions });
+                    break;
+                    }
+                }
+            }
     } else {
             msg.reply('Maaf perintah ini hanya bisa digunakan di dalam grup!');
         }
