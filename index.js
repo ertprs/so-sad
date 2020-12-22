@@ -3,7 +3,7 @@ const moment = require("moment");
 const qrcode = require("qrcode-terminal"); 
 const { Client, MessageMedia } = require("whatsapp-web.js");
 const carbon = require('./modules/carbon');
-const rugaapi = require('./modules/rugaapi');
+const rugazapi = require('./modules/rugazapi');
 const fetch = require("node-fetch");  
 const cheerio = require("cheerio");
 const urlencode = require("urlencode");
@@ -84,7 +84,8 @@ Contoh : !lirik menepi
 *NOTE* : 
 *KALO SPAM GUA MUTE!!!*
 
-Author : http://bit.ly/SadBotAuthor
+*!author* : Untuk menampilkan kontak author.
+Contoh : !author
 
 `);
     }
