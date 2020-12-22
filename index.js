@@ -3,11 +3,11 @@ const moment = require("moment");
 const qrcode = require("qrcode-terminal"); 
 const { Client, MessageMedia } = require("whatsapp-web.js");
 const carbon = require('./modules/carbon');
-const wikipedia = require('./modules/wikipedia');
-const lirik = require('./modules/lirik');
+const rugaapi = require('./modules/rugaapi');
 const fetch = require("node-fetch");  
 const cheerio = require("cheerio");
 const urlencode = require("urlencode");
+const speedTest = require('speedtest-net');
 const axios = require("axios");
 
 const client = new Client({ puppeteer: { headless: true,
@@ -40,10 +40,7 @@ client.on('message', async msg => {
     const quotedMsg = await msg.getQuotedMessage();
 
     if (msg.body == '!help') {
-        msg.reply(`Semua fitur tersedia untuk semua orang.
-
-*!mentionall* Untuk mention semua member grup.
-Contoh : !mention absen
+        msg.reply(`Fitur tersedia untuk semua orang :
 
 *!pantun* Agar botnya berpantun.
 Contoh : !pantun
@@ -72,8 +69,22 @@ Contoh : !fakta
 *!carbon* Untuk membuat gambar kode kode gitu.
 Contoh : !carbon Test
 
+Fitur yang tersedia hanya untuk admin grup :
+
+*!mentionall* Untuk mention semua member grup.
+Contoh : !mention absen
+
+
+*!wiki* Untuk menampilkan wikipedia.
+Contoh : !wiki soekarno
+
+*!lirik* Untuk menampilkan lirik.
+Contoh : !lirik menepi
+
 *NOTE* : 
-*KALO SPAM GUA MUTE!!*
+*KALO SPAM GUA MUTE!!!*
+
+Author : http://bit.ly/SadBotAuthor
 
 `);
     }
@@ -295,25 +306,4 @@ Contoh : !carbon Test
                             }
                 
                         }
-        else if (msg.body.startsWith("!wikipedia ")){
-            let judul = msg.body.split("!wikipedia ")[1];
-            let hasil = wikipedia.hasil(judul);
-            hasil.replace('by: ArugaZ');
-
-            msg.reply(`Wikipedia dari : ${judul}
-
-${hasil}
-`);
-        }
-    
-        else if (msg.body.startsWith("!lirik ")){
-            let judul = msg.body.split("!lirik ")[1];
-            let hasil = lirik.hasil(judul);
-
-            msg.reply(`Lirik dari : ${judul}
-
-${hasil}
-`);
-        }
-    
 });
