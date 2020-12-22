@@ -34,6 +34,7 @@
     "text-to-mp3": "^1.0.4",
     "translatte": "^2.5.8",
     "urlencode": "^1.1.0",
-    "video-url-link": "^0.1.4"
+    "video-url-link": "^0.1.4",
+    "speedtest-net": "^2.1.1"
   }
 }
