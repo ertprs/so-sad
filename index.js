@@ -6,8 +6,52 @@ const carbon = require('./modules/carbon');
 const fetch = require("node-fetch");  
 const cheerio = require("cheerio");
 const urlencode = require("urlencode");
-const speedTest = require('speedtest-net');
+const NetworkSpeed = require('network-speed');
 const axios = require("axios");
+
+const testNetworkSpeed = new NetworkSpeed();
+
+
+async function getNetworkDownloadSpeed() {
+  const baseUrl = 'http://eu.httpbin.org/stream-bytes/50000000';
+  const fileSizeInBytes = 50000000;
+  const speed = await testNetworkSpeed.checkDownloadSpeed(baseUrl, fileSizeInBytes);
+  return speed;
+}
+
+
+async function getNetworkUploadSpeed() {
+  const options = {
+    hostname: 'www.google.com',
+    port: 80,
+    path: '/catchers/544b09b4599c1d0200000289',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const fileSizeInBytes = 2000000
+  const speed = await testNetworkSpeed.checkUploadSpeed(options, fileSizeInBytes);
+  return speed;
+}
+
+
+const upload = getNetworkUploadSpeed();
+const download = getNetworkDownloadSpeed();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const client = new Client({ puppeteer: { headless: true,
     args: [
@@ -34,16 +78,27 @@ client.on('ready', () => {
     console.log('Bot sedang berjalan!');
 });
 
+
+
+console.log(`Kecepatan internet di server ini!
+Upload : ${upload}
+Download : ${download}
+`);
+
+
 client.on('message', async msg => {
     let chat = await msg.getChat();
     const quotedMsg = await msg.getQuotedMessage();
+
+    //Fucking privacy
+    console.log(`Pesan terbaru : ${msg.body} dari ${msg.from}`);
 
     //Supaya ga dikira bot
     client.sendPresenceAvailable();
 
 
     if (msg.body == '!help') {
-        msg.reply(`Fitur yang tersedia untuk semua orang :
+        msg.reply(`Fitur tersedia untuk semua orang :
 
 *!pantun* Agar botnya berpantun.
 Contoh : !pantun
@@ -85,6 +140,7 @@ Contoh : !mention absen
 
 *--------------------------------------------*
 *!author* : Untuk menampilkan nomor pembuat bot ini.
+*!speedtest* : Untuk menampilkan kecepatan internet di server bot.
 *--------------------------------------------*
 
 *NOTE* : 
@@ -334,5 +390,15 @@ Contoh : !mention absen
 
             else if(msg.body.startsWith('!lirik ')){
                 msg.reply('Dalam pengembangan, mungkin bentar lagi!');
+            }
+
+            else if(msg.body == '!speedtest'){
+                const upload = getNetworkUploadSpeed();
+                const download = getNetworkDownloadSpeed();
+
+                msg.reply(`Kecepatan internet di server bot:
+Upload : ${upload}
+Download : ${download}
+`)
             }
 });
