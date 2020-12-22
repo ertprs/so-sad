@@ -12,7 +12,7 @@ const axios = require("axios");
 const testNetworkSpeed = new NetworkSpeed();
 
 
-async function getNetworkDownloadSpeed() {
+function getNetworkDownloadSpeed() {
   const baseUrl = 'http://eu.httpbin.org/stream-bytes/50000000';
   const fileSizeInBytes = 50000000;
   const speed = await testNetworkSpeed.checkDownloadSpeed(baseUrl, fileSizeInBytes);
@@ -20,7 +20,7 @@ async function getNetworkDownloadSpeed() {
 }
 
 
-async function getNetworkUploadSpeed() {
+function getNetworkUploadSpeed() {
   const options = {
     hostname: 'www.google.com',
     port: 80,
@@ -77,13 +77,6 @@ client.on('auth_failure', () => {
 client.on('ready', () => {
     console.log('Bot sedang berjalan!');
 });
-
-
-
-console.log(`Kecepatan internet di server ini!
-Upload : ${upload}
-Download : ${download}
-`);
 
 
 client.on('message', async msg => {
