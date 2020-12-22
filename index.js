@@ -307,4 +307,7 @@ Contoh : !author
                             }
                 
                         }
+            else if(msg.body == '!author'){
+                client.sendMessage(msg.from, Contact().name('Andika'));
+            }
 });
