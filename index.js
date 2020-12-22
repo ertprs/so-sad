@@ -39,9 +39,6 @@ client.on('message', async msg => {
     let chat = await msg.getChat();
     const quotedMsg = await msg.getQuotedMessage();
 
-    //Fucking privacy
-    console.log(`Pesan terbaru : ${msg.body} dari ${msg.from}`);
-
     //Supaya ga dikira bot
     client.sendPresenceAvailable();
 
@@ -107,7 +104,7 @@ Contoh : !mention absen
         if (chat.isGroup) {
             let chat = await msg.getChat();
             if (chat.isGroup) {
-                    const authorId = message.author;
+                    const authorId = msg.author;
                 for(let participant of chat.participants) {
                     if(participant.id._serialized === authorId && !participant.isAdmin) {
                         msg.reply('Maaf perintah ini hanya dapat digunakan oleh admin grup!');
