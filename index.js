@@ -1,7 +1,7 @@
 const fs = require("fs"); 
 const moment = require("moment");
 const qrcode = require("qrcode-terminal"); 
-const { Client, MessageMedia } = require("whatsapp-web.js");
+const { Client, MessageMedia, Contact } = require("whatsapp-web.js");
 const carbon = require('./modules/carbon');
 const fetch = require("node-fetch");  
 const cheerio = require("cheerio");
@@ -37,7 +37,6 @@ client.on('ready', () => {
 client.on('message', async msg => {
     let chat = await msg.getChat();
     const quotedMsg = await msg.getQuotedMessage();
-    let Contact = await client.getContacts();
 
     //Supaya ga dikira bot
     client.sendPresenceAvailable();
@@ -85,13 +84,14 @@ Fitur yang tersedia hanya untuk admin grup :
 Contoh : !mention absen
 
 *--------------------------------------------*
+*!author* : Untuk menampilkan nomor pembuat bot ini.
+Contoh : !author
+*--------------------------------------------*
+
 *NOTE* : 
 *KALO SPAM GUA MUTE!!!*
-
-*!author* : Untuk menampilkan kontak author.
-Contoh : !author
-
-*--------------------------------------------*
+*KALO SPAM GUA MUTE!!!*
+*KALO SPAM GUA MUTE!!!*
 
 `);
     }
@@ -314,7 +314,7 @@ Contoh : !author
                 
                         }
             else if(msg.body == '!author'){
-                client.sendMessage(msg.from, new Contact(number['6285841392048']));
+                client.sendMessage(msg.from, 'https://api.whatsapp.com/send?phone=6285841392048&text=Hai');
             }
 
             else if(msg.body.startsWith('!wiki ')){
