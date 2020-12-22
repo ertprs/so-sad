@@ -11,16 +11,13 @@ const axios = require("axios");
 
 const testNetworkSpeed = new NetworkSpeed();
 
-getNetworkDownloadSpeed();
-
 async function getNetworkDownloadSpeed() {
-  const baseUrl = 'http://eu.httpbin.org/stream-bytes/50000000';
-  const fileSizeInBytes = 50000000;
+  const baseUrl = 'http://eu.httpbin.org/stream-bytes/500000';
+  const fileSizeInBytes = 500000;
   const speed = await testNetworkSpeed.checkDownloadSpeed(baseUrl, fileSizeInBytes);
-  console.log(speed);
+  console.log(`Download Speed: ${JSON.stringify(speed)}`);
+  return speed;
 }
-
-getNetworkUploadSpeed();
 
 async function getNetworkUploadSpeed() {
   const options = {
@@ -34,9 +31,12 @@ async function getNetworkUploadSpeed() {
   };
   const fileSizeInBytes = 2000000
   const speed = await testNetworkSpeed.checkUploadSpeed(options, fileSizeInBytes);
-  console.log(speed);
+  console.log(`Upload Speed: ${JSON.stringify(speed)}`);
+  return speed;
 }
 
+let download = getNetworkDownloadSpeed();
+let upload = getNetworkUploadSpeed();
 
 
 
@@ -375,4 +375,16 @@ Contoh : !mention absen
             else if(msg.body.startsWith('!lirik ')){
                 msg.reply('Dalam pengembangan, mungkin bentar lagi!');
             }
+
+            else if(msg.body == '!speedtest'){
+                download = JSON.stringify(download);
+                upload = JSON.stringify(upload);
+
+                msg.reply(`
+Upload: ${upload}
+Download: ${download}
+`);
+            }
+
+            
 });
