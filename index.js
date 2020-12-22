@@ -85,6 +85,9 @@ Contoh : !lirik menepi
 *!speedtest* Untuk menampilkan kecepatan internet di server bot.
 Contoh : !speedtest
 
+*!sendto* Untuk mengirimkan pesan secara anonim.
+Contoh : !sendto 6285841392048 Halo, tambahin fitur baru ya ke bot ini!
+
 Fitur yang tersedia hanya untuk admin grup :
 
 *!mentionall* Untuk mention semua member grup.
