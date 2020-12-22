@@ -102,7 +102,7 @@ Contoh : !mention absen
     //mentionall member
     else if(msg.body.startsWith('!mentionall ')) {
         if (chat.isGroup) {
-            let chat = await message.getChat();
+            let chat = await msg.getChat();
             if (chat.isGroup) {
                     const authorId = message.author;
                 for(let participant of chat.participants) {
@@ -354,6 +354,18 @@ Upload speed: 134.09 Mbps
 
 Last checked 15:22 22/12/2020
 `);
+        }
+
+        //sendto
+        else if (msg.body.startsWith('!sendto ')) {
+            let number = msg.body.split(' ')[1];
+            let messageIndex = msg.body.indexOf(number) + number.length;
+            let message = msg.body.slice(messageIndex, msg.body.length);
+            number = number.includes('@c.us') ? number : `${number}@c.us`;
+            msg.reply('Done!');
+            client.sendMessage(msg.from, 'Dilarang spam ya!');
+            client.sendMessage(msg.from, 'Cepet mati bot ini, kalo dispam :(');
+            client.sendMessage(number, message);
         }
 
 });
