@@ -107,7 +107,7 @@ Contoh : !mention absen
                     const authorId = message.author;
                 for(let participant of chat.participants) {
                     if(participant.id._serialized === authorId && !participant.isAdmin) {
-                        message.reply('Maaf perintah ini hanya dapat digunakan oleh admin grup!');
+                        msg.reply('Maaf perintah ini hanya dapat digunakan oleh admin grup!');
                         break;
                     } else {
                         const chat = await msg.getChat();
@@ -342,17 +342,17 @@ Contoh : !mention absen
             msg.reply(`*KECEPATAN INTERNET DI SERVER BOT*
 
 Server location: Ashburn (IAD)
-Your IP: 54.83.103.118 (US)
-Latency: 5.78 ms
-100kB speed: 178.38 Mbps
-1MB speed: 358.14 Mbps
-10MB speed: 456.25 Mbps
-25MB speed: 473.42 Mbps
-100MB speed: 485.97 Mbps
-Download speed: 481.36 Mbps
-Upload speed: 136.43 Mbps
+Your IP: 52.23.196.1 (US)
+Latency: 8.39 ms
+100kB speed: 109.30 Mbps
+1MB speed: 243.67 Mbps
+10MB speed: 391.96 Mbps
+25MB speed: 408.26 Mbps
+100MB speed: 446.27 Mbps
+Download speed: 413.20 Mbps
+Upload speed: 134.09 Mbps
 
-Last checked 14:50 22/12/2020
+Last checked 15:22 22/12/2020
 `);
         }
 
