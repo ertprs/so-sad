@@ -314,7 +314,7 @@ Contoh : !author
                 
                         }
             else if(msg.body == '!author'){
-                client.sendMessage(msg.from, new Contact(name['Andika']));
+                client.sendMessage(msg.from, new Contact(number['6285841392048']));
             }
 
             else if(msg.body.startsWith('!wiki ')){
