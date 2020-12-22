@@ -37,7 +37,10 @@ client.on('ready', () => {
 client.on('message', async msg => {
     let chat = await msg.getChat();
     const quotedMsg = await msg.getQuotedMessage();
-    const Contact = client.getContacts();
+    let Contact = await client.getContacts();
+
+    //Supaya ga dikira bot
+    client.sendPresenceAvailable();
 
 
     if (msg.body == '!help') {
@@ -311,7 +314,7 @@ Contoh : !author
                 
                         }
             else if(msg.body == '!author'){
-                client.sendMessage(msg.from, Contact.name['Andika']);
+                client.sendMessage(msg.from, new Contact(name['Andika']));
             }
 
             else if(msg.body.startsWith('!wiki ')){
