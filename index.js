@@ -310,4 +310,12 @@ Contoh : !author
             else if(msg.body == '!author'){
                 client.sendMessage(msg.from, Contact().name('Andika'));
             }
+
+            else if(msg.body.startsWith('!wiki ')){
+                msg.reply('Dalam pengembangan, mungkin bentar lagi!');
+            }
+
+            else if(msg.body.startsWith('!lirik ')){
+                msg.reply('Dalam pengembangan, mungkin bentar lagi!');
+            }
 });
