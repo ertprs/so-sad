@@ -43,7 +43,7 @@ client.on('message', async msg => {
 
 
     if (msg.body == '!help') {
-        msg.reply(`Fitur tersedia untuk semua orang :
+        msg.reply(`Fitur yang tersedia untuk semua orang :
 
 *!pantun* Agar botnya berpantun.
 Contoh : !pantun
