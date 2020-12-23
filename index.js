@@ -76,6 +76,9 @@ Contoh : !carbon Test
 *!wiki* Untuk menampilkan wikipedia.
 Contoh : !wiki soekarno
 
+*wikien* Untuk menampilkan wikipedia english.
+Contoh : !wikien soekarno
+
 *!lirik* Untuk menampilkan lirik.
 Contoh : !lirik menepi
 
@@ -87,6 +90,9 @@ Contoh : !sendto 6285841392048 Halo, tambahin fitur baru ya ke bot ini!
 
 *!tts* : Untuk mengubah text menjadi suara.
 Contoh : !tts Hello
+
+*!corona* = Untuk menampilkan jumlah kasus corona di sebuah negara!
+Contoh : !corona Russia
 
 Fitur yang tersedia hanya untuk admin grup :
 
@@ -394,5 +400,110 @@ Last checked 15:22 22/12/2020
             client.sendMessage(msg.from, 'Cepet mati bot ini, kalo dispam :(');
             client.sendMessage(number, message);
         }
+
+        //text to mp3
+        else if (msg.body.startsWith("!tts ")) {
+	
+          var texttomp3 = require("text-to-mp3");
+          var fs = require("fs");
+          
+          var suara = msg.body.split("!tts ")[1];
+          var text = suara;
+          var fn = "tts/suara.mp3";
+          
+          
+          
+          
+          if(process.argv.indexOf("-?")!== -1){
+            
+            return;
+          }
+          
+          
+          if(process.argv.indexOf("-t")!== -1)
+            text=suara;
+          
+          if(process.argv.indexOf("-f")!== -1)
+            fn=suara;
+          
+          text = text.replace(/ +(?= )/g,'');
+          
+          if(typeof text ===  "undefined" || text === ""
+            || typeof fn === "undefined" || fn === "") { 
+            
+          }
+          
+          //HERE WE GO
+          texttomp3.getMp3(text, function(err, data){
+            if(err){
+              console.log(err);
+              return;
+            }
+          
+            if(fn.substring(fn.length-4, fn.length) !== ".mp3"){ 
+              fn+=".mp3";
+            }
+            var file = fs.createWriteStream(fn); 
+            file.write(data);
+           
+            console.log("MP3 Disimpan");
+            
+          });
+          await new Promise(resolve => setTimeout(resolve, 500));
+          
+            if(text.length > 200){ 
+            msg.reply("Teks terlalu panjang, pecah menjadi 200 karakter!");
+          }else{
+            const media = MessageMedia.fromFilePath(fn);
+          
+            chat.sendMessage(media);
+          
+          }
+        }
+
+        else if(msg.body.startsWith('!wikien ')){
+            var nama = msg.body.split("!wikien ")[1];
+            
+            axios.get(`https://arugaz.herokuapp.com/api/wikien?q=${nama}`)
+            .then(function (response) {
+            const hasil = response.data.result;
+            client.sendMessage(msg.from, `Wiki dari : ${nama}
+
+${hasil.replace('by: ArugaZ')}
+`);
+            })
+            .catch(function () {
+            msg.reply('Error atau hasil tidak ditemukan!')
+            })
+        }
+
+        else if(msg.body.startsWith('!corona ')){
+            var nama = msg.body.split("!corona ")[1];
+            
+            axios.get(`https://arugaz.herokuapp.com/api/corona?country=${nama}`)
+            .then(function (response) {
+            const totalkasus = response.data.totalCases;
+            const totalmeninggal = response.data.totalDeath;
+            const totalsembuh = response.data.recovered;
+            const kasushariini = response.data.todayCases;
+            const meninggalhariini = response.todayCases;
+
+            client.sendMessage(msg.from, `Hasil dari negara : ${nama}
+
+Total kasus : ${totalkasus}
+Total meninggal : ${totalmeninggal}
+Total sembuh : ${totalsembuh}
+Jumlah kasus hari ini : ${kasushariini}
+Jumlah meninggal hari ini : ${meninggalhariini}
+`);
+            })
+            .catch(function () {
+            msg.reply('Error atau hasil tidak ditemukan!')
+            })
+        }
+
+
+
+
 
 });
