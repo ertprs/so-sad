@@ -246,7 +246,7 @@ Contoh : !mention absen
          
             const media = new MessageMedia('image/jpeg', response);
             client.sendMessage(msg.from, media, {
-              caption: `Hai kakak ganteng!` });
+              caption: `Gambar sudah ditemukan!` });
                     }
                 )
                 .catch(
@@ -275,7 +275,7 @@ Contoh : !mention absen
              
                 const media = new MessageMedia('image/jpeg', response);
                 client.sendMessage(msg.from, media, {
-                  caption: `Hai mbak cantik!` });
+                  caption: `Gambar sudah ditemukan!` });
                         }
                     )
                     .catch(
@@ -334,7 +334,15 @@ Contoh : !mention absen
             }
 
             else if(msg.body.startsWith('!lirik ')){
-                msg.reply('Dalam pengembangan, mungkin bentar lagi!');
+                var nama = msg.body.split("!searchimage ")[1];
+                
+                axios.get(`https://arugaz.herokuapp.com/api/lirik?judul=${nama}`)
+                .then(function (response) {
+                client.sendMessage(msg.from, response.data.result);
+                })
+                .catch(function () {
+                msg.reply('Error atau hasil tidak ditemukan!')
+                })
             }
 
         //kecepatan internet di server bot
