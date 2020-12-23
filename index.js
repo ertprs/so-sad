@@ -85,6 +85,9 @@ Contoh : !speedtest
 *!sendto* Untuk mengirimkan pesan secara anonim.
 Contoh : !sendto 6285841392048 Halo, tambahin fitur baru ya ke bot ini!
 
+*!tts* : Untuk mengubah text menjadi suara.
+Contoh : !tts Hello
+
 Fitur yang tersedia hanya untuk admin grup :
 
 *!mentionall* Untuk mention semua member grup.
@@ -330,7 +333,19 @@ Contoh : !mention absen
                         }
 
             else if(msg.body.startsWith('!wiki ')){
-                msg.reply('Dalam pengembangan, mungkin bentar lagi!');
+                var nama = msg.body.split("!wiki ")[1];
+                
+                axios.get(`https://arugaz.herokuapp.com/api/wiki?q=${nama}`)
+                .then(function (response) {
+                const hasil = response.data.result;
+                client.sendMessage(msg.from, `Wiki dari : ${nama}
+
+${hasil.replace('by: ArugaZ')}
+`);
+                })
+                .catch(function () {
+                msg.reply('Error atau hasil tidak ditemukan!')
+                })
             }
 
             else if(msg.body.startsWith('!lirik ')){
