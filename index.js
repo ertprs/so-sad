@@ -7,6 +7,7 @@ const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 const urlencode = require("urlencode");
 const axios = require("axios");
+const yts = require("./modules/cmd.js");
 
 
 const client = new Client({ puppeteer: { headless: true,
@@ -96,6 +97,9 @@ Contoh : !corona Russia
 
 *!ytmp3* = Untuk mendownload musik dari youtube!
 Contoh : !ytmp3 link_video
+
+*!play* = Untuk memutar musik dari youtube.
+Contoh : !ytmp3 Lonely
 
 Fitur yang tersedia hanya untuk admin grup :
 
@@ -551,6 +555,56 @@ Jumlah meninggal hari ini : ${meninggalhariini}
             
             }});
         }
+
+        //yt play
+        else if (msg.body.startsWith("!play ")) {
+            var ytdl = require("ytdl-core");
+            var hh = msg.body.split("!play ")[1];
+            var keyword = hh.replace(/ /g, "+");
+            function foreach(arr, func){
+              for(var i in arr){
+                func(i, arr[i]);
+              }
+            }
+            //////////Calling Async Function//////////
+            const id= "";
+            
+            (async () => {
+            var id = await yts.searchYoutube(keyword);
+            let result ="";
+            
+            var teks = `New Request Play Song
+
+${result}`;
+            console.log( "New Request Play Song " +id[0])
+             
+            var YoutubeMp3Downloader = require("youtube-mp3-downloader");
+            
+            //Configure YoutubeMp3Downloader with your settings
+            var YD = new YoutubeMp3Downloader({
+                "ffmpegPath": "ffmpeg", 
+                "outputPath": "./mp3",    // Where should the downloaded and en>
+                "youtubeVideoQuality": "highest",       // What video quality sho>
+                "queueParallelism": 100,                  // How many parallel down>
+                "progressTimeout": 2000                 // How long should be the>
+            });
+            
+            //Download video and save as MP3 file
+            YD.download(id[0]);
+            
+            YD.on("finished", function(err, data) {
+            
+            
+            const musik = MessageMedia.fromFilePath(data.file);
+            var ehe = `Now Playing : *${data.videoTitle}*`;
+
+            chat.sendMessage(msg.from, ehe);
+            chat.sendMessage(musik);
+            });
+            YD.on("progress", function(data) {
+            });
+            })();
+            }
 
 
 
