@@ -94,6 +94,9 @@ Contoh : !tts Hello
 *!corona* : Untuk menampilkan jumlah kasus corona di sebuah negara!
 Contoh : !corona Russia
 
+*!coronaindo* : Untuk menampilkan jumlah kasus corona di Indonesia.
+Contoh : !coronaindo
+
 *!ytmp3* : Untuk mendownload musik dari youtube!
 Contoh : !ytmp3 link_video
 
@@ -499,11 +502,33 @@ ${hasil}
             }) */
         }
 
-        
+
         //ytmp3 download
         else if (msg.body.startsWith("!ytmp3 ")) {
             msg.reply('Dalam perbaikan!')
         }
+
+        else if (msg.body == '!coronaindo'){
+            axios.get(`https://arugaz.herokuapp.com/api/coronaindo`)
+            .then(function (response) {
+
+            client.sendMessage(msg.from, `Data corona di indonesia :
+
+Kasus baru : ${response.data.kasus_baru}
+Total kasus : ${response.data.kasus_total}
+Meninggal : ${response.data.meninggal}
+Penanganan : ${response.data.penanganan}
+Sembuh : ${response.data.sembuh}
+
+Terakhir di update ${response.data.terakhir}
+`);
+        })
+    .catch(function () {
+    msg.reply('Error atau hasil tidak ditemukan!')
+    }) 
+
+        }
+    
 
         
 
