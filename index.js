@@ -334,11 +334,15 @@ Contoh : !mention absen
             }
 
             else if(msg.body.startsWith('!lirik ')){
-                var nama = msg.body.split("!searchimage ")[1];
+                var nama = msg.body.split("!lirik ")[1];
                 
                 axios.get(`https://arugaz.herokuapp.com/api/lirik?judul=${nama}`)
                 .then(function (response) {
-                client.sendMessage(msg.from, response.data.result);
+                const hasil = response.data.result;
+                client.sendMessage(msg.from, `Lirik dari lagu : ${nama}
+
+${hasil}
+`);
                 })
                 .catch(function () {
                 msg.reply('Error atau hasil tidak ditemukan!')
