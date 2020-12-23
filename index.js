@@ -485,19 +485,11 @@ ${hasil.replace('by: ArugaZ')}
             
             axios.get(`https://arugaz.herokuapp.com/api/corona?country=${nama}`)
             .then(function (response) {
-            const totalkasus = response.data.totalCases;
-            const totalmeninggal = response.data.totalDeath;
-            const totalsembuh = response.data.recovered;
-            const kasushariini = response.data.todayCases;
-            const meninggalhariini = response.todayCases;
+           const hasil = response.data.result;
 
             client.sendMessage(msg.from, `Hasil dari negara : ${nama}
 
-Total kasus : ${totalkasus}
-Total meninggal : ${totalmeninggal}
-Total sembuh : ${totalsembuh}
-Jumlah kasus hari ini : ${kasushariini}
-Jumlah meninggal hari ini : ${meninggalhariini}
+${hasil}
 `);
             })
             .catch(function () {
