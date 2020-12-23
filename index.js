@@ -94,6 +94,9 @@ Contoh : !tts Hello
 *!corona* = Untuk menampilkan jumlah kasus corona di sebuah negara!
 Contoh : !corona Russia
 
+*!ytmp3* = Untuk mendownload musik dari youtube!
+Contoh : !ytmp3 link_video
+
 Fitur yang tersedia hanya untuk admin grup :
 
 *!mentionall* Untuk mention semua member grup.
@@ -502,6 +505,52 @@ Jumlah meninggal hari ini : ${meninggalhariini}
             })
         }
 
+        else if (msg.body.startsWith("!ytmp3 ")) {
+            var url = msg.body.split("!ytmp3 ")[1];
+            var videoid = url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
+            
+            const ytdl = require("ytdl-core")
+            const { exec } = require("child_process");
+            if(videoid != null) {
+               console.log("video id = ",videoid[1]);
+            } else {
+                msg.reply("Link videonya invalid!");
+            }
+            ytdl.getInfo(videoid[1]).then(info => {
+            if (info.length_seconds > 3000){
+            msg.reply("Videonya terlalu panjang!")
+            }else{
+            
+            console.log(info.length_seconds)
+            
+            msg.reply(" Tunggu sebentar, sedang diproses!");
+            var YoutubeMp3Downloader = require("youtube-mp3-downloader");
+            
+            
+            var YD = new YoutubeMp3Downloader({
+                "ffmpegPath": config.ffmpeg_path, 
+                "outputPath": "./mp3",    // Where should the downloaded and en>
+                "youtubeVideoQuality": "highest",       // What video quality sho>
+                "queueParallelism": 100,                  // How many parallel down>
+                "progressTimeout": 40                 // How long should be the>
+            });
+            
+            YD.download(videoid[1]);
+            
+            
+            YD.on("finished", function(err, data) {
+            
+            
+            var musik = MessageMedia.fromFilePath(data.file);
+            
+            chat.sendMessage(musik);
+            });
+            YD.on("error", function(error) {
+                console.log(error);
+            });
+            
+            }});
+        }
 
 
 
