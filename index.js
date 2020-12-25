@@ -8,6 +8,10 @@ const cheerio = require("cheerio");
 const urlencode = require("urlencode");
 const axios = require("axios");
 const google = require('google-it');
+const scrape = require('website-scraper');
+const fsExtra = require('fs-extra');
+const carikasar = require('./modules/carikasar.js');
+
 
 
 const client = new Client({ puppeteer: { headless: true,
@@ -547,7 +551,7 @@ Terakhir di update ${response.data.terakhir}
             const googleQuery = msg.body.split('!google ')[1];
 
             google({ 'query': googleQuery }).then(results => {
-                let vars = `*Hasil pencarian dari* : ${googleQuery}\n`
+                let vars = `*Hasil pencarian dari* : ${googleQuery}\n\n`;
                 for (let i = 0; i < results.length; i++) {
                     vars +=  `*Judul* : ${results[i].title}\n\n*Deskripsi* : ${results[i].snippet}\n\n*Link* : ${results[i].link}\n\n`
                 }
@@ -556,6 +560,33 @@ Terakhir di update ${response.data.terakhir}
                     msg.reply('Error atau hasil tidak ditemukan!');
                 })
         }
+
+        //brainly
+        else if (msg.body.startsWith('!brainly ')){
+
+        }
+
+        //scrape
+        else if (msg.body.startsWith('!scrape ') && msg.from.includes('6285841392048')){
+            const url_situs = msg.body.split('!scrape ')[1];
+            scrape({
+                urls: url_situs,
+                directory: './web-scrapper/',
+                sources: [
+                    {selector: 'img', attr: 'src'},
+                    {selector: 'link[rel="stylesheet"]', attr: 'href'},
+                    {selector: 'script', attr: 'src'}
+                  ]
+              });
+
+              msg.reply('Done!');
+            
+            
+        }
+
+        //read and delete file
+
+        
 
     
 
@@ -597,8 +628,10 @@ Terakhir di update ${response.data.terakhir}
 
 
 
-
-
+        //Anti badword
+        else if (carikasar(msg.body) == true){
+            msg.reply('Jangan kasar bro, lu kasar cuma nyakitin perasaan orang lain :(');
+        }
         //feedback
         else if (msg.body.startsWith('!feedback ')){
             var pesan = msg.body.split("!feedback ")[1];
