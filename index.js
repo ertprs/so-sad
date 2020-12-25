@@ -10,7 +10,7 @@ const axios = require("axios");
 const google = require('google-it');
 const scrape = require('website-scraper');
 const fsExtra = require('fs-extra');
-const cariKasar = require('./modules/carikasar.js');
+const carikasar = require('./modules/carikasar.js');
 
 
 
@@ -43,6 +43,7 @@ client.on('ready', () => {
 client.on('message', async msg => {
     let chat = await msg.getChat();
     const quotedMsg = await msg.getQuotedMessage();
+    const isKasar = await cariKasar(chat)
 
     //Supaya ga dikira bot
     client.sendPresenceAvailable();
@@ -563,7 +564,6 @@ Terakhir di update ${response.data.terakhir}
 
         //brainly
         else if (msg.body.startsWith('!brainly ')){
-		msg.reply('Dalam pengembangan!');
 
         }
 
@@ -630,9 +630,10 @@ Terakhir di update ${response.data.terakhir}
 
 
         //Anti badword
-        else if (cariKasar(msg.body) == true){
+        else if (isKasar){
             msg.reply('Jangan kasar bro, lu kasar cuma nyakitin perasaan orang lain :(');
         }
+        
         //feedback
         else if (msg.body.startsWith('!feedback ')){
             var pesan = msg.body.split("!feedback ")[1];
