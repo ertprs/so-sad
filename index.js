@@ -10,7 +10,7 @@ const axios = require("axios");
 const google = require('google-it');
 const scrape = require('website-scraper');
 const fsExtra = require('fs-extra');
-const carikasar = require('./modules/carikasar.js');
+const cariKasar = require('./modules/carikasar.js');
 
 
 
@@ -563,6 +563,7 @@ Terakhir di update ${response.data.terakhir}
 
         //brainly
         else if (msg.body.startsWith('!brainly ')){
+		msg.reply('Dalam pengembangan!');
 
         }
 
@@ -629,7 +630,7 @@ Terakhir di update ${response.data.terakhir}
 
 
         //Anti badword
-        else if (carikasar(msg.body) == true){
+        else if (cariKasar(msg.body) == true){
             msg.reply('Jangan kasar bro, lu kasar cuma nyakitin perasaan orang lain :(');
         }
         //feedback
