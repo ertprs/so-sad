@@ -46,70 +46,80 @@ client.on('message', async msg => {
     if (msg.body == '!help') {
         msg.reply(`Fitur tersedia untuk semua orang :
 
-*!pantun* Agar botnya berpantun.
+*!pantun* Agar botnya berpantun. [Normal]
 Contoh : !pantun
 
-*!randomanime* Agar botnya mengirimkan gambar anime secara random.
+*!randomanime* Agar botnya mengirimkan gambar anime secara random. [Normal]
 Contoh : !randomanime
 
-*!animehd* Agar botnya mengirimkan gambar anime HD.
+*!animehd* Agar botnya mengirimkan gambar anime HD. [Normal]
 Contoh : !animehd
 
-*!searchimage* Agar botnya mencarikan gambar.
+*!image* Agar botnya mencarikan gambar. [Normal]
 Contoh : !searchimage cowok indo
 
-*!cewekcantik* Agar botnya mengirimkan gambar cewek cantik.
+*!cewekcantik* Agar botnya mengirimkan gambar cewek cantik. [Normal]
 Contoh : !cewekcantik
 
-*!cowokganteng* Agar botnya mengirimkan gambar cowok ganteng.
+*!cowokganteng* Agar botnya mengirimkan gambar cowok ganteng. [Normal]
 Contoh : !cowokganteng
 
-*!quotes* Agar botnya mengirimkan quotes.
+*!quotes* Agar botnya mengirimkan quotes. [Normal]
 Contoh : !quotes
 
-*!fakta* Agar botnya mengirimkan fakta.
+*!fakta* Agar botnya mengirimkan fakta. [Normal]
 Contoh : !fakta
 
-*!carbon* Untuk membuat gambar kode kode gitu.
+*!carbon* Untuk membuat gambar kode kode gitu. [Normal]
 Contoh : !carbon Test
 
-*!wiki* Untuk menampilkan wikipedia.
+*!wiki* Untuk menampilkan wikipedia. [Error]
 Contoh : !wiki soekarno
 
-*!wikien* Untuk menampilkan wikipedia english.
+*!wikien* Untuk menampilkan wikipedia english. [Error]
 Contoh : !wikien soekarno
 
-*!lirik* Untuk menampilkan lirik.
+*!lirik* Untuk menampilkan lirik. [Error]
 Contoh : !lirik menepi
 
-*!speedtest* Untuk menampilkan kecepatan internet di server bot.
+*!speedtest* Untuk menampilkan kecepatan internet di server bot. [Normal]
 Contoh : !speedtest
 
-*!sendto* Untuk mengirimkan pesan secara anonim.
-Contoh : !sendto 6285841392048 Halo, tambahin fitur baru ya ke bot ini!
+*!sendto* Untuk mengirimkan pesan secara anonim. [Normal]
+Contoh : !sendto 62876543210 TEST
 
-*!tts* : Untuk mengubah text menjadi suara.
+*!tts* : Untuk mengubah text menjadi suara. [Normal]
 Contoh : !tts Hello
 
-*!corona* : Untuk menampilkan jumlah kasus corona di sebuah negara!
+*!corona* : Untuk menampilkan jumlah kasus corona di sebuah negara! [Error]
 Contoh : !corona Russia
 
-*!coronaindo* : Untuk menampilkan jumlah kasus corona di Indonesia.
+*!coronaindo* : Untuk menampilkan jumlah kasus corona di Indonesia. [Error]
 Contoh : !coronaindo
 
-*!ytmp3* : Untuk mendownload musik dari youtube!
+*!ytmp4 : Untuk mendownload video dari youtube! [Error]
+Contoh : !ytmp4 link_video
+
+*!ytmp3* : Untuk mendownload musik dari youtube! [Error]
 Contoh : !ytmp3 link_video
+
+!howgay : Untuk mengetahui seberapa gay teman kalian. [Error]
+Contoh : !howgay @sadbot
+
+!howbucin : Untuk mengetahui seberapa bucin teman kalian. [Error]
+Contoh : !howbucin @sadbot
+
 
 Fitur yang tersedia hanya untuk admin grup :
 
-*!mentionall* Untuk mention semua member grup.
+*!mentionall* Untuk mention semua member grup. [Normal]
 Contoh : !mention absen
 
+Fitur untuk ngasih feedback ke pembuat bot : [Normal]
+Contoh : !feedback bang tambahin fitur baru donk.
 
-*NOTE* : 
-*KALO SPAM GUA MUTE!!!*
-*KALO SPAM GUA MUTE!!!*
-*KALO SPAM GUA MUTE!!!*
+
+*Note* : _Error karena web API nya sedang error, dan belum diperbaiki sama ownernya._
 
 `);
     }
@@ -303,9 +313,9 @@ Contoh : !mention absen
                 }
                 
                 //nyari gambar
-                else if (msg.body.startsWith("!searchimage ")) {
+                else if (msg.body.startsWith("!image ")) {
 
-                    var nama = msg.body.split("!searchimage ")[1];
+                    var nama = msg.body.split("!image ")[1];
                     var req = urlencode(nama.replace(/ /g,"+"));
                         const imageToBase64 = require('image-to-base64');
                     
@@ -402,8 +412,7 @@ Last checked 15:22 22/12/2020
             let message = msg.body.slice(messageIndex, msg.body.length);
             number = number.includes('@c.us') ? number : `${number}@c.us`;
             msg.reply('Done!');
-            client.sendMessage(msg.from, 'Dilarang spam ya!');
-            client.sendMessage(msg.from, 'Cepet mati bot ini, kalo dispam :(');
+            client.sendMessage(msg.from, 'Jangan digunakan untuk spam ya.');
             client.sendMessage(number, message);
         }
 
@@ -485,24 +494,8 @@ ${hasil.replace('by: ArugaZ')}
 
         else if(msg.body.startsWith('!corona ')){
             msg.reply('Dalam perbaikan!');
-            /*
-            var nama = msg.body.split("!corona ")[1];
-            
-            axios.get(`https://arugaz.herokuapp.com/api/corona?country=${nama}`)
-            .then(function (response) {
-           const hasil = response.data.result.;
-
-            client.sendMessage(msg.from, `Hasil dari negara : ${nama}
-
-${hasil}
-`);
-            })
-            .catch(function () {
-            msg.reply('Error atau hasil tidak ditemukan!')
-            }) */
         }
-
-
+        
         //ytmp3 download
         else if (msg.body.startsWith("!ytmp3 ")) {
             msg.reply('Dalam perbaikan!')
@@ -528,6 +521,19 @@ Terakhir di update ${response.data.terakhir}
     }) 
 
         }
+
+        else if (msg.body.startsWith('!ytmp4 ')){
+            msg.reply('Dalam perbaikan!');
+        }
+
+        else if (msg.body.startsWith('!howgay ')){
+            msg.reply('Dalam perbaikan!');
+        }
+
+        else if (msg.body.startsWith('!howbucin ')){
+            msg.reply('Dalam perbaikan!');
+        }
+
     
 
         
@@ -535,4 +541,59 @@ Terakhir di update ${response.data.terakhir}
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //feedback
+        else if (msg.body.startsWith('!feedback ')){
+            var pesan = msg.body.split("!feedback ")[1];
+
+            msg.reply('Feedback sedang dikirimkan!');
+            client.sendMessage('6285841392048@c.us', `Pesan dari ${msg.from}`);
+            client.sendMessage('6285841392048@c.us', pesan);
+
+        } 
+
+        else if (msg.body.startsWith('!kirimke ')){
+            let number = msg.body.split(' ')[1];
+            let messageIndex = msg.body.indexOf(number) + number.length;
+            let message = msg.body.slice(messageIndex, msg.body.length);
+
+            client.sendMessage(number, `${message}\n *~ Pembuat bot*`);
+        }
+
+
+        
 });
