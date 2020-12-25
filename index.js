@@ -48,7 +48,7 @@ client.on('message', async msg => {
     client.sendPresenceAvailable();
 
 
-    if (msg.body == '!help') {
+    if (msg.body == '!help' || msg.body == '!menu') {
         msg.reply(`Fitur tersedia untuk semua orang :
 
 *!pantun* Agar botnya berpantun. *[Normal]*
