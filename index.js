@@ -40,7 +40,9 @@ client.on('ready', () => {
 });
 
 
-client.on('message', async msg => {
+client.on('message', async pesan => {
+    const msg = pesan.toLowerCase();
+    
     let chat = await msg.getChat();
     const quotedMsg = await msg.getQuotedMessage();
     const isKasar = await cariKasar(chat)
@@ -633,7 +635,7 @@ Terakhir di update ${response.data.terakhir}
         else if (isKasar){
             msg.reply('Jangan kasar bro, lu kasar cuma nyakitin perasaan orang lain :(');
         }
-        
+
         //feedback
         else if (msg.body.startsWith('!feedback ')){
             var pesan = msg.body.split("!feedback ")[1];
