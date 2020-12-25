@@ -7,6 +7,7 @@ const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 const urlencode = require("urlencode");
 const axios = require("axios");
+const google = require('google-it');
 
 
 const client = new Client({ puppeteer: { headless: true,
@@ -109,13 +110,18 @@ Contoh : !howgay @sadbot
 *!howbucin* : Untuk mengetahui seberapa bucin teman kalian. *[Error]*
 Contoh : !howbucin @sadbot
 
+*!google* : Agar bot mencari ke google untuk kalian. *[Beta]*
+Contoh : !google Test
+
 
 Fitur yang tersedia hanya untuk admin grup :
 
 *!mentionall* Untuk mention semua member grup. *[Normal]*
 Contoh : !mention absen
 
-Fitur untuk ngasih feedback ke pembuat bot : *[Normal]*
+
+
+Fitur untuk ngasih feedback ke pembuat bot :
 Contoh : !feedback bang tambahin fitur baru donk.
 
 
@@ -498,7 +504,9 @@ ${hasil.replace('by: ArugaZ')}
 
         //ytmp3 download
         else if (msg.body.startsWith("!ytmp3 ")) {
-            msg.reply('Dalam perbaikan!')
+            const link_video = msg.body.split("!ytmp3 ")[1].replace('https://youtu.be/','').replace('https://www.youtube.com/watch?v=','');
+
+            
         }
 
         else if (msg.body == '!coronaindo'){
@@ -532,6 +540,21 @@ Terakhir di update ${response.data.terakhir}
 
         else if (msg.body.startsWith('!howbucin ')){
             msg.reply('Dalam perbaikan!');
+        }
+
+        //google
+        else if (msg.body.startsWith('!google ')){
+            const googleQuery = msg.body.split('!google ')[1];
+
+            google({ 'query': googleQuery }).then(results => {
+                let vars = `*Hasil pencarian dari* : ${googleQuery}\n`
+                for (let i = 0; i < results.length; i++) {
+                    vars +=  `*Judul* : ${results[i].title}\n\n*Deskripsi* : ${results[i].snippet}\n\n*Link* : ${results[i].link}\n\n`
+                }
+                    client.sendMessage(msg.from, vars)
+                }).catch(e => {
+                    msg.reply('Error atau hasil tidak ditemukan!');
+                })
         }
 
     
