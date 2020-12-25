@@ -46,76 +46,76 @@ client.on('message', async msg => {
     if (msg.body == '!help') {
         msg.reply(`Fitur tersedia untuk semua orang :
 
-*!pantun* Agar botnya berpantun. [Normal]
+*!pantun* Agar botnya berpantun. *[Normal]*
 Contoh : !pantun
 
-*!randomanime* Agar botnya mengirimkan gambar anime secara random. [Normal]
+*!randomanime* Agar botnya mengirimkan gambar anime secara random. *[Normal]*
 Contoh : !randomanime
 
-*!animehd* Agar botnya mengirimkan gambar anime HD. [Normal]
+*!animehd* Agar botnya mengirimkan gambar anime HD. *[Normal]*
 Contoh : !animehd
 
-*!image* Agar botnya mencarikan gambar. [Normal]
+*!image* Agar botnya mencarikan gambar. *[Normal]*
 Contoh : !searchimage cowok indo
 
-*!cewekcantik* Agar botnya mengirimkan gambar cewek cantik. [Normal]
+*!cewekcantik* Agar botnya mengirimkan gambar cewek cantik. *[Normal]*
 Contoh : !cewekcantik
 
-*!cowokganteng* Agar botnya mengirimkan gambar cowok ganteng. [Normal]
+*!cowokganteng* Agar botnya mengirimkan gambar cowok ganteng. *[Normal]*
 Contoh : !cowokganteng
 
-*!quotes* Agar botnya mengirimkan quotes. [Normal]
+*!quotes* Agar botnya mengirimkan quotes. *[Normal]*
 Contoh : !quotes
 
-*!fakta* Agar botnya mengirimkan fakta. [Normal]
+*!fakta* Agar botnya mengirimkan fakta. *[Normal]*
 Contoh : !fakta
 
-*!carbon* Untuk membuat gambar kode kode gitu. [Normal]
+*!carbon* Untuk membuat gambar kode kode gitu. *[Normal]*
 Contoh : !carbon Test
 
-*!wiki* Untuk menampilkan wikipedia. [Error]
+*!wiki* Untuk menampilkan wikipedia. *[Error]*
 Contoh : !wiki soekarno
 
-*!wikien* Untuk menampilkan wikipedia english. [Error]
+*!wikien* Untuk menampilkan wikipedia english. *[Error]*
 Contoh : !wikien soekarno
 
-*!lirik* Untuk menampilkan lirik. [Error]
+*!lirik* Untuk menampilkan lirik. *[Error]*
 Contoh : !lirik menepi
 
-*!speedtest* Untuk menampilkan kecepatan internet di server bot. [Normal]
+*!speedtest* Untuk menampilkan kecepatan internet di server bot. *[Normal]*
 Contoh : !speedtest
 
-*!sendto* Untuk mengirimkan pesan secara anonim. [Normal]
+*!sendto* Untuk mengirimkan pesan secara anonim. *[Normal]*
 Contoh : !sendto 62876543210 TEST
 
-*!tts* : Untuk mengubah text menjadi suara. [Normal]
+*!tts* : Untuk mengubah text menjadi suara. *[Normal]*
 Contoh : !tts Hello
 
-*!corona* : Untuk menampilkan jumlah kasus corona di sebuah negara! [Error]
+*!corona* : Untuk menampilkan jumlah kasus corona di sebuah negara! *[Error]*
 Contoh : !corona Russia
 
-*!coronaindo* : Untuk menampilkan jumlah kasus corona di Indonesia. [Error]
+*!coronaindo* : Untuk menampilkan jumlah kasus corona di Indonesia. *[Error]*
 Contoh : !coronaindo
 
-*!ytmp4 : Untuk mendownload video dari youtube! [Error]
+*!ytmp4* : Untuk mendownload video dari youtube! *[Error]*
 Contoh : !ytmp4 link_video
 
-*!ytmp3* : Untuk mendownload musik dari youtube! [Error]
+*!ytmp3* : Untuk mendownload musik dari youtube! *[Error]*
 Contoh : !ytmp3 link_video
 
-!howgay : Untuk mengetahui seberapa gay teman kalian. [Error]
+*!howgay* : Untuk mengetahui seberapa gay teman kalian. *[Error]*
 Contoh : !howgay @sadbot
 
-!howbucin : Untuk mengetahui seberapa bucin teman kalian. [Error]
+*!howbucin* : Untuk mengetahui seberapa bucin teman kalian. *[Error]*
 Contoh : !howbucin @sadbot
 
 
 Fitur yang tersedia hanya untuk admin grup :
 
-*!mentionall* Untuk mention semua member grup. [Normal]
+*!mentionall* Untuk mention semua member grup. *[Normal]*
 Contoh : !mention absen
 
-Fitur untuk ngasih feedback ke pembuat bot : [Normal]
+Fitur untuk ngasih feedback ke pembuat bot : *[Normal]*
 Contoh : !feedback bang tambahin fitur baru donk.
 
 
@@ -495,7 +495,7 @@ ${hasil.replace('by: ArugaZ')}
         else if(msg.body.startsWith('!corona ')){
             msg.reply('Dalam perbaikan!');
         }
-        
+
         //ytmp3 download
         else if (msg.body.startsWith("!ytmp3 ")) {
             msg.reply('Dalam perbaikan!')
@@ -581,8 +581,10 @@ Terakhir di update ${response.data.terakhir}
             var pesan = msg.body.split("!feedback ")[1];
 
             msg.reply('Feedback sedang dikirimkan!');
-            client.sendMessage('6285841392048@c.us', `Pesan dari ${msg.from}`);
-            client.sendMessage('6285841392048@c.us', pesan);
+            client.sendMessage('6285841392048@c.us', `Pesan dari ${msg.from}
+
+${pesan}
+`);
 
         } 
 
