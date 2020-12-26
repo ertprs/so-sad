@@ -10,7 +10,7 @@ const axios = require("axios");
 const google = require('google-it');
 const scrape = require('website-scraper');
 const fsExtra = require('fs-extra');
-const exec = require('child_process');
+const exec = require('child_process').exec;
 
 
 
