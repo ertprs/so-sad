@@ -1,6 +1,3 @@
-const fs = require("fs"); 
-const moment = require("moment");
-const qrcode = require("qrcode-terminal"); 
 const { Client, MessageMedia, Contact } = require("whatsapp-web.js");
 const carbon = require('./modules/carbon');
 const fetch = require("node-fetch");  
@@ -8,8 +5,6 @@ const cheerio = require("cheerio");
 const urlencode = require("urlencode");
 const axios = require("axios");
 const google = require('google-it');
-const scrape = require('website-scraper');
-const fsExtra = require('fs-extra');
 const exec = require('child_process').exec;
 const captureWebsite = require('capture-website');
 
