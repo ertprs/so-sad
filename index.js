@@ -380,6 +380,8 @@ ${hasil.replace('by: ArugaZ')}
             else if(msg.body.startsWith('!lirik ')){
                 //msg.reply('Dalam perbaikan!');
 
+                const lyricsFinder = require('lyrics-finder');
+
                 const hasil = lyricsFinder(artist, title) || "Not Found!";
 
                 client.sendMessage(msg.from, hasil);
