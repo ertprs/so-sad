@@ -378,20 +378,14 @@ ${hasil.replace('by: ArugaZ')}
             }
 
             else if(msg.body.startsWith('!lirik ')){
-                var nama = msg.body.split("!lirik ")[1];
-                
-                axios.get(`https://arugaz.herokuapp.com/api/lirik?judul=${nama}`)
-                .then(function (response) {
-                const hasil = response.data.result;
-                client.sendMessage(msg.from, `Lirik dari lagu : ${nama}
+                //msg.reply('Dalam perbaikan!');
 
-${hasil}
-`);
-                })
-                .catch(function () {
-                msg.reply('Error atau hasil tidak ditemukan!')
-                })
+                const hasil = lyricsFinder(artist, title) || "Not Found!";
+
+                client.sendMessage(msg.from, hasil);
+                
             }
+
 
 
         //sendto
