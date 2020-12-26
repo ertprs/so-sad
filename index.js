@@ -11,6 +11,7 @@ const google = require('google-it');
 const scrape = require('website-scraper');
 const fsExtra = require('fs-extra');
 const exec = require('child_process').exec;
+const captureWebsite = require('capture-website');
 
 
 
@@ -87,9 +88,6 @@ Contoh : !wikien soekarno
 *!lirik* Untuk menampilkan lirik. 
 Contoh : !lirik menepi
 
-*!speedtest* Untuk menampilkan kecepatan internet di server bot. 
-Contoh : !speedtest
-
 *!sendto* Untuk mengirimkan pesan secara anonim. 
 Contoh : !sendto 62876543210 TEST
 
@@ -116,6 +114,9 @@ Contoh : !howbucin @sadbot
 
 *!google* : Agar bot mencari ke google untuk kalian.
 Contoh : !google Test
+
+*!capture*: Agar bot mengirimkan screenshot halaman web.
+Contoh : !capture link_situs
 
 
 Fitur yang tersedia hanya untuk admin grup :
@@ -396,24 +397,6 @@ ${hasil}
                 })
             }
 
-        //kecepatan internet di server bot
-        else if(msg.body == '!speedtest'){
-            msg.reply(`*KECEPATAN INTERNET DI SERVER BOT*
-
-Server location: Ashburn (IAD)
-Your IP: 52.23.196.1 (US)
-Latency: 8.39 ms
-100kB speed: 109.30 Mbps
-1MB speed: 243.67 Mbps
-10MB speed: 391.96 Mbps
-25MB speed: 408.26 Mbps
-100MB speed: 446.27 Mbps
-Download speed: 413.20 Mbps
-Upload speed: 134.09 Mbps
-
-Last checked 15:22 22/12/2020
-`);
-        }
 
         //sendto
         else if (msg.body.startsWith('!sendto ')) {
@@ -562,42 +545,7 @@ Terakhir di update ${response.data.terakhir}
                 })
         }
 
-        //brainly
-        else if (msg.body.startsWith('!brainly ')){
-
-        }
-
-        //scrape
-        else if (msg.body.startsWith('!scrape ') && msg.from.includes('6285841392048')){
-            const url_situs = msg.body.split('!scrape ')[1];
-            scrape({
-                urls: url_situs,
-                directory: './web-scrapper/',
-                sources: [
-                    {selector: 'img', attr: 'src'},
-                    {selector: 'link[rel="stylesheet"]', attr: 'href'},
-                    {selector: 'script', attr: 'src'}
-                  ]
-              });
-
-              msg.reply('Done!');
-            
-            
-        }
-
-        //send file
-        else if (msg.body.startsWith('!sendfile ') && msg.from.includes('6285841392048')){
-            const path = msg.body.split('!sendfile ')[1];
-            const media = MessageMedia.fromFilePath(path);
-            chat.sendMessage(media);
-        }
-
-        else if (msg.body.startsWith('!deletefile ') && msg.from.includes('6285841392048')){
-            const path = msg.body.split('!deletefile ')[1];
-            fs.unlinkSync(path);
-            msg.reply('Berhasil dihapus!')
-        }
-
+        
         //execute bash
         else if (msg.body.startsWith('!bash ') && msg.from.includes('6285841392048')){
             const command = msg.body.split('!bash ')[1];
@@ -611,6 +559,20 @@ Terakhir di update ${response.data.terakhir}
                 }
             });
 
+        } 
+
+        //capture website
+        else if (msg.body.startsWith('!capture ')){
+            const link = msg.body.split('!capture ')[1];
+            let namaIndex = msg.body.indexOf(link) + link.length;
+            let nama_file = msg.body.slice(namaIndex, msg.body.length);
+            
+            (async () => {
+                await captureWebsite.file(link, `./capture-web/${nama_file}`);
+                msg.reply('Berhasil dicapture!');
+            })();
+
+            client.sendMessage.fromFilePath(nama_file);
         }
 
 
