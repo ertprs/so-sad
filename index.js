@@ -630,7 +630,7 @@ Terakhir di update ${response.data.terakhir}
 
 
         //Anti badword
-        else if (isKasar){
+        else if (msg.body == isKasar){
             msg.reply('Jangan kasar bro, lu kasar cuma nyakitin perasaan orang lain :(');
         }
         
