@@ -7,6 +7,7 @@ const axios = require("axios");
 const google = require('google-it');
 const exec = require('child_process').exec;
 const captureWebsite = require('capture-website');
+const fs = require('fs');
 
 
 
@@ -111,7 +112,7 @@ Contoh : !howbucin @sadbot
 Contoh : !google Test
 
 *!capture*: Agar bot mengirimkan screenshot halaman web.
-Contoh : !capture link_situs nama_file
+Contoh : !capture link_situs
 
 
 Fitur yang tersedia hanya untuk admin grup :
@@ -559,14 +560,9 @@ Terakhir di update ${response.data.terakhir}
         //capture website
         else if (msg.body.startsWith('!capture ')){
             const link = msg.body.split('!capture ')[1];
-            let namaIndex = msg.body.indexOf(link) + link.length;
-            let nama_file = msg.body.slice(namaIndex, msg.body.length);
-
-            if (fs.existsSync(`./capture-web/${nama_file}.png`)) {
-                fs.unlinkSync(`./capture-web/${nama_file}.png`);
-              }
-
             
+            const nama_file = 'screenshot';
+
             (async () => {
                 await captureWebsite.file(link, `./capture-web/${nama_file}.png`, {
                     launchOptions: {
@@ -579,6 +575,7 @@ Terakhir di update ${response.data.terakhir}
             })();
 
             client.sendMessage.fromFilePath(`./capture-web/${nama_file}.png`);
+            fs.unlinkSync(`./capture-web/${nama_file}.png`);
         }
 
 
