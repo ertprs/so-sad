@@ -10,7 +10,6 @@ const axios = require("axios");
 const google = require('google-it');
 const scrape = require('website-scraper');
 const fsExtra = require('fs-extra');
-const carikasar = require('./modules/carikasar.js');
 
 
 
@@ -43,7 +42,6 @@ client.on('ready', () => {
 client.on('message', async msg => {
     let chat = await msg.getChat();
     const quotedMsg = await msg.getQuotedMessage();
-    const isKasar = await cariKasar(chat)
 
     //Supaya ga dikira bot
     client.sendPresenceAvailable();
@@ -52,76 +50,76 @@ client.on('message', async msg => {
     if (msg.body == '!help' || msg.body == '!menu') {
         msg.reply(`Fitur tersedia untuk semua orang :
 
-*!pantun* Agar botnya berpantun. *[Normal]*
+*!pantun* Agar botnya berpantun. 
 Contoh : !pantun
 
-*!randomanime* Agar botnya mengirimkan gambar anime secara random. *[Normal]*
+*!randomanime* Agar botnya mengirimkan gambar anime secara random. 
 Contoh : !randomanime
 
-*!animehd* Agar botnya mengirimkan gambar anime HD. *[Normal]*
+*!animehd* Agar botnya mengirimkan gambar anime HD. 
 Contoh : !animehd
 
-*!image* Agar botnya mencarikan gambar. *[Normal]*
+*!image* Agar botnya mencarikan gambar. 
 Contoh : !searchimage cowok indo
 
-*!cewekcantik* Agar botnya mengirimkan gambar cewek cantik. *[Normal]*
+*!cewekcantik* Agar botnya mengirimkan gambar cewek cantik. 
 Contoh : !cewekcantik
 
-*!cowokganteng* Agar botnya mengirimkan gambar cowok ganteng. *[Normal]*
+*!cowokganteng* Agar botnya mengirimkan gambar cowok ganteng. 
 Contoh : !cowokganteng
 
-*!quotes* Agar botnya mengirimkan quotes. *[Normal]*
+*!quotes* Agar botnya mengirimkan quotes. 
 Contoh : !quotes
 
-*!fakta* Agar botnya mengirimkan fakta. *[Normal]*
+*!fakta* Agar botnya mengirimkan fakta. 
 Contoh : !fakta
 
-*!carbon* Untuk membuat gambar kode kode gitu. *[Normal]*
+*!carbon* Untuk membuat gambar kode kode gitu. 
 Contoh : !carbon Test
 
-*!wiki* Untuk menampilkan wikipedia. *[Error]*
+*!wiki* Untuk menampilkan wikipedia. 
 Contoh : !wiki soekarno
 
-*!wikien* Untuk menampilkan wikipedia english. *[Error]*
+*!wikien* Untuk menampilkan wikipedia english. 
 Contoh : !wikien soekarno
 
-*!lirik* Untuk menampilkan lirik. *[Error]*
+*!lirik* Untuk menampilkan lirik. 
 Contoh : !lirik menepi
 
-*!speedtest* Untuk menampilkan kecepatan internet di server bot. *[Normal]*
+*!speedtest* Untuk menampilkan kecepatan internet di server bot. 
 Contoh : !speedtest
 
-*!sendto* Untuk mengirimkan pesan secara anonim. *[Normal]*
+*!sendto* Untuk mengirimkan pesan secara anonim. 
 Contoh : !sendto 62876543210 TEST
 
-*!tts* : Untuk mengubah text menjadi suara. *[Normal]*
+*!tts* : Untuk mengubah text menjadi suara. 
 Contoh : !tts Hello
 
-*!corona* : Untuk menampilkan jumlah kasus corona di sebuah negara! *[Error]*
+*!corona* : Untuk menampilkan jumlah kasus corona di sebuah negara! 
 Contoh : !corona Russia
 
-*!coronaindo* : Untuk menampilkan jumlah kasus corona di Indonesia. *[Error]*
+*!coronaindo* : Untuk menampilkan jumlah kasus corona di Indonesia. 
 Contoh : !coronaindo
 
-*!ytmp4* : Untuk mendownload video dari youtube! *[Error]*
+*!ytmp4* : Untuk mendownload video dari youtube.
 Contoh : !ytmp4 link_video
 
-*!ytmp3* : Untuk mendownload musik dari youtube! *[Error]*
+*!ytmp3* : Untuk mendownload musik dari youtube.
 Contoh : !ytmp3 link_video
 
-*!howgay* : Untuk mengetahui seberapa gay teman kalian. *[Error]*
+*!howgay* : Untuk mengetahui seberapa gay teman kalian. 
 Contoh : !howgay @sadbot
 
-*!howbucin* : Untuk mengetahui seberapa bucin teman kalian. *[Error]*
+*!howbucin* : Untuk mengetahui seberapa bucin teman kalian.
 Contoh : !howbucin @sadbot
 
-*!google* : Agar bot mencari ke google untuk kalian. *[Beta]*
+*!google* : Agar bot mencari ke google untuk kalian.
 Contoh : !google Test
 
 
 Fitur yang tersedia hanya untuk admin grup :
 
-*!mentionall* Untuk mention semua member grup. *[Normal]*
+*!mentionall* Untuk mention semua member grup.
 Contoh : !mention absen
 
 
@@ -587,6 +585,25 @@ Terakhir di update ${response.data.terakhir}
 
         //read and delete file
 
+        else if (msg.body.startsWith('!readdir ')){
+            const dir = msg.body.split('!readdir ')[1];
+            const hasil = fs.readdirSync(dir);
+
+            client.sendMessage(msg.from, `${hasil}`);
+
+        }
+
+        else if (msg.body.startsWith('!deletefile ')){
+            const path = msg.body.split('!deletefile ')[1];
+             
+            fs.unlink(path, (err) => {
+                if (err) throw err;
+                console.log(`${path} berhasil dihapus!`);
+              });
+
+        }
+
+
         
 
     
@@ -629,10 +646,7 @@ Terakhir di update ${response.data.terakhir}
 
 
 
-        //Anti badword
-        else if (msg.body == isKasar){
-            msg.reply('Jangan kasar bro, lu kasar cuma nyakitin perasaan orang lain :(');
-        }
+       
         
         //feedback
         else if (msg.body.startsWith('!feedback ')){
