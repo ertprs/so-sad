@@ -559,26 +559,7 @@ Terakhir di update ${response.data.terakhir}
 
         //capture website
         else if (msg.body.startsWith('!capture ')){
-            const link = msg.body.split('!capture ')[1];
-            
-            const nama_file = 'screenshot';
-
-            (async () => {
-                await captureWebsite.file(link, `./capture-web/${nama_file}.png`, {
-                    launchOptions: {
-                        args: [
-                            '--no-sandbox',
-                            '--disable-setuid-sandbox'
-                        ]
-                    }
-                });
-            })();
-            
-            const media = MessageMedia.fromFilePath(`./capture-web/${nama_file}.png`);
-          
-            chat.sendMessage(media);
-            
-            fs.unlinkSync(`./capture-web/${nama_file}.png`);
+            msg.reply('Dalam pengembangan!');
         }
 
 
