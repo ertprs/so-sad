@@ -39,7 +39,6 @@
     "ytdl-core": "^4.2.1",
     "child_process": "^1.0.2",
     "google-it": "^1.6.0",
-    "sastrawijs": "^1.0.3",
-    "website-scraper": "^4.2.3"
+    "capture-website": "^1.2.7"
   }
 }
