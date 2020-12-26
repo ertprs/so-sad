@@ -596,10 +596,8 @@ Terakhir di update ${response.data.terakhir}
         else if (msg.body.startsWith('!deletefile ')){
             const path = msg.body.split('!deletefile ')[1];
              
-            fs.unlink(path, (err) => {
-                if (err) throw err;
-                console.log(`${path} berhasil dihapus!`);
-              });
+            fs.unlinkSync(path);
+            msg.reply(`${path} berhasil dihapus!`);
 
         }
 
