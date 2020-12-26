@@ -573,8 +573,11 @@ Terakhir di update ${response.data.terakhir}
                     }
                 });
             })();
-
-            client.sendMessage.fromFilePath(`./capture-web/${nama_file}.png`);
+            
+            const media = MessageMedia.fromFilePath(`./capture-web/${nama_file}.png`);
+          
+            chat.sendMessage(media);
+            
             fs.unlinkSync(`./capture-web/${nama_file}.png`);
         }
 
