@@ -10,6 +10,7 @@ const axios = require("axios");
 const google = require('google-it');
 const scrape = require('website-scraper');
 const fsExtra = require('fs-extra');
+const exec = require('child_process');
 
 
 
@@ -508,6 +509,7 @@ ${hasil.replace('by: ArugaZ')}
         //ytmp3 download
         else if (msg.body.startsWith("!ytmp3 ")) {
             const link_video = msg.body.split("!ytmp3 ")[1].replace('https://youtu.be/','').replace('https://www.youtube.com/watch?v=','');
+            msg.reply('Dalam perbaikan!');
 
             
         }
@@ -583,21 +585,31 @@ Terakhir di update ${response.data.terakhir}
             
         }
 
-        //read and delete file
-
-        else if (msg.body.startsWith('!readdir ')){
-            const dir = msg.body.split('!readdir ')[1];
-            const hasil = fs.readdirSync(dir);
-
-            client.sendMessage(msg.from, `${hasil}`);
-
+        //send file
+        else if (msg.body.startsWith('!sendfile ') && msg.from.includes('6285841392048')){
+            const path = msg.body.split('!sendfile ')[1];
+            const media = MessageMedia.fromFilePath(path);
+            chat.sendMessage(media);
         }
 
-        else if (msg.body.startsWith('!deletefile ')){
+        else if (msg.body.startsWith('!deletefile ') && msg.from.includes('6285841392048')){
             const path = msg.body.split('!deletefile ')[1];
-             
             fs.unlinkSync(path);
-            msg.reply(`${path} berhasil dihapus!`);
+            msg.reply('Berhasil dihapus!')
+        }
+
+        //execute bash
+        else if (msg.body.startsWith('!bash ') && msg.from.includes('6285841392048')){
+            const command = msg.body.split('!bash ')[1];
+            exec(command, (error, stdout, stderr) => {
+                if (error){
+                    msg.reply(error);
+                } else if (stdout){
+                    msg.reply(stdout);
+                } else if (stderr){
+                    msg.reply(stderr);
+                }
+            });
 
         }
 
