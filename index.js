@@ -82,7 +82,7 @@ Contoh : !wiki soekarno
 Contoh : !wikien soekarno
 
 *!lirik* Untuk menampilkan lirik. 
-Contoh : !lirik menepi
+Contoh : !lirik Artist Title
 
 *!sendto* Untuk mengirimkan pesan secara anonim. 
 Contoh : !sendto 62876543210 TEST
@@ -378,8 +378,9 @@ ${hasil.replace('by: ArugaZ')}
             }
 
             else if(msg.body.startsWith('!lirik ')){
-                //msg.reply('Dalam perbaikan!');
-
+                let artist = msg.body.split('!lirik ')[1];
+                let titleindex = msg.body.indexOf(artist) + artist.length;
+                let title = msg.body.slice(titleindex, msg.body.length);
                 const lyricsFinder = require('lyrics-finder');
 
                 const hasil = lyricsFinder(artist, title) || "Not Found!";
