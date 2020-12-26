@@ -111,7 +111,7 @@ Contoh : !howbucin @sadbot
 Contoh : !google Test
 
 *!capture*: Agar bot mengirimkan screenshot halaman web.
-Contoh : !capture link_situs
+Contoh : !capture link_situs nama_file
 
 
 Fitur yang tersedia hanya untuk admin grup :
@@ -561,13 +561,24 @@ Terakhir di update ${response.data.terakhir}
             const link = msg.body.split('!capture ')[1];
             let namaIndex = msg.body.indexOf(link) + link.length;
             let nama_file = msg.body.slice(namaIndex, msg.body.length);
+
+            if (fs.existsSync(`./capture-web/${nama_file}.png`)) {
+                fs.unlinkSync(`./capture-web/${nama_file}.png`);
+              }
+
             
             (async () => {
-                await captureWebsite.file(link, `./capture-web/${nama_file}`);
-                msg.reply('Berhasil dicapture!');
+                await captureWebsite.file(link, `./capture-web/${nama_file}.png`, {
+                    launchOptions: {
+                        args: [
+                            '--no-sandbox',
+                            '--disable-setuid-sandbox'
+                        ]
+                    }
+                });
             })();
 
-            client.sendMessage.fromFilePath(nama_file);
+            client.sendMessage.fromFilePath(`./capture-web/${nama_file}.png`);
         }
 
 
