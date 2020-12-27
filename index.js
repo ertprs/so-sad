@@ -616,7 +616,19 @@ Jumlah postingan : ${response.data.Jumlah_Post}
 
         //nulis
         else if (msg.body.startsWith('!nulis ')){
-            msg.reply('Dalam pengembangan!');
+            const text = msg.body.split('!nulis ')[1]
+
+            axios.get(`https://arugaz.herokuapp.com/api/nulis?text=${text}`)
+            .then(function (response) {
+            const media = new MessageMedia('image/jpeg', response.result.replace('data:image/jpeg;base64,'));
+            client.sendMessage(msg.from, media, {
+            caption: `Gambar sudah dibuat!` });
+            
+        })
+    .catch(function () {
+    msg.reply('Error atau hasil tidak ditemukan!')
+    }) 
+            
         }
 
 
