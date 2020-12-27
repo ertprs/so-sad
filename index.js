@@ -584,7 +584,23 @@ Deskripsi : ${response.data.desc}
 
         //capture website
         else if (msg.body.startsWith('!capture ')){
-            msg.reply('Dalam pengembangan!');
+            const link_situs = msg.body.split('!capture ')[1];
+
+            const imageToBase64 = require('image-to-base64');
+
+            imageToBase64(`https://api.apiflash.com/v1/urltoimage?access_key=eb1661f6a8d8449988a8b31cc6285e65&url=${link_situs}`) // Image URL
+            .then(
+                (response) => {
+        const media = new MessageMedia('image/jpeg', response);
+        client.sendMessage(msg.from, media, {
+        caption: `Gambar sudah dibuat!` });
+                }
+            )
+            .catch(
+                (error) => {
+                    msg.reply(error); // Logs an error if there was one
+                }
+            )
         }
 
         //Facebook downloader
