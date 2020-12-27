@@ -620,7 +620,7 @@ Jumlah postingan : ${response.data.Jumlah_Post}
 
             axios.get(`https://arugaz.herokuapp.com/api/nulis?text=${text}`)
             .then(function (response) {
-            const media = new MessageMedia('image/jpeg', response.result.replace('data:image/jpeg;base64,'));
+            const media = new MessageMedia('image/jpeg', response.result);
             client.sendMessage(msg.from, media, {
             caption: `Gambar sudah dibuat!` });
             
