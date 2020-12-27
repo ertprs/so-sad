@@ -6,7 +6,6 @@ const urlencode = require("urlencode");
 const axios = require("axios");
 const google = require('google-it');
 const exec = require('child_process').exec;
-const captureWebsite = require('capture-website');
 const fs = require('fs');
 
 
@@ -44,7 +43,7 @@ client.on('message', async msg => {
     //Supaya ga dikira bot
     client.sendPresenceAvailable();
 
-
+    //help
     if (msg.body == '!help' || msg.body == '!menu') {
         msg.reply(`Fitur tersedia untuk semua orang :
 
@@ -75,6 +74,9 @@ Contoh : !fakta
 *!carbon* Untuk membuat gambar kode kode gitu. 
 Contoh : !carbon Test
 
+*!nulis* : Agar botnya menulis kata di kertas.
+Contoh : !nulis Halo
+
 *!wiki* Untuk menampilkan wikipedia. 
 Contoh : !wiki soekarno
 
@@ -102,6 +104,9 @@ Contoh : !ytmp4 link_video
 *!ytmp3* : Untuk mendownload musik dari youtube.
 Contoh : !ytmp3 link_video
 
+*!fbd* : Untuk mendownload video dari facebook.
+Contoh : !fbd link_postingan
+
 *!howgay* : Untuk mengetahui seberapa gay teman kalian. 
 Contoh : !howgay @sadbot
 
@@ -114,6 +119,9 @@ Contoh : !google Test
 *!capture*: Agar bot mengirimkan screenshot halaman web.
 Contoh : !capture link_situs
 
+*igs* : Agar bot memberi tahu info tentang akun ig.
+Contoh : !igs sadbot
+
 
 Fitur yang tersedia hanya untuk admin grup :
 
@@ -122,12 +130,8 @@ Contoh : !mention absen
 
 
 
-Fitur untuk ngasih feedback ke pembuat bot :
-Contoh : !feedback bang tambahin fitur baru donk.
-
-
-*Note* : _Error karena web API nya sedang error, dan belum diperbaiki sama ownernya._
-
+*!feedback* Untuk ngasih feedback ke pembuat bot
+Contoh : !feedback Kak tambahin fitur ini donk
 `);
     }
 
@@ -378,14 +382,18 @@ ${hasil.replace('by: ArugaZ')}
             }
 
             else if(msg.body.startsWith('!lirik ')){
-                let artist = msg.body.split('!lirik ')[1];
-                let titleindex = msg.body.indexOf(artist) + artist.length;
-                let title = msg.body.slice(titleindex, msg.body.length);
-                const lyricsFinder = require('lyrics-finder');
+                const judul = msg.body.split('!lirik ')[1];
+                axios.get(`https://arugaz.herokuapp.com/api/lirik?judul=${judul}`)
+            .then(function (response) {
 
-                const hasil = lyricsFinder(artist, title) || "Not Found!";
+            client.sendMessage(msg.from, `Lirik dari : ${judul}
 
-                client.sendMessage(msg.from, hasil);
+${response.data.result}
+`);
+        })
+    .catch(function () {
+    msg.reply('Error atau hasil tidak ditemukan!')
+    }) 
                 
             }
 
@@ -479,13 +487,12 @@ ${hasil.replace('by: ArugaZ')}
         }
 
         else if(msg.body.startsWith('!corona ')){
-            msg.reply('Dalam perbaikan!');
+            msg.reply('Dalam pengembangan!');
         }
 
         //ytmp3 download
         else if (msg.body.startsWith("!ytmp3 ")) {
-            const link_video = msg.body.split("!ytmp3 ")[1].replace('https://youtu.be/','').replace('https://www.youtube.com/watch?v=','');
-            msg.reply('Dalam perbaikan!');
+            msg.reply('Dalam pengembangan!');
 
             
         }
@@ -512,15 +519,36 @@ Terakhir di update ${response.data.terakhir}
         }
 
         else if (msg.body.startsWith('!ytmp4 ')){
-            msg.reply('Dalam perbaikan!');
+            msg.reply('Dalam pengembangan!');
         }
 
         else if (msg.body.startsWith('!howgay ')){
-            msg.reply('Dalam perbaikan!');
+            axios.get(`https://arugaz.herokuapp.com/api/howgay`)
+            .then(function (response) {
+
+            client.sendMessage(msg.from, `
+Persen : ${response.data.persen}
+Deskripsi : ${response.data.desc}
+`);
+        })
+    .catch(function () {
+    msg.reply('Error atau hasil tidak ditemukan!')
+    }) 
+
         }
 
         else if (msg.body.startsWith('!howbucin ')){
-            msg.reply('Dalam perbaikan!');
+            axios.get(`https://arugaz.herokuapp.com/api/howbucins`)
+            .then(function (response) {
+
+            client.sendMessage(msg.from, `
+Persen : ${response.data.persen}
+Deskripsi : ${response.data.desc}
+`);
+        })
+    .catch(function () {
+    msg.reply('Error atau hasil tidak ditemukan!')
+    }) 
         }
 
         //google
@@ -558,6 +586,40 @@ Terakhir di update ${response.data.terakhir}
         else if (msg.body.startsWith('!capture ')){
             msg.reply('Dalam pengembangan!');
         }
+
+        //Facebook downloader
+        else if (msg.body.startsWith('!fbd ')){
+            msg.reply('Dalam pengembangan!');
+        }
+
+        //Instagram stalker
+        else if (msg.body.startsWith('!igs ')){
+            const username = msg.body.split('!lirik ')[1];
+                axios.get(`https://arugaz.herokuapp.com/api/lirik?judul=${username}`)
+            .then(function (response) {
+
+            client.sendMessage(msg.from, `Info dari username : ${usernam}
+
+Nama : ${response.data.Name}
+Biodata : ${response.data.Biodata}
+Jumlah pengikut : ${response.data.Jumlah_Followers}
+Jumlah diikuti : ${response.data.Jumlah_Following}
+Jumlah postingan : ${response.data.Jumlah_Post}
+
+
+`);
+        })
+    .catch(function () {
+    msg.reply('Error atau hasil tidak ditemukan!')
+    }) 
+        }
+
+        //nulis
+        else if (msg.body.startsWith('!nulis ')){
+            msg.reply('Dalam pengembangan!');
+        }
+
+
 
 
         
@@ -615,14 +677,6 @@ ${pesan}
 `);
 
         } 
-
-        else if (msg.body.startsWith('!kirimke ')){
-            let number = msg.body.split(' ')[1];
-            let messageIndex = msg.body.indexOf(number) + number.length;
-            let message = msg.body.slice(messageIndex, msg.body.length);
-
-            client.sendMessage(number, `${message}\n *~ Pembuat bot*`);
-        }
 
 
         
