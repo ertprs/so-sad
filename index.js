@@ -601,7 +601,6 @@ Deskripsi : ${response.data.desc}
             client.sendMessage(msg.from, `Info dari username : ${usernam}
 
 Nama : ${response.data.Name}
-Biodata : ${response.data.Biodata}
 Jumlah pengikut : ${response.data.Jumlah_Followers}
 Jumlah diikuti : ${response.data.Jumlah_Following}
 Jumlah postingan : ${response.data.Jumlah_Post}
