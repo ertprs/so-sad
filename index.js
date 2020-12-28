@@ -627,7 +627,7 @@ Jumlah postingan : ${response.data.Jumlah_Post}
 
         //nulis
         else if (msg.body.startsWith('!nulis ')){
-            const text = msg.body.split('!nulis ')[1]
+            const text = msg.body.split('!nulis ')[1];
 
             axios.get(`https://arugaz.herokuapp.com/api/nulis?text=${encodeURIComponent(text)}`)
             .then(function (response) {
@@ -693,7 +693,7 @@ Jumlah postingan : ${response.data.Jumlah_Post}
 
         //next features
 
-        } 
+        
 
 
         
