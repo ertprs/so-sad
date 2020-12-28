@@ -74,9 +74,6 @@ Contoh : !fakta
 *!carbon* Untuk membuat gambar kode kode gitu. 
 Contoh : !carbon Test
 
-*!nulis* : Agar botnya menulis kata di kertas.
-Contoh : !nulis Halo
-
 *!wiki* Untuk menampilkan wikipedia. 
 Contoh : !wiki soekarno
 
@@ -625,22 +622,7 @@ Jumlah postingan : ${response.data.Jumlah_Post}
     }) 
         }
 
-        //nulis
-        else if (msg.body.startsWith('!nulis ')){
-            const text = msg.body.split('!nulis ')[1];
-
-            axios.get(`https://arugaz.herokuapp.com/api/nulis?text=${encodeURIComponent(text)}`)
-            .then(function (response) {
-            const media = new MessageMedia('image/jpeg', response.result.replace(/^data:image\/(png|jpeg|jpg);base64,/, ''));
-            client.sendMessage(msg.from, media, {
-            caption: `Gambar sudah dibuat!` });
-            
-        })
-    .catch(function (error) {
-    msg.reply(error);
-    }) 
-            
-        }
+        
 
 
 
