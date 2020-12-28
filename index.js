@@ -124,9 +124,6 @@ Fitur yang tersedia hanya untuk admin grup :
 
 *!mentionall* Untuk mention semua member grup.
 Contoh : !mention absen
-
-
-_Made with NodeJS and Puppeteer_
 `);
     }
 
