@@ -612,9 +612,9 @@ Deskripsi : ${response.data.desc}
             client.sendMessage(msg.from, `Info dari username : ${response.data.Username}
 
 Nama : ${response.data.Name}
-Jumlah pengikut : ${response.data.Jumlah_Following}
-Jumlah diikuti : ${response.data.Jumlah_Followers}
-Jumlah postingan : ${response.data.Jumlah_Post}
+Jumlah pengikut : ${response.data.Jumlah_Following.replace('Following')}
+Jumlah diikuti : ${response.data.Jumlah_Followers.replace('Followers')}
+Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts')}
 `);
         })
     .catch(function (error) {
