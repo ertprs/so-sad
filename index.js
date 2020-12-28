@@ -387,7 +387,7 @@ ${response.data.result}
 `);
         })
     .catch(function (error) {
-    msg.reply(error)
+    msg.reply(error);
     }) 
                 
             }
@@ -479,7 +479,7 @@ ${hasil.replace('by: ArugaZ')}
 `);
             })
             .catch(function (error) {
-            msg.reply(error)
+            msg.reply(error);
             })
         }
 
@@ -509,8 +509,8 @@ Sembuh : ${response.data.sembuh}
 Terakhir di update ${response.data.terakhir}
 `);
         })
-    .catch(function () {
-    msg.reply('Error atau hasil tidak ditemukan!')
+    .catch(function (error) {
+    msg.reply(error);
     }) 
 
         }
