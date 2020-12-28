@@ -119,7 +119,7 @@ Contoh : !google Test
 *!capture*: Agar bot mengirimkan screenshot halaman web.
 Contoh : !capture link_situs
 
-*igs* : Agar bot memberi tahu info tentang akun ig.
+*!igs* : Agar bot memberi tahu info tentang akun ig.
 Contoh : !igs sadbot
 
 
@@ -129,9 +129,7 @@ Fitur yang tersedia hanya untuk admin grup :
 Contoh : !mention absen
 
 
-
-*!feedback* Untuk ngasih feedback ke pembuat bot
-Contoh : !feedback Kak tambahin fitur ini donk
+_Made with NodeJS and Puppeteer_
 `);
     }
 
@@ -197,7 +195,7 @@ Contoh : !feedback Kak tambahin fitur ini donk
             )
             .catch(
                 (error) => {
-                    console.log(error); // Logs an error if there was one
+                   msg.reply(error);
                 }
             )
         });
@@ -258,7 +256,7 @@ Contoh : !feedback Kak tambahin fitur ini donk
             )
             .catch(
                 (error) => {
-                    console.log(error);
+                    msg.reply(error);
                 }
             )
         
@@ -287,7 +285,7 @@ Contoh : !feedback Kak tambahin fitur ini donk
                 )
                 .catch(
                     (error) => {
-                        console.log(error); // Logs an error if there was one
+                        msg.reply(error); // Logs an error if there was one
                     }
                 )
             
@@ -316,7 +314,7 @@ Contoh : !feedback Kak tambahin fitur ini donk
                     )
                     .catch(
                         (error) => {
-                            console.log(error); // Logs an error if there was one
+                            msg.reply(error); // Logs an error if there was one
                         }
                     )
                 
@@ -348,7 +346,7 @@ Contoh : !feedback Kak tambahin fitur ini donk
                             )
                             .catch(
                                 (error) => {
-                                   msg.reply(`Gambar tidak ditemukan!`); // Logs an error if there was one
+                                   msg.reply(error); // Logs an error if there was one
                                 }
                             )
                         
@@ -376,8 +374,8 @@ Contoh : !feedback Kak tambahin fitur ini donk
 ${hasil.replace('by: ArugaZ')}
 `);
                 })
-                .catch(function () {
-                msg.reply('Error atau hasil tidak ditemukan!')
+                .catch(function (error) {
+                msg.reply(error);
                 })
             }
 
@@ -391,8 +389,8 @@ ${hasil.replace('by: ArugaZ')}
 ${response.data.result}
 `);
         })
-    .catch(function () {
-    msg.reply('Error atau hasil tidak ditemukan!')
+    .catch(function (error) {
+    msg.reply(error)
     }) 
                 
             }
@@ -470,6 +468,8 @@ ${response.data.result}
           }
         }
 
+
+        //wiki en
         else if(msg.body.startsWith('!wikien ')){
             var nama = msg.body.split("!wikien ")[1];
             
@@ -481,8 +481,8 @@ ${response.data.result}
 ${hasil.replace('by: ArugaZ')}
 `);
             })
-            .catch(function () {
-            msg.reply('Error atau hasil tidak ditemukan!')
+            .catch(function (error) {
+            msg.reply(error)
             })
         }
 
@@ -526,13 +526,12 @@ Terakhir di update ${response.data.terakhir}
             axios.get(`https://arugaz.herokuapp.com/api/howgay`)
             .then(function (response) {
 
-            client.sendMessage(msg.from, `
-Persen : ${response.data.persen}
+            client.sendMessage(msg.from, `Persen : ${response.data.persen}
 Deskripsi : ${response.data.desc}
 `);
         })
-    .catch(function () {
-    msg.reply('Error atau hasil tidak ditemukan!')
+    .catch(function (error) {
+    msg.reply(error);
     }) 
 
         }
@@ -541,13 +540,12 @@ Deskripsi : ${response.data.desc}
             axios.get(`https://arugaz.herokuapp.com/api/howbucins`)
             .then(function (response) {
 
-            client.sendMessage(msg.from, `
-Persen : ${response.data.persen}
+            client.sendMessage(msg.from, `Persen : ${response.data.persen}
 Deskripsi : ${response.data.desc}
 `);
         })
-    .catch(function () {
-    msg.reply('Error atau hasil tidak ditemukan!')
+    .catch(function (error) {
+    msg.reply(error);
     }) 
         }
 
@@ -562,7 +560,7 @@ Deskripsi : ${response.data.desc}
                 }
                     client.sendMessage(msg.from, vars)
                 }).catch(e => {
-                    msg.reply('Error atau hasil tidak ditemukan!');
+                    msg.reply(e);
                 })
         }
 
@@ -588,7 +586,7 @@ Deskripsi : ${response.data.desc}
 
             const imageToBase64 = require('image-to-base64');
 
-            imageToBase64(`https://api.apiflash.com/v1/urltoimage?access_key=eb1661f6a8d8449988a8b31cc6285e65&url=${link_situs}`) // Image URL
+            imageToBase64(`https://api.apiflash.com/v1/urltoimage?access_key=eb1661f6a8d8449988a8b31cc6285e65&url=https://${link_situs}/`) // Image URL
             .then(
                 (response) => {
         const media = new MessageMedia('image/jpeg', response);
@@ -611,21 +609,19 @@ Deskripsi : ${response.data.desc}
         //Instagram stalker
         else if (msg.body.startsWith('!igs ')){
             const username = msg.body.split('!lirik ')[1];
-                axios.get(`https://arugaz.herokuapp.com/api/lirik?judul=${username}`)
+                axios.get(`https://arugaz.herokuapp.com/api/stalk?username=${username}`)
             .then(function (response) {
 
-            client.sendMessage(msg.from, `Info dari username : ${usernam}
+            client.sendMessage(msg.from, `Info dari username : ${username}
 
 Nama : ${response.data.Name}
 Jumlah pengikut : ${response.data.Jumlah_Followers}
 Jumlah diikuti : ${response.data.Jumlah_Following}
 Jumlah postingan : ${response.data.Jumlah_Post}
-
-
 `);
         })
-    .catch(function () {
-    msg.reply('Error atau hasil tidak ditemukan!')
+    .catch(function (error) {
+    msg.reply(error);
     }) 
         }
 
@@ -633,15 +629,15 @@ Jumlah postingan : ${response.data.Jumlah_Post}
         else if (msg.body.startsWith('!nulis ')){
             const text = msg.body.split('!nulis ')[1]
 
-            axios.get(`https://arugaz.herokuapp.com/api/nulis?text=${text}`)
+            axios.get(`https://arugaz.herokuapp.com/api/nulis?text=${encodeURIComponent(text)}`)
             .then(function (response) {
             const media = new MessageMedia('image/jpeg', response.result);
             client.sendMessage(msg.from, media, {
             caption: `Gambar sudah dibuat!` });
             
         })
-    .catch(function () {
-    msg.reply('Error atau hasil tidak ditemukan!')
+    .catch(function (error) {
+    msg.reply(error);
     }) 
             
         }
@@ -693,15 +689,9 @@ Jumlah postingan : ${response.data.Jumlah_Post}
 
        
         
-        //feedback
-        else if (msg.body.startsWith('!feedback ')){
-            var pesan = msg.body.split("!feedback ")[1];
 
-            msg.reply('Feedback sedang dikirimkan!');
-            client.sendMessage('6285841392048@c.us', `Pesan dari ${msg.from}
 
-${pesan}
-`);
+        //next features
 
         } 
 
