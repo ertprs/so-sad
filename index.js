@@ -13,7 +13,8 @@ const fs = require('fs');
 const client = new Client({ puppeteer: { headless: true,
     args: [
         "--no-sandbox"
-      ]}
+      ]
+    }
 });
 
 client.initialize();
@@ -124,6 +125,9 @@ Fitur yang tersedia hanya untuk admin grup :
 
 *!mentionall* Untuk mention semua member grup.
 Contoh : !mention absen
+
+
+_Made with NodeJS and Puppeteer_
 `);
     }
 
@@ -365,7 +369,7 @@ Contoh : !mention absen
                 const hasil = response.data.result;
                 client.sendMessage(msg.from, `Wiki dari : ${nama}
 
-${hasil.replace('by: ArugaZ')}
+${hasil.replace('by: ArugaZ', '')}
 `);
                 })
                 .catch(function (error) {
@@ -472,7 +476,7 @@ ${response.data.result}
             const hasil = response.data.result;
             client.sendMessage(msg.from, `Wiki dari : ${nama}
 
-${hasil.replace('by: ArugaZ')}
+${hasil.replace('by: ArugaZ', '')}
 `);
             })
             .catch(function (error) {
@@ -609,15 +613,17 @@ Deskripsi : ${response.data.desc}
             client.sendMessage(msg.from, `Info dari username : ${response.data.Username}
 
 Nama : ${response.data.Name}
-Jumlah pengikut : ${response.data.Jumlah_Following.replace('Following')}
-Jumlah diikuti : ${response.data.Jumlah_Followers.replace('Followers')}
-Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts')}
+Jumlah pengikut : ${response.data.Jumlah_Following.replace('Following', 'pengikut')}
+Jumlah diikuti : ${response.data.Jumlah_Followers.replace('Followers', 'diikuti')}
+Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
 `);
         })
     .catch(function (error) {
     msg.reply(error);
     }) 
         }
+
+
 
         
 
