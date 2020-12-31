@@ -21,7 +21,7 @@ function removeValue(arr, value) {
 const inArray = (needle, haystack) => {
     let length = haystack.length;
     for(let i = 0; i < length; i++) {
-        if(haystack[i] == needle) return true;
+        if(haystack[i].includes(needle)) return true;
     }
     return false;
 }
@@ -65,10 +65,8 @@ client.on('message', async msg => {
     //detect spam
     console.log(`${msg.body} from ${msg.from}`);
 
-    
-    let id_pengguna = msg.from;
-    const nomortelepon = id_pengguna.substring(0, id_pengguna.lastIndexOf('-'));
-    if (!inArray(nomortelepon, blacklist)){
+
+    if (!inArray(msg.from, blacklist)){
     if (msg.body == '!help' || msg.body == '!menu') {
         msg.reply(`Fitur tersedia untuk semua orang :
 
@@ -645,9 +643,8 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
         }
 
         else if (msg.body.startsWith('!ban ') && msg.from.includes('6285841392048')){
-            let id_pengguna = msg.body.split('!ban ')[1];
-            const nomortelepon = id_pengguna.substring(0, id_pengguna.lastIndexOf('-'));
-            blacklist.push(id_pengguna);
+            let nomortelepon = msg.body.split('!ban ')[1];
+            blacklist.push(nomortelepon);
             msg.reply('Berhasil dibanned!');
         }
 
