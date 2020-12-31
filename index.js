@@ -9,6 +9,16 @@ const exec = require('child_process').exec;
 const fs = require('fs');
 
 
+//inArray
+const inArray = (needle, haystack) => {
+    let length = haystack.length;
+    for(let i = 0; i < length; i++) {
+        if(haystack[i] == needle) return true;
+    }
+    return false;
+}
+
+var blacklist = [];
 
 const client = new Client({ puppeteer: { headless: true,
     args: [
@@ -44,7 +54,12 @@ client.on('message', async msg => {
     //Supaya ga dikira bot
     client.sendPresenceAvailable();
 
-    //help
+    //detect spam
+    console.log(`${msg.body} from ${msg.from}`);
+
+    
+
+    if (!inArray(msg.from, blacklist)){
     if (msg.body == '!help' || msg.body == '!menu') {
         msg.reply(`Fitur tersedia untuk semua orang :
 
@@ -125,9 +140,6 @@ Fitur yang tersedia hanya untuk admin grup :
 
 *!mentionall* Untuk mention semua member grup.
 Contoh : !mention absen
-
-
-_Made with NodeJS and Puppeteer_
 `);
     }
 
@@ -623,6 +635,12 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
     }) 
         }
 
+        else if (msg.body.startsWith('!ban ') && msg.from.includes('6285841392048')){
+            const id_pengguna = msg.body.split('!ban ')[1];
+            blacklist.push(id_pengguna);
+            msg.reply('Berhasil dibanned!');
+        }
+
 
 
         
@@ -681,5 +699,5 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
         
 
 
-        
+    }
 });
