@@ -8,6 +8,14 @@ const google = require('google-it');
 const exec = require('child_process').exec;
 const fs = require('fs');
 
+//remove value array
+function removeValue(arr, value) {
+    var index = arr.indexOf(value);
+    if (index > -1) {
+      arr.splice(index, 1);
+    }
+}
+
 
 //inArray
 const inArray = (needle, haystack) => {
@@ -641,6 +649,16 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
             msg.reply('Berhasil dibanned!');
         }
 
+        else if (msg.body == '!showlistban' && msg.from.includes('6285841392048')){
+            msg.reply(blacklist);
+        }
+
+        else if (msg.body.startsWith('!unban ') && msg.from.includes('6285841392048')){
+            const id_pengguna = msg.body.split('!ban ')[1];
+            removeValue(blacklist, id_pengguna);
+            msg.reply('Berhasil diunbanned!');
+        }
+
 
 
         
@@ -700,4 +718,7 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
 
 
     }
-});
+}
+
+
+);
