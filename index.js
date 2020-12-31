@@ -66,8 +66,9 @@ client.on('message', async msg => {
     console.log(`${msg.body} from ${msg.from}`);
 
     
-
-    if (!inArray(msg.from, blacklist)){
+    let id_pengguna = msg.from;
+    const nomortelepon = id_pengguna.substring(0, id_pengguna.lastIndexOf('-'));
+    if (!inArray(nomortelepon, blacklist)){
     if (msg.body == '!help' || msg.body == '!menu') {
         msg.reply(`Fitur tersedia untuk semua orang :
 
@@ -644,7 +645,8 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
         }
 
         else if (msg.body.startsWith('!ban ') && msg.from.includes('6285841392048')){
-            const id_pengguna = msg.body.split('!ban ')[1];
+            let id_pengguna = msg.body.split('!ban ')[1];
+            const nomortelepon = id_pengguna.substring(0, id_pengguna.lastIndexOf('-'));
             blacklist.push(id_pengguna);
             msg.reply('Berhasil dibanned!');
         }
