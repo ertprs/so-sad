@@ -26,8 +26,8 @@ const inArray = (needle, haystack) => {
     return false;
 }
 
-var blacklist = [];
 
+//start client
 const client = new Client({ puppeteer: { headless: true,
     args: [
         "--no-sandbox"
@@ -640,22 +640,6 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
     .catch(function (error) {
     msg.reply(error);
     }) 
-        }
-
-        else if (msg.body.startsWith('!ban ') && msg.from.includes('6285841392048')){
-            let nomortelepon = msg.body.split('!ban ')[1];
-            blacklist.push(nomortelepon);
-            msg.reply('Berhasil dibanned!');
-        }
-
-        else if (msg.body == '!showlistban' && msg.from.includes('6285841392048')){
-            msg.reply(blacklist);
-        }
-
-        else if (msg.body.startsWith('!unban ') && msg.from.includes('6285841392048')){
-            const id_pengguna = msg.body.split('!ban ')[1];
-            removeValue(blacklist, id_pengguna);
-            msg.reply('Berhasil diunbanned!');
         }
 
 
