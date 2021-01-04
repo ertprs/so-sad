@@ -646,10 +646,11 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
 
         //Image to sticker
         else if (msg.body == '!sticker' && msg.hasQuotedMsg){
-            if (quotedMsg.hasMedia) {
+            /* if (quotedMsg.hasMedia) {
                 const attachmentData = await quotedMsg.downloadMedia();
                 client.sendMessage(msg.from, attachmentData, { sendMediaAsSticker: true });
-            }
+            } */
+            msg.reply('Tunggu fitur di library nya dirilis ya!');
         }
 
 
