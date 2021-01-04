@@ -141,6 +141,9 @@ Contoh : !capture link_situs
 *!igs* : Agar bot memberi tahu info tentang akun ig.
 Contoh : !igs sadbot
 
+*!sticker* : Agar bot mengubah gambar menjadi sticker.
+Contoh : reply gambarnya ketik !sticker
+
 
 Fitur yang tersedia hanya untuk admin grup :
 
@@ -639,6 +642,14 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
     .catch(function (error) {
     msg.reply(error);
     }) 
+        }
+
+        //Image to sticker
+        else if (msg.body == '!sticker' && msg.hasQuotedMsg){
+            if (quotedMsg.hasMedia) {
+                const attachmentData = await quotedMsg.downloadMedia();
+                client.sendMessage(msg.from, attachmentData, { sendMediaAsSticker: true });
+            }
         }
 
 
