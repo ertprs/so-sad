@@ -65,8 +65,7 @@ client.on('message', async msg => {
     //detect spam
     console.log(`${msg.body} from ${msg.from}`);
 
-
-    if (!inArray(msg.from, blacklist)){
+    //detect message
     if (msg.body == '!help' || msg.body == '!menu') {
         msg.reply(`Fitur tersedia untuk semua orang :
 
@@ -701,7 +700,5 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
 
 
     }
-}
-
 
 );
