@@ -8,24 +8,6 @@ const google = require('google-it');
 const exec = require('child_process').exec;
 const fs = require('fs');
 
-//remove value array
-function removeValue(arr, value) {
-    var index = arr.indexOf(value);
-    if (index > -1) {
-      arr.splice(index, 1);
-    }
-}
-
-
-//inArray
-const inArray = (needle, haystack) => {
-    let length = haystack.length;
-    for(let i = 0; i < length; i++) {
-        if(haystack[i] === needle) return true;
-    }
-    return false;
-}
-
 
 //start client
 const client = new Client({ puppeteer: { headless: true,
