@@ -800,10 +800,7 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
             else if (msg.body.startsWith('!pengumuman ') && msg.from.includes('6285841392048')){
                 const pesan = msg.body.split('!pengumuman ')[1];
                 const chats = await client.getChats();
-                let length = chats.length;
-                for(let i = 0; i < length; i++) {
-                    client.sendMessage(chats[i], `<From pembuat bot to all user>\n\n${pesan}`);
-                }
+                msg.reply(chats);
             }
 
 
