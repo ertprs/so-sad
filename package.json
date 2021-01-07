@@ -35,8 +35,8 @@
     "translatte": "^2.5.8",
     "urlencode": "^1.1.0",
     "video-url-link": "^0.1.4",
-    "youtube-mp3-downloader": "^0.6.8",
-    "ytdl-core": "^4.2.1",
+    "youtube-mp3-downloader": "^0.7.6",
+    "ytdl-core": "^4.4.1",
     "child_process": "^1.0.2",
     "google-it": "^1.6.0"
   }
