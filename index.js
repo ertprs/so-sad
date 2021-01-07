@@ -122,6 +122,9 @@ Contoh : !coronaindo
 *!ytmp3* : Untuk mendownload musik dari youtube.
 Contoh : !ytmp3 link_video
 
+*!play* : Agar botnya memutarkan musik.
+Contoh : !play nama_musik
+
 *!howgay* : Untuk mengetahui seberapa gay teman kalian. 
 Contoh : !howgay @sadbot
 
@@ -687,8 +690,6 @@ Deskripsi : ${response.data.desc}
             
             (async () => {
             var id = await yts.searchYoutube(keyword);
-            
-            client.sendMessage( `New request play song : ${id[0]}`);
 
             var YoutubeMp3Downloader = require("youtube-mp3-downloader");
             
@@ -714,9 +715,11 @@ Deskripsi : ${response.data.desc}
         
         });
             YD.on("progress", function(data) {
-            });
-            })();
-            }
+            });})();
+            
+        
+        
+        }
             
             
         //next features
