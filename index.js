@@ -661,36 +661,6 @@ Deskripsi : ${response.data.desc}
             )
         }
 
-        //Facebook downloader
-        else if (msg.body.startsWith("!fbd ")) {
-            var teks = msg.body.split("!fbd ")[1];
-            const { exec } = require("child_process");
-            var url = "http://api.fdci.se/sosmed/fb.php?url="+ teks;
-            axios.get(url)
-              .then((result) => {
-            var b = JSON.parse(JSON.stringify(result.data));
-            
-             var teks = `Berhasil didownload!`;
-             
-            exec('wget "' + b.link + '" -O mp4/fbvid.mp4', (error, stdout, stderr) => {
-              let media = MessageMedia.fromFilePath('mp4/fbvid.mp4');
-                client.sendMessage(msg.from, media, {
-                caption: teks });
-                if (error) {
-                    console.log(`error: ${error.message}`);
-                    return;
-                }
-                if (stderr) {
-                    console.log(`stderr: ${stderr}`);
-                    return;
-                }
-            
-                console.log(`stdout: ${stdout}`);
-            });
-            
-            });
-        }
-
         //Instagram stalker
         else if (msg.body.startsWith('!igs ')){
             const username = msg.body.split('!igs ')[1];
@@ -729,72 +699,6 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
                 }
             }
         }
-
-        //Instagram downloader
-        else if (msg.body.startsWith("!igd ")) {
-            const imageToBase64 = require('image-to-base64');
-            var link = msg.body.split("!igd ")[1];
-            var url = "http://api.fdci.se/sosmed/insta.php?url="+ link;
-            const { exec } = require("child_process");
-            
-            function foreach(arr, func){
-              for(var i in arr){
-                func(i, arr[i]);
-              }
-            }
-            axios.get(url)
-              .then((result) => {
-            var b = JSON.parse(JSON.stringify(result.data));
-             console.log(b.data[0].url) 
-              var teks = `Berhasil didownload!`;
-              if(b.url == false){
-                  msg.reply("Linknya invalid!");
-              }else if( b.data[0][0].type == "foto"){
-                  
-            foreach(b.data[0], function(i, v){
-            imageToBase64(b.data[0][i].url) // Path to the image
-                .then(
-                    (response) => {
-                        ; // "cGF0aC90by9maWxlLmpwZw=="
-            
-            const media = new MessageMedia('image/jpeg', response);
-            client.sendMessage(msg.from, media, {
-                caption: teks });
-                    }
-                )
-                .catch(
-                    (error) => {
-                        console.log(error); // Logs an error if there was one
-                    }
-                )
-            })
-                }else if(b.data[0][0].type == "video"){
-                    
-            foreach(b.data[0], function(i, v){
-                    exec('wget "' + b.data[0][i].url + '" -O mp4/insta.mp4', (error, stdout, stderr) => {
-            
-            let media = MessageMedia.fromFilePath('mp4/insta.mp4');
-                client.sendMessage(msg.from, media, {
-                caption: teks });
-                if (error) {
-                    console.log(`error: ${error.message}`);
-                    return;
-                }
-                if (stderr) {
-                    console.log(`stderr: ${stderr}`);
-                    return;
-                }
-            
-                console.log(`stdout: ${stdout}`);
-            });
-            })
-            }
-              
-            })
-              .catch((err) => {
-            console.log(err);
-              })
-            }
             
         //next features
 
