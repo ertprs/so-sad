@@ -121,12 +121,6 @@ Contoh : !coronaindo
 *!ytmp3* : Untuk mendownload musik dari youtube.
 Contoh : !ytmp3 link_video
 
-*!igd* : Untuk mendownload foto/video dari instagram.
-Contoh : !igd link_postingan
-
-*!fbd* : Untuk mendownload video dari facebook.
-Contoh : !fbd link_postingan
-
 *!howgay* : Untuk mengetahui seberapa gay teman kalian. 
 Contoh : !howgay @sadbot
 
