@@ -113,41 +113,41 @@ Contoh : !lirik Artist Title
 *!sendto* Untuk mengirimkan pesan secara anonim. 
 Contoh : !sendto 62876543210 TEST
 
-*!tts* : Untuk mengubah text menjadi suara. 
+*!tts* Untuk mengubah text menjadi suara. 
 Contoh : !tts Hello
 
-*!coronaindo* : Untuk menampilkan jumlah kasus corona di Indonesia. 
+*!coronaindo* Untuk menampilkan jumlah kasus corona di Indonesia. 
 Contoh : !coronaindo
 
-*!ytmp3* : Untuk mendownload musik dari youtube.
+*!ytmp3* Untuk mendownload musik dari youtube.
 Contoh : !ytmp3 link_video
 
-*!play* : Agar botnya memutarkan musik.
+*!play* Agar botnya memutarkan musik.
 Contoh : !play nama_musik
 
-*!howgay* : Untuk mengetahui seberapa gay teman kalian. 
+*!howgay* Untuk mengetahui seberapa gay teman kalian. 
 Contoh : !howgay @sadbot
 
-*!howbucin* : Untuk mengetahui seberapa bucin teman kalian.
+*!howbucin* Untuk mengetahui seberapa bucin teman kalian.
 Contoh : !howbucin @sadbot
 
-*!google* : Agar bot mencari ke google untuk kalian.
+*!google* Agar bot mencari ke google untuk kalian.
 Contoh : !google Test
 
-*!capture*: Agar bot mengirimkan screenshot halaman web.
+*!capture* Agar bot mengirimkan screenshot halaman web.
 Contoh : !capture link_situs
 
-*!sticker* : Agar bot mengubah gambar/gif menjadi sticker.
+*!sticker* Agar bot mengubah gambar/gif menjadi sticker.
 Contoh : reply gambarnya ketik !sticker
 
-*!delete* : Agar bot menghapus pesan yang dia kirimkan.
+*!delete* Agar bot menghapus pesan yang dia kirimkan.
 Contoh : reply pesan bot ketik !delete
 
 
 Fitur yang tersedia hanya untuk admin grup :
 
 *!mentionall* Untuk mention semua member grup.
-Contoh : !mention absen
+Contoh : !mention absen [ lagi rusak ].
 `);
     }
 
