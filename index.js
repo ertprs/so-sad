@@ -70,7 +70,7 @@ client.on('message', async msg => {
     }
 
     //detect message
-    if (msg.body == '!help' || msg.body == '!menu') {
+    if (msg.body === '!help' || msg.body === '!menu') {
         msg.reply(`Fitur tersedia untuk semua orang :
 
 *!pantun* Agar botnya berpantun. 
@@ -145,8 +145,11 @@ Contoh : !capture link_situs
 *!igs* : Agar bot memberi tahu info tentang akun ig.
 Contoh : !igs sadbot
 
-*!sticker* : Agar bot mengubah gambar menjadi sticker.
+*!sticker* : Agar bot mengubah gambar/gif menjadi sticker.
 Contoh : reply gambarnya ketik !sticker
+
+*!delete* : Agar bot menghapus pesan yang dia kirimkan.
+Contoh : reply pesan bot ketik !delete
 
 
 Fitur yang tersedia hanya untuk admin grup :
@@ -188,7 +191,7 @@ Contoh : !mention absen
     }
 
     //random pantun
-    else if (msg.body == "!pantun") {
+    else if (msg.body === "!pantun") {
         const fetch = require("node-fetch"); 
         fetch('https://raw.githubusercontent.com/pajaar/grabbed-results/master/pajaar-2020-pantun-pakboy.txt')
             .then(res => res.text())
@@ -200,7 +203,7 @@ Contoh : !mention absen
     }
 
     //random anime
-    else if (msg.body == "!animehd" ){
+    else if (msg.body === "!animehd" ){
         const fetch = require("node-fetch"); 
         const imageToBase64 = require('image-to-base64');
         fetch('https://raw.githubusercontent.com/pajaar/grabbed-results/master/pajaar-2020-gambar-anime.txt')
@@ -225,7 +228,7 @@ Contoh : !mention absen
     }
 
     //random quotes
-    else if (msg.body == "!quotes") {
+    else if (msg.body === "!quotes") {
         const request = require('request');
         
         var url = 'https://jagokata.com/kata-bijak/acak.html'
@@ -245,7 +248,7 @@ Contoh : !mention absen
     }
 
     //random fakta
-    else if (msg.body == "!fakta") {
+    else if (msg.body === "!fakta") {
         const fetch = require("node-fetch"); 
         fetch('https://raw.githubusercontent.com/pajaar/grabbed-results/master/pajaar-2020-fakta-unik.txt')
             .then(res => res.text())
@@ -257,7 +260,7 @@ Contoh : !mention absen
     }
 
     //random anime
-    else if (msg.body == "!randomanime" ){
+    else if (msg.body === "!randomanime" ){
         const imageToBase64 = require('image-to-base64');
         var items = ["anime aesthetic", "anime cute", "anime", "kawaii anime"];
         var cewe = items[Math.floor(Math.random() * items.length)];
@@ -287,7 +290,7 @@ Contoh : !mention absen
         }
 
         //random cewe cantik
-        else if (msg.body == "!cewekcantik" ){
+        else if (msg.body === "!cewekcantik" ){
             const imageToBase64 = require('image-to-base64');
             var items = ["ullzang girl", "cewe cantik", "hijab cantik", "korean girl"];
             var cewe = items[Math.floor(Math.random() * items.length)];
@@ -316,7 +319,7 @@ Contoh : !mention absen
             }
 
         //random cowok ganteng
-            else if (msg.body == "!cowokganteng" ){
+            else if (msg.body === "!cowokganteng" ){
                 const imageToBase64 = require('image-to-base64');
                 var items = ["ullzang boy", "cowo ganteng", "cogan", "korean boy"];
                 var cewe = items[Math.floor(Math.random() * items.length)];
@@ -378,7 +381,7 @@ Contoh : !mention absen
                         else if (msg.body.startsWith("!carbon ")) { // Carbon Module
 
                             var data = await carbon.mainF(msg.body.replace("!carbon ", ""));
-                            if (data == "error") {
+                            if (data === "error") {
                                 client.sendMessage(msg.from, `Error, gagal saat membuat gambar!`);
                             } else {
                                 client.sendMessage(msg.from, new MessageMedia(data.mimetype, data.data, data.filename), { caption: `Gambar sudah dibuat!` });
@@ -520,7 +523,7 @@ ${hasil.replace('by: ArugaZ', '')}
             
         }
 
-        else if (msg.body == '!coronaindo'){
+        else if (msg.body === '!coronaindo'){
             axios.get(`https://arugaz.herokuapp.com/api/coronaindo`)
             .then(function (response) {
 
@@ -649,10 +652,22 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
         }
 
         //Image to sticker
-        else if (msg.body == '!sticker' && msg.hasQuotedMsg){
+        else if (msg.body === '!sticker' && msg.hasQuotedMsg){
             if (quotedMsg.hasMedia) {
                 const attachmentData = await quotedMsg.downloadMedia();
                 client.sendMessage(msg.from, attachmentData, { sendMediaAsSticker: true });
+            }
+        }
+
+        //delete bot message
+        else if (msg.body === '!delete') {
+            if (msg.hasQuotedMsg) {
+                const quotedMsg = await msg.getQuotedMessage();
+                if (quotedMsg.fromMe) {
+                    quotedMsg.delete(true);
+                } else {
+                    msg.reply('Bot hanya dapat menghapus pesan yang dia kirimkan.');
+                }
             }
         }
 
