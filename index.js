@@ -115,14 +115,8 @@ Contoh : !sendto 62876543210 TEST
 *!tts* : Untuk mengubah text menjadi suara. 
 Contoh : !tts Hello
 
-*!corona* : Untuk menampilkan jumlah kasus corona di sebuah negara! 
-Contoh : !corona Russia
-
 *!coronaindo* : Untuk menampilkan jumlah kasus corona di Indonesia. 
 Contoh : !coronaindo
-
-*!ytmp4* : Untuk mendownload video dari youtube.
-Contoh : !ytmp4 link_video
 
 *!ytmp3* : Untuk mendownload musik dari youtube.
 Contoh : !ytmp3 link_video
@@ -515,10 +509,6 @@ ${hasil.replace('by: ArugaZ', '')}
             })
         }
 
-        else if(msg.body.startsWith('!corona ')){
-            msg.reply('Dalam pengembangan!');
-        }
-
         //ytmp3 download
         else if (msg.body.startsWith("!ytmp3 ")) {
             var url = msg.body.split("!ytmp3 ")[1];
@@ -591,52 +581,7 @@ Terakhir di update ${response.data.terakhir}
 
         }
 
-        else if (msg.body.startsWith('!ytmp4 ')){
-            const url = msg.body.split("!ytmp4 ")[1];
-const exec = require('child_process').exec;
-
-var videoid = url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
-
-const ytdl = require("ytdl-core")
-if(videoid != null) {
-   console.log("video id = ",videoid[1]);
-} else {
-    msg.reply("Videonya invalid!");
-}
-msg.reply("Tunggu sebentar, sedang diproses!");
-ytdl.getInfo(videoid[1]).then(info => {
-if (info.length_seconds > 1000){
-msg.reply("Terlalu panjang\nsebagai gantinya\nkamu bisa klik link dibawah ini :\π \n "+ info.formats[0].url)
-} else {
-
-console.log(info.length_seconds)
-
-function os_func() {
-    this.execCommand = function (cmd) {
-        return new Promise((resolve, reject)=> {
-           exec(cmd, (error, stdout, stderr) => {
-             if (error) {
-                reject(error);
-                return;
-            }
-            resolve(stdout)
-           });
-       })
-   }
-}
-var os = new os_func();
-
-os.execCommand('youtube-dl ' + ' -q highest -o mp4/'+ videoid[1] +'.mp4' + url).then(res=> {
-    var media = MessageMedia.fromFilePath('mp4/'+ videoid[1] +'.mp4');
-chat.sendMessage(media);
-}).catch(err=> {
-    console.log("os >>>", err);
-})
-
-}
-});
-        }
-
+       //howgay
         else if (msg.body.startsWith('!howgay ')){
             axios.get(`https://arugaz.herokuapp.com/api/howgay`)
             .then(function (response) {
