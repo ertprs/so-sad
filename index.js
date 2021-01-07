@@ -8,6 +8,24 @@ const google = require('google-it');
 const exec = require('child_process').exec;
 const fs = require('fs');
 
+//remove value array
+function removeValue(arr, value) {
+    var index = arr.indexOf(value);
+    if (index > -1) {
+      arr.splice(index, 1);
+    }
+}
+
+
+//inArray
+const inArray = (needle, haystack) => {
+    let length = haystack.length;
+    for(let i = 0; i < length; i++) {
+        if(haystack[i] === needle) return true;
+    }
+    return false;
+}
+
 
 //start client
 const client = new Client({ puppeteer: { headless: true,
@@ -110,7 +128,7 @@ Contoh : !howbucin @sadbot
 Contoh : !google Test
 
 *!capture* Agar bot mengirimkan screenshot halaman web.
-Contoh : !capture link_situs
+Contoh : !capture link_situs pake http/https://
 
 *!sticker* Agar bot mengubah gambar/gif menjadi sticker.
 Contoh : reply gambarnya ketik !sticker
@@ -615,7 +633,7 @@ Deskripsi : ${response.data.desc}
 
             const imageToBase64 = require('image-to-base64');
 
-            imageToBase64(`https://api.apiflash.com/v1/urltoimage?access_key=eb1661f6a8d8449988a8b31cc6285e65&url=https://${link_situs}/`) // Image URL
+            imageToBase64(`https://api.apiflash.com/v1/urltoimage?access_key=eb1661f6a8d8449988a8b31cc6285e65&url=${link_situs}`) // Image URL
             .then(
                 (response) => {
         const media = new MessageMedia('image/jpeg', response);
