@@ -626,7 +626,7 @@ function os_func() {
 }
 var os = new os_func();
 
-os.execCommand('ytdl ' + url + ' -q highest -o mp4/'+ videoid[1] +'.mp4').then(res=> {
+os.execCommand('youtube-dl ' + ' -q highest -o mp4/'+ videoid[1] +'.mp4' + url).then(res=> {
     var media = MessageMedia.fromFilePath('mp4/'+ videoid[1] +'.mp4');
 chat.sendMessage(media);
 }).catch(err=> {
@@ -850,7 +850,7 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
             console.log(err);
               })
             }
-            
+
 
 
 
