@@ -157,13 +157,8 @@ Contoh : !mention absen
             if (chat.isGroup) {
                     const authorId = msg.author;
                 for(let participant of chat.participants) {
-                    if(participant.id._serialized === authorId && !participant.isAdmin) {
-                        msg.reply('Maaf perintah ini hanya dapat digunakan oleh admin grup!');
-                        break;
-                    }
-                }
-
-                const chat = await msg.getChat();
+                    if(participant.id._serialized === authorId && participant.isAdmin) {
+                        const chat = await msg.getChat();
                         let text = msg.body.split("!mentionall ")[1];
                         text += `\n`;
                         let mentions = [];
@@ -174,6 +169,11 @@ Contoh : !mention absen
                         text += `\n`
                     }
                     chat.sendMessage(text, { mentions });
+                    break;
+                    } else {
+                        msg.reply('Maaf perintah ini hanya dapat digunakan oleh admin grup!');
+                    }
+                }
             }
     } else {
             msg.reply('Maaf perintah ini hanya bisa digunakan di dalam grup!');
