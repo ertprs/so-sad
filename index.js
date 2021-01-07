@@ -127,6 +127,9 @@ Contoh : !ytmp4 link_video
 *!ytmp3* : Untuk mendownload musik dari youtube.
 Contoh : !ytmp3 link_video
 
+*!igd* : Untuk mendownload foto/video dari instagram.
+Contoh : !igd link_postingan
+
 *!fbd* : Untuk mendownload video dari facebook.
 Contoh : !fbd link_postingan
 
@@ -518,7 +521,51 @@ ${hasil.replace('by: ArugaZ', '')}
 
         //ytmp3 download
         else if (msg.body.startsWith("!ytmp3 ")) {
-            msg.reply('Dalam pengembangan!');
+            var url = msg.body.split(" ")[1];
+            var videoid = url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
+            
+            const ytdl = require("ytdl-core")
+            const { exec } = require("child_process");
+            if(videoid != null) {
+               console.log("video id = ",videoid[1]);
+            } else {
+                msg.reply("Videonya invalid!");
+            }
+            ytdl.getInfo(videoid[1]).then(info => {
+            if (info.length_seconds > 3000){
+            msg.reply("Batas video 50 menit!")
+            }else{
+            
+            console.log(info.length_seconds)
+            
+            msg.reply("Tunggu sebentar, sedang diproses!");
+            var YoutubeMp3Downloader = require("youtube-mp3-downloader");
+            
+            //Configure YoutubeMp3Downloader with your settings
+            var YD = new YoutubeMp3Downloader({
+                "ffmpegPath": "ffmpeg", 
+                "outputPath": "./mp3",    // Where should the downloaded and en>
+                "youtubeVideoQuality": "highest",       // What video quality sho>
+                "queueParallelism": 100,                  // How many parallel down>
+                "progressTimeout": 40                 // How long should be the>
+            });
+            
+            YD.download(videoid[1]);
+            
+            
+            YD.on("finished", function(err, data) {
+            
+            
+            var musik = MessageMedia.fromFilePath(data.file);
+            
+            msg.reply(`Mp3 berhasil didownload!`);
+            chat.sendMessage(musik);
+            });
+            YD.on("error", function(error) {
+                console.log(error);
+            });
+            
+            }});
 
             
         }
@@ -545,7 +592,49 @@ Terakhir di update ${response.data.terakhir}
         }
 
         else if (msg.body.startsWith('!ytmp4 ')){
-            msg.reply('Dalam pengembangan!');
+            const url = msg.body.split("!ytmp4 ")[1];
+const exec = require('child_process').exec;
+
+var videoid = url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
+
+const ytdl = require("ytdl-core")
+if(videoid != null) {
+   console.log("video id = ",videoid[1]);
+} else {
+    msg.reply("Videonya invalid!");
+}
+msg.reply("Tunggu sebentar, sedang diproses!");
+ytdl.getInfo(videoid[1]).then(info => {
+if (info.length_seconds > 1000){
+msg.reply("Terlalu panjang\nsebagai gantinya\nkamu bisa klik link dibawah ini :\π \n "+ info.formats[0].url)
+} else {
+
+console.log(info.length_seconds)
+
+function os_func() {
+    this.execCommand = function (cmd) {
+        return new Promise((resolve, reject)=> {
+           exec(cmd, (error, stdout, stderr) => {
+             if (error) {
+                reject(error);
+                return;
+            }
+            resolve(stdout)
+           });
+       })
+   }
+}
+var os = new os_func();
+
+os.execCommand('ytdl ' + url + ' -q highest -o mp4/'+ videoid[1] +'.mp4').then(res=> {
+    var media = MessageMedia.fromFilePath('mp4/'+ videoid[1] +'.mp4');
+chat.sendMessage(media);
+}).catch(err=> {
+    console.log("os >>>", err);
+})
+
+}
+});
         }
 
         else if (msg.body.startsWith('!howgay ')){
@@ -629,7 +718,68 @@ Deskripsi : ${response.data.desc}
 
         //Facebook downloader
         else if (msg.body.startsWith('!fbd ')){
-            msg.reply('Dalam pengembangan!');
+            const imageToBase64 = require('image-to-base64');
+            var link = msg.body.split("!fbd ")[1];
+            var url = "http://api.fdci.se/sosmed/fb.php?url="+ link;
+            const { exec } = require("child_process");
+            
+            function foreach(arr, func){
+              for(var i in arr){
+                func(i, arr[i]);
+              }
+            }
+            axios.get(url)
+              .then((result) => {
+            var b = JSON.parse(JSON.stringify(result.data));
+             console.log(b.data[0].url) 
+              var teks = `Berhasil didownload!`;
+              if(b.url == false){
+                  msg.reply("Linknya invalid!");
+              }else if( b.data[0][0].type == "foto"){
+                  
+            foreach(b.data[0], function(i, v){
+            imageToBase64(b.data[0][i].url) // Path to the image
+                .then(
+                    (response) => {
+                        ; // "cGF0aC90by9maWxlLmpwZw=="
+            
+            const media = new MessageMedia('image/jpeg', response);
+            client.sendMessage(msg.from, media, {
+                caption: teks });
+                    }
+                )
+                .catch(
+                    (error) => {
+                        console.log(error); // Logs an error if there was one
+                    }
+                )
+            })
+                }else if(b.data[0][0].type == "video"){
+                    
+            foreach(b.data[0], function(i, v){
+                    exec('wget "' + b.data[0][i].url + '" -O mp4/insta.mp4', (error, stdout, stderr) => {
+            
+            let media = MessageMedia.fromFilePath('mp4/insta.mp4');
+                client.sendMessage(msg.from, media, {
+                caption: teks });
+                if (error) {
+                    console.log(`error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                }
+            
+                console.log(`stdout: ${stdout}`);
+            });
+            })
+            }
+              
+            })
+              .catch((err) => {
+            console.log(err);
+              })
         }
 
         //Instagram stalker
@@ -670,6 +820,72 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
                 }
             }
         }
+
+        //Instagram downloader
+        else if (msg.body.startsWith("!igd ")) {
+            const imageToBase64 = require('image-to-base64');
+            var link = msg.body.split("!igd ")[1];
+            var url = "http://api.fdci.se/sosmed/insta.php?url="+ link;
+            const { exec } = require("child_process");
+            
+            function foreach(arr, func){
+              for(var i in arr){
+                func(i, arr[i]);
+              }
+            }
+            axios.get(url)
+              .then((result) => {
+            var b = JSON.parse(JSON.stringify(result.data));
+             console.log(b.data[0].url) 
+              var teks = `Berhasil didownload!`;
+              if(b.url == false){
+                  msg.reply("Linknya invalid!");
+              }else if( b.data[0][0].type == "foto"){
+                  
+            foreach(b.data[0], function(i, v){
+            imageToBase64(b.data[0][i].url) // Path to the image
+                .then(
+                    (response) => {
+                        ; // "cGF0aC90by9maWxlLmpwZw=="
+            
+            const media = new MessageMedia('image/jpeg', response);
+            client.sendMessage(msg.from, media, {
+                caption: teks });
+                    }
+                )
+                .catch(
+                    (error) => {
+                        console.log(error); // Logs an error if there was one
+                    }
+                )
+            })
+                }else if(b.data[0][0].type == "video"){
+                    
+            foreach(b.data[0], function(i, v){
+                    exec('wget "' + b.data[0][i].url + '" -O mp4/insta.mp4', (error, stdout, stderr) => {
+            
+            let media = MessageMedia.fromFilePath('mp4/insta.mp4');
+                client.sendMessage(msg.from, media, {
+                caption: teks });
+                if (error) {
+                    console.log(`error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                }
+            
+                console.log(`stdout: ${stdout}`);
+            });
+            })
+            }
+              
+            })
+              .catch((err) => {
+            console.log(err);
+              })
+            }
 
 
 
