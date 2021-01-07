@@ -7,6 +7,7 @@ const axios = require("axios");
 const google = require('google-it');
 const exec = require('child_process').exec;
 const fs = require('fs');
+const yts = require('./modules/youtube.js');
 
 //remove value array
 function removeValue(arr, value) {
@@ -132,9 +133,6 @@ Contoh : !google Test
 
 *!capture*: Agar bot mengirimkan screenshot halaman web.
 Contoh : !capture link_situs
-
-*!igs* : Agar bot memberi tahu info tentang akun ig.
-Contoh : !igs sadbot
 
 *!sticker* : Agar bot mengubah gambar/gif menjadi sticker.
 Contoh : reply gambarnya ketik !sticker
@@ -660,25 +658,6 @@ Deskripsi : ${response.data.desc}
             )
         }
 
-        //Instagram stalker
-        else if (msg.body.startsWith('!igs ')){
-            const username = msg.body.split('!igs ')[1];
-                axios.get(`https://arugaz.herokuapp.com/api/stalk?username=${username}`)
-            .then(function (response) {
-
-            client.sendMessage(msg.from, `Info dari username : ${response.data.Username}
-
-Nama : ${response.data.Name}
-Jumlah pengikut : ${response.data.Jumlah_Following.replace('Following', 'pengikut')}
-Jumlah diikuti : ${response.data.Jumlah_Followers.replace('Followers', 'diikuti')}
-Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
-`);
-        })
-    .catch(function (error) {
-    msg.reply(error);
-    }) 
-        }
-
         //Image to sticker
         else if (msg.body === '!sticker' && msg.hasQuotedMsg){
             if (quotedMsg.hasMedia) {
@@ -698,6 +677,47 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
                 }
             }
         }
+
+
+        //Play music
+        else if (msg.body.startsWith("!play ")) {
+            var ytdl = require("ytdl-core");
+            var hh = msg.body.split("!play ")[1];
+            var keyword = hh.replace(/ /g, "+");
+            
+            (async () => {
+            var id = await yts.searchYoutube(keyword);
+            
+            client.sendMessage( `New request play song : ${id[0]}`);
+
+            var YoutubeMp3Downloader = require("youtube-mp3-downloader");
+            
+            //Configure YoutubeMp3Downloader with your settings
+            var YD = new YoutubeMp3Downloader({
+                "ffmpegPath": "ffmpeg", 
+                "outputPath": "./mp3",    // Where should the downloaded and en>
+                "youtubeVideoQuality": "highest",       // What video quality sho>
+                "queueParallelism": 100,                  // How many parallel down>
+                "progressTimeout": 2000                 // How long should be the>
+            });
+            
+            //Download video and save as MP3 file
+            YD.download(id[0]);
+            
+            YD.on("finished", function(err, data) {
+            
+            
+            const musik = MessageMedia.fromFilePath(data.file);
+            
+            client.sendMessage(msg.from, `Now Playing : ${data.videoTitle}`);
+            chat.sendMessage(musik);
+        
+        });
+            YD.on("progress", function(data) {
+            });
+            })();
+            }
+            
             
         //next features
 
