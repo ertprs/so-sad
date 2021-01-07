@@ -7,25 +7,6 @@ const axios = require("axios");
 const google = require('google-it');
 const exec = require('child_process').exec;
 const fs = require('fs');
-const yts = require('./modules/youtube.js');
-
-//remove value array
-function removeValue(arr, value) {
-    var index = arr.indexOf(value);
-    if (index > -1) {
-      arr.splice(index, 1);
-    }
-}
-
-
-//inArray
-const inArray = (needle, haystack) => {
-    let length = haystack.length;
-    for(let i = 0; i < length; i++) {
-        if(haystack[i] === needle) return true;
-    }
-    return false;
-}
 
 
 //start client
@@ -109,9 +90,6 @@ Contoh : !wikien soekarno
 
 *!lirik* Untuk menampilkan lirik. 
 Contoh : !lirik Artist Title
-
-*!sendto* Untuk mengirimkan pesan secara anonim. 
-Contoh : !sendto 62876543210 TEST
 
 *!tts* Untuk mengubah text menjadi suara. 
 Contoh : !tts Hello
@@ -419,16 +397,7 @@ ${response.data.result}
 
         //sendto
         else if (msg.body.startsWith('!sendto ')) {
-            /*
-            let number = msg.body.split(' ')[1];
-            let messageIndex = msg.body.indexOf(number) + number.length;
-            let message = msg.body.slice(messageIndex, msg.body.length);
-            number = number.includes('@c.us') ? number : `${number}@c.us`;
-            msg.reply('Done!');
-            client.sendMessage(msg.from, 'Jangan digunakan untuk spam ya.');
-            client.sendMessage(number, message);
-            */
-           msg.reply('Fitur ini bakal dihapus, malah buat spam hadeh');
+           msg.reply('Fitur ini udah dihapus, malah buat spam hadeh');
         }
 
         //text to mp3
