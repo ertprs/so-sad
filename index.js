@@ -521,7 +521,7 @@ ${hasil.replace('by: ArugaZ', '')}
 
         //ytmp3 download
         else if (msg.body.startsWith("!ytmp3 ")) {
-            var url = msg.body.split(" ")[1];
+            var url = msg.body.split("!ytmp3 ")[1];
             var videoid = url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
             
             const ytdl = require("ytdl-core")
@@ -850,6 +850,7 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
             console.log(err);
               })
             }
+            
 
 
 
