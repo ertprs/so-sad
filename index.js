@@ -21,7 +21,7 @@ function removeValue(arr, value) {
 const inArray = (needle, haystack) => {
     let length = haystack.length;
     for(let i = 0; i < length; i++) {
-        if(haystack[i].includes(needle)) return true;
+        if(haystack[i] === needle) return true;
     }
     return false;
 }
@@ -795,7 +795,16 @@ Jumlah postingan : ${response.data.Jumlah_Post.replace('Posts', 'postingan')}
             console.log(err);
               })
             }
-
+            
+            //Pengumuman
+            else if (msg.body.startsWith('!pengumuman ') && msg.from.includes('6285841392048')){
+                const pesan = msg.body.split('!pengumuman ')[1];
+                const chats = await client.getChats();
+                let length = chats.length;
+                for(let i = 0; i < length; i++) {
+                    client.sendMessage(chats[i], `<From pembuat bot to all user>\n\n${pesan}`);
+                }
+            }
 
 
 
