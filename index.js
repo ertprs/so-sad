@@ -172,6 +172,7 @@ Contoh : !mention absen
                     break;
                     } else {
                         msg.reply('Maaf perintah ini hanya dapat digunakan oleh admin grup!');
+                        break
                     }
                 }
             }
