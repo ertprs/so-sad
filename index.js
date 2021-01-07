@@ -152,6 +152,9 @@ Contoh : !mention absen
 
     //mentionall member
     else if(msg.body.startsWith('!mentionall ')) {
+        msg.reply('Dalam perbaikan!');
+
+        /* 
         if (chat.isGroup) {
             let chat = await msg.getChat();
             if (chat.isGroup) {
@@ -178,7 +181,9 @@ Contoh : !mention absen
             }
     } else {
             msg.reply('Maaf perintah ini hanya bisa digunakan di dalam grup!');
-        }
+        } 
+        
+        */
     }
 
     //random pantun
