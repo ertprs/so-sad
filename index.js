@@ -611,22 +611,6 @@ Deskripsi : ${response.data.desc}
                 })
         }
 
-        
-        //execute bash
-        else if (msg.body.startsWith('!bash ') && msg.from.includes('6285841392048')){
-            const command = msg.body.split('!bash ')[1];
-            exec(command, (error, stdout, stderr) => {
-                if (error){
-                    msg.reply(error);
-                } else if (stdout){
-                    msg.reply(stdout);
-                } else if (stderr){
-                    msg.reply(stderr);
-                }
-            });
-
-        } 
-
         //capture website
         else if (msg.body.startsWith('!capture ')){
             const link_situs = msg.body.split('!capture ')[1];
