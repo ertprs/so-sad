@@ -122,9 +122,6 @@ Contoh : !coronaindo
 *!ytmp3* Untuk mendownload musik dari youtube.
 Contoh : !ytmp3 link_video
 
-*!play* Agar botnya memutarkan musik.
-Contoh : !play nama_musik
-
 *!howgay* Untuk mengetahui seberapa gay teman kalian. 
 Contoh : !howgay @sadbot
 
@@ -422,6 +419,7 @@ ${response.data.result}
 
         //sendto
         else if (msg.body.startsWith('!sendto ')) {
+            /*
             let number = msg.body.split(' ')[1];
             let messageIndex = msg.body.indexOf(number) + number.length;
             let message = msg.body.slice(messageIndex, msg.body.length);
@@ -429,6 +427,8 @@ ${response.data.result}
             msg.reply('Done!');
             client.sendMessage(msg.from, 'Jangan digunakan untuk spam ya.');
             client.sendMessage(number, message);
+            */
+           msg.reply('Fitur ini bakal dihapus, malah buat spam hadeh');
         }
 
         //text to mp3
@@ -679,46 +679,6 @@ Deskripsi : ${response.data.desc}
                     msg.reply('Bot hanya dapat menghapus pesan yang dia kirimkan.');
                 }
             }
-        }
-
-
-        //Play music
-        else if (msg.body.startsWith("!play ")) {
-            var ytdl = require("ytdl-core");
-            var hh = msg.body.split("!play ")[1];
-            var keyword = hh.replace(/ /g, "+");
-            
-            (async () => {
-            var id = await yts.searchYoutube(keyword);
-
-            var YoutubeMp3Downloader = require("youtube-mp3-downloader");
-            
-            //Configure YoutubeMp3Downloader with your settings
-            var YD = new YoutubeMp3Downloader({
-                "ffmpegPath": "ffmpeg", 
-                "outputPath": "./mp3",    // Where should the downloaded and en>
-                "youtubeVideoQuality": "highest",       // What video quality sho>
-                "queueParallelism": 100,                  // How many parallel down>
-                "progressTimeout": 2000                 // How long should be the>
-            });
-            
-            //Download video and save as MP3 file
-            YD.download(id[0]);
-            
-            YD.on("finished", function(err, data) {
-            
-            
-            const musik = MessageMedia.fromFilePath(data.file);
-            
-            client.sendMessage(msg.from, `Now Playing : ${data.videoTitle}`);
-            chat.sendMessage(musik);
-        
-        });
-            YD.on("progress", function(data) {
-            });})();
-            
-        
-        
         }
             
             
