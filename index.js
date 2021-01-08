@@ -1,5 +1,5 @@
 const { Client, MessageMedia, Contact } = require("whatsapp-web.js");
-const carbon = require('./modules/carbon');
+const carbon = require('./modules/carbon.js');
 const fetch = require("node-fetch");  
 const cheerio = require("cheerio");
 const urlencode = require("urlencode");
@@ -7,7 +7,7 @@ const axios = require("axios");
 const google = require('google-it');
 const exec = require('child_process').exec;
 const fs = require('fs');
-
+const { default: translate } = require('google-translate-open-api');
 
 //start client
 const client = new Client({ puppeteer: { headless: true,
@@ -117,6 +117,9 @@ Contoh : reply gambarnya ketik !sticker
 
 *!delete* Agar bot menghapus pesan yang dia kirimkan.
 Contoh : reply pesan bot ketik !delete
+
+*!translate* Agar bot mentranslate teks yang dikirimkan.
+Contoh : reply teksnya ketik !translate id
 
 
 Fitur yang tersedia hanya untuk admin grup :
@@ -634,6 +637,17 @@ Deskripsi : ${response.data.desc}
             }
         }
             
+
+
+        //translate
+        else if (msg.body.startsWith('!translate ') && msg.hasQuotedMsg){
+            const text = await msg.getQuotedMessage();
+            const lang = msg.body.split('!translate ')[1];
+
+            translate(text, { tld: 'cn', to: lang })
+            .then((text) => msg.reply(text.data[0]))
+            .catch((err) => msg.reply(err))
+        }
             
         //next features
 
