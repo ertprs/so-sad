@@ -7,7 +7,6 @@ const axios = require("axios");
 const google = require('google-it');
 const exec = require('child_process').exec;
 const fs = require('fs');
-const { default: translate } = require('google-translate-open-api');
 
 //start client
 const client = new Client({ puppeteer: { headless: true,
