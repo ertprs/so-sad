@@ -408,7 +408,7 @@ ${response.data.result}
 
         //text to mp3
         else if (msg.body.startsWith("!tts ")) {
-        const tts = require('node-gtts')(msg.body.split('!tts ')[1]);
+        const tts = require('node-gtts')(msg.body.split(' ')[1]);
         const dataText = msg.body.split(' ')[2];
 	
           try {
