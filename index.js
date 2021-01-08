@@ -631,7 +631,7 @@ Deskripsi : ${response.data.desc}
         else if (msg.body.startsWith('!simisimi ')){
             const lang = msg.body.split(' ')[1];
             const text = msg.body.split(' ')[2];
-            axios({method: 'get',url: `https://simsumi.herokuapp.com/api?text=${text}&lang=${lang}`,responseType: 'stream'})
+            axios({method: 'get',url: `https://simsumi.herokuapp.com/api?text=${text}&lang=${lang}`,responseType: 'text'})
             .then(function (response) {
             const hasil = response.split(':')[1];
             msg.reply(`${hasil.substring(1,2)}`)})
