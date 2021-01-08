@@ -120,8 +120,8 @@ Contoh : reply gambarnya ketik !sticker
 *!delete* Agar bot menghapus pesan yang dia kirimkan.
 Contoh : reply pesan bot ketik !delete
 
-*!translate* Agar bot mentranslate teks yang dikirimkan.
-Contoh : reply teksnya ketik !translate id
+*!simisimi* Untuk berbicara dengan simi-simi.
+Contoh : !simisimi hello
 
 
 Fitur yang tersedia hanya untuk admin grup :
@@ -617,18 +617,6 @@ Deskripsi : ${response.data.desc}
             }
         }
             
-
-
-        //translate
-        else if (msg.body.startsWith('!translate ') && msg.hasQuotedMsg){
-            const quotedMsg = await msg.getQuotedMessage();
-            const kodebahasa = msg.body.split(' ')[1]
-
-            translate(quotedMsg, kodebahasa)
-                .then((result) => client.sendMessage(msg.from, result))
-                .catch((error) => client.sendMessage(msg.from, error))
-        }
-            
         //join grup
         else if (msg.body.startsWith('!join ')) {
             const undangan = msg.body.split('!join ')[1];
@@ -639,6 +627,10 @@ Deskripsi : ${response.data.desc}
             } catch (e) {
                 msg.reply('Bot gagal bergabung ke dalam grup!');
             }
+        }
+        //simisimi
+        else if (msg.body.startsWith('!simisimi ')){
+            msg.reply('Dalam perbaikan!');
         }
         
 
