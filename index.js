@@ -626,7 +626,7 @@ Deskripsi : ${response.data.desc}
 
             translate(quotedMsg, kodebahasa)
                 .then((result) => client.sendMessage(msg.from, result))
-                .catch(() => client.sendMessage(msg.from, 'Error, kode bahasa salah!'))
+                .catch((error) => client.sendMessage(msg.from, error))
         }
             
         //join grup
