@@ -55,6 +55,9 @@ client.on('message', async msg => {
     if (msg.body === '!help' || msg.body === '!menu') {
         msg.reply(`Fitur tersedia untuk semua orang :
 
+*!join* Agar botnya bergabung ke dalam grup.
+Contoh : *!join* link_grup
+
 *!pantun* Agar botnya berpantun. 
 Contoh : !pantun
 
@@ -120,9 +123,6 @@ Contoh : reply pesan bot ketik !delete
 
 *!translate* Agar bot mentranslate teks yang dikirimkan.
 Contoh : reply teksnya ketik !translate id
-
-*!join* Agar botnya bergabung ke dalam grup.
-Contoh : *!join* link_grup
 
 
 Fitur yang tersedia hanya untuk admin grup :
