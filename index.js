@@ -638,7 +638,7 @@ Deskripsi : ${response.data.desc}
             .then(body => {
             let text1 = body.split(':');
             let text2 = text1[1];
-            msg.reply(text2.replace('}', ''));
+            msg.reply(text2.replace(/[&\/\\#,+()$~%.'":*<>{}]/g, ''));
             });
             
            
