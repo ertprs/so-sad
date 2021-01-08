@@ -603,17 +603,18 @@ Deskripsi : ${response.data.desc}
 
         //delete bot message
         else if (msg.body === '!delete') {
-            /*
-            if (msg.hasQuotedMsg) {
-                const quotedMsg = await msg.getQuotedMessage();
-                if (quotedMsg.fromMe) {
-                    quotedMsg.delete(true);
-                } else {
-                    msg.reply('Bot hanya dapat menghapus pesan yang dia kirimkan.');
+            if (chat.isGroup) {
+                msg.reply('Sementara gua nonaktifin dulu untuk grup sampe gua nemuin cara : yang ngehapus cuma yang ngasih perintah, kasian kalo ada bocil yang menyalahgunakan.')
+            } else {
+                if (msg.hasQuotedMsg) {
+                    const quotedMsg = await msg.getQuotedMessage();
+                    if (quotedMsg.fromMe) {
+                        quotedMsg.delete(true);
+                    } else {
+                        msg.reply('Bot hanya dapat menghapus pesan yang dia kirimkan.');
+                    }
                 }
             }
-            */
-           msg.reply('Sementara gua hapus dulu sampe nemuin cara : yang ngehapus cuma yang ngasih perintah, kasian kalo ada bocil yang menyalahgunakan.')
         }
             
 
