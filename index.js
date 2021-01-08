@@ -627,6 +627,7 @@ Deskripsi : ${response.data.desc}
                 msg.reply('Bot gagal bergabung ke dalam grup!');
             }
         }
+
         //simisimi
         else if (msg.body.startsWith('!simisimi ')){
             const lang = msg.body.split(' ')[1];
@@ -637,7 +638,7 @@ Deskripsi : ${response.data.desc}
             .then(body => {
             let text1 = body.split(':');
             let text2 = text1[1];
-            msg.reply(text2.substring(1, 2));
+            msg.reply(text2.replace('}'));
             });
             
            
