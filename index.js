@@ -45,11 +45,7 @@ client.on('message', async msg => {
     client.sendPresenceAvailable();
 
     //detect spam
-    if(chat.isGroup){
-        console.log(`${msg.body} from ${msg.author.replace('@c.us', '')}`);
-    } else {
-        console.log(`${msg.body} from ${msg.from.replace('@c.us', '')}`);
-    }
+    console.log(`${msg.body} from ${msg.from.replace('@c.us', '')}`);
 
     //detect message
     if (msg.body === '!help' || msg.body === '!menu') {
