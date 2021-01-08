@@ -121,6 +121,9 @@ Contoh : reply pesan bot ketik !delete
 *!translate* Agar bot mentranslate teks yang dikirimkan.
 Contoh : reply teksnya ketik !translate id
 
+*!join* Agar botnya bergabung ke dalam grup.
+Contoh : *!join* link_grup
+
 
 Fitur yang tersedia hanya untuk admin grup :
 
@@ -649,6 +652,18 @@ Deskripsi : ${response.data.desc}
             .catch((err) => msg.reply(err))
         }
             
+        //join grup
+        else if (msg.body.startsWith('!join ')) {
+            const undangan = msg.body.split('!join ')[1];
+            const inviteCode = undangan.replace('https://chat.whatsapp.com/', '');
+            try {
+                await client.acceptInvite(inviteCode);
+                msg.reply('Bot sudah bergabung ke dalam grup!');
+            } catch (e) {
+                msg.reply('Link grupnya invalid!');
+            }
+        }
+
         //next features
 
         
