@@ -5,8 +5,9 @@ const cheerio = require("cheerio");
 const urlencode = require("urlencode");
 const axios = require("axios");
 const google = require('google-it');
-const exec = require('child_process').exec;
-const fs = require('fs');
+const translate = require('./modules/translate.js');
+
+
 
 //start client
 const client = new Client({ puppeteer: { headless: true,
@@ -90,7 +91,7 @@ Contoh : !wikien soekarno
 Contoh : !lirik Artist Title
 
 *!tts* Untuk mengubah text menjadi suara. 
-Contoh : !tts Hello
+Contoh : !tts id Halo
 
 *!coronaindo* Untuk menampilkan jumlah kasus corona di Indonesia. 
 Contoh : !coronaindo
@@ -407,61 +408,19 @@ ${response.data.result}
 
         //text to mp3
         else if (msg.body.startsWith("!tts ")) {
+        const tts = require('node-gtts')(msg.body.split('!tts ')[1]);
+        const dataText = msg.body.split(' ')[2];
 	
-          var texttomp3 = require("text-to-mp3");
-          var fs = require("fs");
-          
-          var suara = msg.body.split("!tts ")[1];
-          var text = suara;
-          var fn = "tts/suara.mp3";
-          
-          
-          
-          
-          if(process.argv.indexOf("-?")!== -1){
-            
-            return;
+          try {
+            tts.save('./tts/tts.mp3', dataText, function () {
+                const media = MessageMedia.fromFilePath('./tts/tts.mp3');
+                chat.sendMessage(media);
+            })
+
+          } catch (error) {
+              msg.reply(error);
           }
           
-          
-          if(process.argv.indexOf("-t")!== -1)
-            text=suara;
-          
-          if(process.argv.indexOf("-f")!== -1)
-            fn=suara;
-          
-          text = text.replace(/ +(?= )/g,'');
-          
-          if(typeof text ===  "undefined" || text === ""
-            || typeof fn === "undefined" || fn === "") { 
-            
-          }
-          
-          //HERE WE GO
-          texttomp3.getMp3(text, function(err, data){
-            if(err){
-              console.log(err);
-              return;
-            }
-          
-            if(fn.substring(fn.length-4, fn.length) !== ".mp3"){ 
-              fn+=".mp3";
-            }
-            var file = fs.createWriteStream(fn); 
-            file.write(data);
-           
-            
-          });
-          await new Promise(resolve => setTimeout(resolve, 500));
-          
-            if(text.length > 200){ 
-            msg.reply("Teks terlalu panjang, pecah menjadi 200 karakter!");
-          }else{
-            const media = MessageMedia.fromFilePath(fn);
-          
-            chat.sendMessage(media);
-          
-          }
         }
 
 
@@ -661,15 +620,11 @@ Deskripsi : ${response.data.desc}
 
         //translate
         else if (msg.body.startsWith('!translate ') && msg.hasQuotedMsg){
-            /*
-            const text = await msg.getQuotedMessage();
-            const lang = msg.body.split('!translate ')[1];
+            const quotedMsg = await msg.getQuotedMessage();
 
-            translate(text, { tld: 'cn', to: lang })
-            .then((text) => msg.reply(text.data[0]))
-            .catch((err) => msg.reply(err))
-            */
-           msg.reply('Dalam pengembangan!');
+            translate(quotedMsg, msg.body.split(' ')[1])
+                .then((result) => client.sendMessage(msg.from, result))
+                .catch(() => client.sendMessage(msg.from, 'Error, kode bahasa salah!'))
         }
             
         //join grup
