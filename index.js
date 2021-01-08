@@ -5,7 +5,6 @@ const cheerio = require("cheerio");
 const urlencode = require("urlencode");
 const axios = require("axios");
 const google = require('google-it');
-const translate = require('./modules/translate.js');
 
 
 
@@ -630,7 +629,13 @@ Deskripsi : ${response.data.desc}
         }
         //simisimi
         else if (msg.body.startsWith('!simisimi ')){
-            msg.reply('Dalam perbaikan!');
+            const lang = msg.body.split(' ')[1];
+            const text = msg.body.split(' ')[2];
+                axios.get(`https://simsumi.herokuapp.com/api?text=${text}&lang=${lang}`)
+            .then(function (response) {
+            msg.reply(`${response.success}`)})
+            .catch(function (error) {
+            msg.reply(error);}) 
         }
         
 
