@@ -45,7 +45,7 @@ client.on('message', async msg => {
     client.sendPresenceAvailable();
 
     //detect spam
-    console.log(`${msg.body} from ${msg.from.replace('@c.us @g.us', '')}`);
+    console.log(`${msg.body} from ${msg.from.split('@')[0]}`);
 
     //detect message
     if (msg.body === '!help' || msg.body === '!menu') {
