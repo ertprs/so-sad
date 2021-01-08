@@ -633,7 +633,8 @@ Deskripsi : ${response.data.desc}
             const text = msg.body.split(' ')[2];
             axios({method: 'get',url: `https://simsumi.herokuapp.com/api?text=${text}&lang=${lang}`,responseType: 'stream'})
             .then(function (response) {
-            msg.reply(`${response.split(':')[1].replace('}', '').substring(1, 1)}`)})
+            const hasil = response.split(':')[1];
+            msg.reply(`${hasil.substring(1,2)}`)})
             .catch(function (error) {
             msg.reply(error);}) 
         }
