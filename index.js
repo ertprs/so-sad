@@ -50,9 +50,6 @@ client.on('message', async msg => {
     if (msg.body === '!help' || msg.body === '!menu') {
         msg.reply(`Fitur tersedia untuk semua orang :
 
-*!about* Menampilkan informasi tentang bot ini.
-Contoh : !about
-
 *!join* Agar botnya bergabung ke dalam grup.
 Contoh : *!join* link_grup
 
@@ -132,11 +129,7 @@ Fitur yang tersedia hanya untuk admin grup :
 Contoh : !mention absen [ lagi rusak ].
 `);
     }
-    //about
-    else if (msg.body === '!about'){
-        const chats = await client.getChats();
-        msg.reply(`Bot ini dibuat oleh Andika Dinata dengan menggunakan bahasa Javascript dan library: whatsapp-web.js, axios, dan lain-lain.\n\nBot ini berjalan di server heroku, yang paket free :v\n\nBot ini telah menghandle ${chats.length} room chat.\n\nJika ada pertanyaan atau mau request fitur bisa hubungi :\n\n\nhttps://wa.me/6285841392048`);
-    }
+    
 
     //mentionall member
     else if(msg.body.startsWith('!mentionall ')) {
