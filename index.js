@@ -622,8 +622,9 @@ Deskripsi : ${response.data.desc}
         //translate
         else if (msg.body.startsWith('!translate ') && msg.hasQuotedMsg){
             const quotedMsg = await msg.getQuotedMessage();
+            const kodebahasa = msg.body.split(' ')[1]
 
-            translate(quotedMsg, msg.body.split(' ')[1])
+            translate(quotedMsg, kodebahasa)
                 .then((result) => client.sendMessage(msg.from, result))
                 .catch(() => client.sendMessage(msg.from, 'Error, kode bahasa salah!'))
         }
