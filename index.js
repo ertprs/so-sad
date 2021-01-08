@@ -644,12 +644,15 @@ Deskripsi : ${response.data.desc}
 
         //translate
         else if (msg.body.startsWith('!translate ') && msg.hasQuotedMsg){
+            /*
             const text = await msg.getQuotedMessage();
             const lang = msg.body.split('!translate ')[1];
 
             translate(text, { tld: 'cn', to: lang })
             .then((text) => msg.reply(text.data[0]))
             .catch((err) => msg.reply(err))
+            */
+           msg.reply('Dalam pengembangan!');
         }
             
         //join grup
@@ -660,7 +663,7 @@ Deskripsi : ${response.data.desc}
                 await client.acceptInvite(inviteCode);
                 msg.reply('Bot sudah bergabung ke dalam grup!');
             } catch (e) {
-                msg.reply('Link grupnya invalid!');
+                msg.reply('Bot gagal bergabung ke dalam grup!');
             }
         }
 
