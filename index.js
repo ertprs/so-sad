@@ -631,12 +631,16 @@ Deskripsi : ${response.data.desc}
         else if (msg.body.startsWith('!simisimi ')){
             const lang = msg.body.split(' ')[1];
             const text = msg.body.split(' ')[2];
-            axios({method: 'get',url: `https://simsumi.herokuapp.com/api?text=${text}&lang=${lang}`,responseType: 'text'})
-            .then(function (response) {
-            const hasil = response.split(':')[1];
-            msg.reply(`${hasil.substring(1,2)}`)})
-            .catch(function (error) {
-            msg.reply(error);}) 
+
+            fetch(`https://simsumi.herokuapp.com/api?text=${text}&lang=${lang}`)
+            .then(res => res.text())
+            .then(body => {
+            let text1 = body.split(':');
+            let text2 = text1[1];
+            msg.reply(text2.substring(1, 2));
+            });
+            
+           
         }
         
 
