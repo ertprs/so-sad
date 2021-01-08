@@ -112,6 +112,9 @@ Contoh : !howbucin @sadbot
 *!google* Agar bot mencari ke google untuk kalian.
 Contoh : !google Test
 
+*!youtube* Agar bot mencari ke youtube untuk kalian.
+Contoh : !youtube Test
+
 *!capture* Agar bot mengirimkan screenshot halaman web.
 Contoh : !capture link_situs pake http/https://
 
@@ -589,9 +592,25 @@ Deskripsi : ${response.data.desc}
             const googleQuery = msg.body.split('!google ')[1];
 
             google({ 'query': googleQuery }).then(results => {
-                let vars = `*Hasil pencarian dari* : ${googleQuery}\n\n`;
+                let vars = `Hasil pencarian dari : ${googleQuery}\n\n`;
                 for (let i = 0; i < results.length; i++) {
-                    vars +=  `*Judul* : ${results[i].title}\n\n*Deskripsi* : ${results[i].snippet}\n\n*Link* : ${results[i].link}\n\n`
+                    vars +=  `Judul : ${results[i].title}\nDeskripsi : ${results[i].snippet}\nLink : ${results[i].link}\n\n`
+                }
+                    client.sendMessage(msg.from, vars)
+                }).catch(e => {
+                    msg.reply(e);
+                })
+        }
+
+        //youtube
+        else if (msg.body.startsWith('!youtube ')){
+            const googleQuery = msg.body.split('!youtube ')[1];
+            const youtubeQuery = `${googleQuery} site:youtube.com`
+
+            google({ 'query': youtubeQuery }).then(results => {
+                let vars = `Hasil pencarian dari : ${googleQuery}\n\n`;
+                for (let i = 0; i < results.length; i++) {
+                    vars +=  `Judul : ${results[i].title}\nDeskripsi : ${results[i].snippet}\nLink : ${results[i].link}\n\n`
                 }
                     client.sendMessage(msg.from, vars)
                 }).catch(e => {
@@ -668,7 +687,7 @@ Deskripsi : ${response.data.desc}
         }
 
         //next features
-
+        
         
 
 
