@@ -120,7 +120,7 @@ Contoh : reply gambarnya ketik !sticker
 Contoh : reply pesan bot ketik !delete
 
 *!simisimi* Untuk berbicara dengan simi-simi.
-Contoh : !simisimi hello
+Contoh : !simisimi id halo simi
 
 
 Fitur yang tersedia hanya untuk admin grup :
