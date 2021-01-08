@@ -55,6 +55,9 @@ client.on('message', async msg => {
     if (msg.body === '!help' || msg.body === '!menu') {
         msg.reply(`Fitur tersedia untuk semua orang :
 
+*!about* Menampilkan informasi tentang bot ini.
+Contoh : !about
+
 *!join* Agar botnya bergabung ke dalam grup.
 Contoh : *!join* link_grup
 
@@ -133,6 +136,11 @@ Fitur yang tersedia hanya untuk admin grup :
 *!mentionall* Untuk mention semua member grup.
 Contoh : !mention absen [ lagi rusak ].
 `);
+    }
+    //about
+    else if (msg.body === '!about'){
+        const chats = await client.getChats();
+        msg.reply(`Bot ini dibuat oleh Andika Dinata dengan menggunakan bahasa Javascript dan library: whatsapp-web.js, axios, dan lain-lain.\n\nBot ini berjalan di server heroku, yang paket free :v\n\nBot ini telah menghandle ${chats.length} room chat.\n\nJika ada pertanyaan atau mau request fitur bisa hubungi :\n\n\nhttps://wa.me/6285841392048`);
     }
 
     //mentionall member
@@ -454,7 +462,6 @@ ${response.data.result}
             var file = fs.createWriteStream(fn); 
             file.write(data);
            
-            console.log("MP3 Disimpan");
             
           });
           await new Promise(resolve => setTimeout(resolve, 500));
@@ -649,6 +656,7 @@ Deskripsi : ${response.data.desc}
 
         //delete bot message
         else if (msg.body === '!delete') {
+            /*
             if (msg.hasQuotedMsg) {
                 const quotedMsg = await msg.getQuotedMessage();
                 if (quotedMsg.fromMe) {
@@ -657,6 +665,8 @@ Deskripsi : ${response.data.desc}
                     msg.reply('Bot hanya dapat menghapus pesan yang dia kirimkan.');
                 }
             }
+            */
+           msg.reply('Sementara gua hapus dulu sampe nemuin cara : yang ngehapus cuma yang ngasih perintah, kasian kalo ada bocil yang menyalahgunakan.')
         }
             
 
@@ -685,8 +695,10 @@ Deskripsi : ${response.data.desc}
                 msg.reply('Bot gagal bergabung ke dalam grup!');
             }
         }
+        
 
-        //next features
+
+        
         
         
 
