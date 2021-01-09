@@ -51,7 +51,7 @@ client.on('message', async msg => {
         msg.reply(`Fitur tersedia untuk semua orang :
 
 *!join* Agar botnya bergabung ke dalam grup.
-Contoh : *!join* link_grup
+Contoh : !join link_grup
 
 *!pantun* Agar botnya berpantun. 
 Contoh : !pantun
@@ -119,8 +119,8 @@ Contoh : reply gambarnya ketik !sticker
 *!delete* Agar bot menghapus pesan yang dia kirimkan.
 Contoh : reply pesan bot ketik !delete
 
-*!simisimi* Untuk berbicara dengan simi-simi.
-Contoh : !simisimi id halo simi
+*!ss* Untuk berbicara dengan simi-simi.
+Contoh : !ss id halo simi
 
 
 Fitur yang tersedia hanya untuk admin grup :
@@ -603,7 +603,7 @@ Deskripsi : ${response.data.desc}
         //delete bot message
         else if (msg.body === '!delete') {
             if (chat.isGroup) {
-                msg.reply('Sementara gua nonaktifin dulu untuk grup sampe gua nemuin cara : yang ngehapus cuma yang ngasih perintah, kasian kalo ada bocil yang menyalahgunakan.')
+                msg.reply('Tidak tersedia untuk grup saat ini!');
             } else {
                 if (msg.hasQuotedMsg) {
                     const quotedMsg = await msg.getQuotedMessage();
@@ -629,7 +629,7 @@ Deskripsi : ${response.data.desc}
         }
 
         //simisimi
-        else if (msg.body.startsWith('!simisimi ')){
+        else if (msg.body.startsWith('!ss ')){
             const lang = msg.body.split(' ')[1];
             const text = msg.body.split(' ')[2];
 
