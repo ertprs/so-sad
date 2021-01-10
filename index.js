@@ -114,19 +114,16 @@ Contoh : !youtube Test
 Contoh : !capture link_situs pake http/https://
 
 *!sticker* Agar bot mengubah gambar/gif menjadi sticker.
-Contoh : reply gambarnya ketik !sticker
+Contoh : *reply* gambarnya ketik !sticker
 
 *!delete* Agar bot menghapus pesan yang dia kirimkan.
-Contoh : reply pesan bot ketik !delete
-
-*!ss* Untuk berbicara dengan simi-simi.
-Contoh : !ss id halo simi
+Contoh : *reply* pesan bot ketik !delete
 
 
 Fitur yang tersedia hanya untuk admin grup :
 
 *!mentionall* Untuk mention semua member grup.
-Contoh : !mention absen [ lagi rusak ].
+Contoh : !mention absen
 `);
     }
     
@@ -188,7 +185,7 @@ Contoh : !mention absen [ lagi rusak ].
             .then(body => {
             let tod = body.split("\n");
             let pjr = tod[Math.floor(Math.random() * tod.length)];
-        imageToBase64(pjr) // Image URL
+        imageToBase64(pjr)
             .then(
                 (response) => {
         const media = new MessageMedia('image/jpeg', response);
@@ -248,7 +245,7 @@ Contoh : !mention absen [ lagi rusak ].
     var b = JSON.parse(JSON.stringify(result.data));
        
         var cewek =  b[Math.floor(Math.random() * b.length)];
-        imageToBase64(cewek) // Path to the image
+        imageToBase64(cewek)
             .then(
                 (response) => {
      
@@ -269,7 +266,7 @@ Contoh : !mention absen [ lagi rusak ].
         //random cewe cantik
         else if (msg.body === "!cewekcantik" ){
             const imageToBase64 = require('image-to-base64');
-            var items = ["ullzang girl", "cewe cantik", "hijab cantik", "korean girl"];
+            var items = ["ullzang girl","korean girl"];
             var cewe = items[Math.floor(Math.random() * items.length)];
             var url = "http://api.fdci.se/rep.php?gambar=" + cewe;
             
@@ -277,7 +274,7 @@ Contoh : !mention absen [ lagi rusak ].
           .then((result) => {
             var b = JSON.parse(JSON.stringify(result.data));
             var cewek =  b[Math.floor(Math.random() * b.length)];
-            imageToBase64(cewek) // Path to the image
+            imageToBase64(cewek)
                 .then(
                     (response) => {
          
@@ -288,7 +285,7 @@ Contoh : !mention absen [ lagi rusak ].
                 )
                 .catch(
                     (error) => {
-                        msg.reply(error); // Logs an error if there was one
+                        msg.reply(error); 
                     }
                 )
             
@@ -306,7 +303,7 @@ Contoh : !mention absen [ lagi rusak ].
               .then((result) => {
             var b = JSON.parse(JSON.stringify(result.data));
                 var cewek =  b[Math.floor(Math.random() * b.length)];
-                imageToBase64(cewek) // Path to the image
+                imageToBase64(cewek) 
                     .then(
                         (response) => {
              
@@ -317,7 +314,7 @@ Contoh : !mention absen [ lagi rusak ].
                     )
                     .catch(
                         (error) => {
-                            msg.reply(error); // Logs an error if there was one
+                            msg.reply(error); 
                         }
                     )
                 
@@ -462,13 +459,13 @@ ${hasil.replace('by: ArugaZ', '')}
             msg.reply("Tunggu sebentar, sedang diproses!");
             var YoutubeMp3Downloader = require("youtube-mp3-downloader");
             
-            //Configure YoutubeMp3Downloader with your settings
+           
             var YD = new YoutubeMp3Downloader({
                 "ffmpegPath": "ffmpeg", 
-                "outputPath": "./mp3",    // Where should the downloaded and en>
-                "youtubeVideoQuality": "highest",       // What video quality sho>
-                "queueParallelism": 100,                  // How many parallel down>
-                "progressTimeout": 40                 // How long should be the>
+                "outputPath": "./mp3",
+                "youtubeVideoQuality": "highest",
+                "queueParallelism": 100,
+                "progressTimeout": 40
             });
             
             YD.download(videoid[1]);
@@ -587,7 +584,7 @@ Deskripsi : ${response.data.desc}
             )
             .catch(
                 (error) => {
-                    msg.reply(error); // Logs an error if there was one
+                    msg.reply(error);
                 }
             )
         }
@@ -628,21 +625,8 @@ Deskripsi : ${response.data.desc}
             }
         }
 
-        //simisimi
-        else if (msg.body.startsWith('!ss ')){
-            const lang = msg.body.split(' ')[1];
-            const text = msg.body.split(' ')[2];
 
-            fetch(`https://simsumi.herokuapp.com/api?text=${text}&lang=${lang}`)
-            .then(res => res.text())
-            .then(body => {
-            let text1 = body.split(':');
-            let text2 = text1[1];
-            msg.reply(text2.replace(/[&\/\\#,+()$~%.'":*<>{}]/g, ''));
-            });
-            
-           
-        }
+        //fitur lainnya
         
 
 
