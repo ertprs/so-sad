@@ -111,7 +111,7 @@ Contoh : !google Test
 Contoh : !youtube Test
 
 *!capture* Agar bot mengirimkan screenshot halaman web.
-Contoh : !capture link_situs pake http/https://
+Contoh : !capture link_situs
 
 *!sticker* Agar bot mengubah gambar/gif menjadi sticker.
 Contoh : *reply* gambarnya ketik !sticker
@@ -120,7 +120,7 @@ Contoh : *reply* gambarnya ketik !sticker
 Contoh : *reply* pesan bot ketik !delete
 
 
-Fitur yang tersedia hanya untuk admin grup :
+Fitur yang tersedia hanya untuk pembuat grup :
 
 *!mentionall* Untuk mention semua member grup.
 Contoh : !mention absen
@@ -130,16 +130,9 @@ Contoh : !mention absen
 
     //mentionall member
     else if(msg.body.startsWith('!mentionall ')) {
-        msg.reply('Dalam perbaikan!');
-
-        /* 
+        const chat = await msg.getChat();
         if (chat.isGroup) {
-            let chat = await msg.getChat();
-            if (chat.isGroup) {
-                    const authorId = msg.author;
-                for(let participant of chat.participants) {
-                    if(participant.id._serialized === authorId && participant.isAdmin) {
-                        const chat = await msg.getChat();
+            if (msg.author.replace('@c.us', '') == chat.owner.user){
                         let text = msg.body.split("!mentionall ")[1];
                         text += `\n`;
                         let mentions = [];
@@ -150,18 +143,13 @@ Contoh : !mention absen
                         text += `\n`
                     }
                     chat.sendMessage(text, { mentions });
-                    break;
-                    } else {
-                        msg.reply('Maaf perintah ini hanya dapat digunakan oleh admin grup!');
-                        break
-                    }
-                }
+            } else {
+                msg.reply('Maaf untuk sementara perintah ini hanya dapat digunakan oleh pembuat grup!');
             }
+
     } else {
             msg.reply('Maaf perintah ini hanya bisa digunakan di dalam grup!');
-        } 
-        
-        */
+        }   
     }
 
     //random pantun
