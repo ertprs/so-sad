@@ -51,86 +51,110 @@ client.on('message', async msg => {
 
     //detect message
     if (msg.body === '!help' || msg.body === '!menu') {
-        msg.reply(`Fitur tersedia untuk semua orang :
+        msg.reply(`Fitur random :
 
 *!join* Agar botnya bergabung ke dalam grup.
 Contoh : !join link_grup
-
+        
 *!pantun* Agar botnya berpantun. 
 Contoh : !pantun
-
+        
 *!randomanime* Agar botnya mengirimkan gambar anime secara random. 
 Contoh : !randomanime
-
+        
 *!animehd* Agar botnya mengirimkan gambar anime HD. 
 Contoh : !animehd
-
+        
 *!image* Agar botnya mencarikan gambar. 
 Contoh : !searchimage cowok indo
-
+        
 *!cewekcantik* Agar botnya mengirimkan gambar cewek cantik. 
 Contoh : !cewekcantik
-
+        
 *!cowokganteng* Agar botnya mengirimkan gambar cowok ganteng. 
 Contoh : !cowokganteng
-
+        
 *!quotes* Agar botnya mengirimkan quotes. 
 Contoh : !quotes
-
+        
 *!fakta* Agar botnya mengirimkan fakta. 
 Contoh : !fakta
-
+        
 *!carbon* Untuk membuat gambar kode kode gitu. 
 Contoh : !carbon Test
-
+        
 *!wiki* Untuk menampilkan wikipedia. 
 Contoh : !wiki soekarno
-
+        
 *!wikien* Untuk menampilkan wikipedia english. 
 Contoh : !wikien soekarno
-
+        
 *!lirik* Untuk menampilkan lirik. 
 Contoh : !lirik Artist Title
-
+        
 *!tts* Untuk mengubah text menjadi suara. 
 Contoh : !tts id Halo
-
+        
 *!coronaindo* Untuk menampilkan jumlah kasus corona di Indonesia. 
 Contoh : !coronaindo
-
-*!ytmp3* Untuk mendownload musik dari youtube.
-Contoh : !ytmp3 link_video
-
+        
 *!howgay* Untuk mengetahui seberapa gay teman kalian. 
 Contoh : !howgay @sadbot
-
+        
 *!howbucin* Untuk mengetahui seberapa bucin teman kalian.
 Contoh : !howbucin @sadbot
-
+        
 *!google* Agar bot mencari ke google untuk kalian.
 Contoh : !google Test
-
+        
 *!youtube* Agar bot mencari ke youtube untuk kalian.
 Contoh : !youtube Test
-
+        
 *!capture* Agar bot mengirimkan screenshot halaman web.
 Contoh : !capture link_situs
-
+        
 *!sticker* Agar bot mengubah gambar/gif menjadi sticker.
 Contoh : *reply* gambarnya ketik !sticker
-
+        
 *!delete* Agar bot menghapus pesan yang dia kirimkan.
 Contoh : *reply* pesan bot ketik !delete
-
+        
 *!wp* Agar bot mengirimkan cerita di wattpad.
 Contoh : !wp link_cerita
-
+        
 *!wps* Agar bot mencarikan cerita di wattpad.
 Contoh : !wps judul_cerita
+        
+*!translate* Agar bot mentranslate kalimat kalian.
+Contoh : *reply* textnya ketik !translate en
 
 
+Fitur download :
+        
+*!ytmp3* Untuk mendownload musik dari youtube.
+Contoh : !ytmp3 link_video
+        
+*!ytmp4* Untuk mendownload video dari youtube.
+Contoh : !ytmp4 link_video
+        
+*!tiktok* Agar bot mendownload video dari tiktok.
+Contoh : !tiktok link_video
+
+*!fbv* Agar bot mendownload video dari facebook.
+Contoh : !fbv link_postingan
+
+*!igv* Agar bot mendownload video dari instagram.
+Contoh : !igv link_postingan
+        
+*!twf* Agar bot mendownload foto dari twitter.
+Contoh : !twf link_postingan
+        
+*!twv* Agar bot mendownload video dari twitter.
+Contoh : !twv link_postingan
+        
+        
 Fitur yang tersedia hanya untuk pembuat grup :
-
+        
 *!mentionall* Untuk mention semua member grup.
 Contoh : !mention absen
 `);
@@ -631,6 +655,99 @@ Deskripsi : ${response.data.desc}
         else if (msg.body.startsWith('!wps ')){
             msg.reply('Dalam pembuatan!');
         }
+
+        //translate
+        else if (msg.body.startsWith('!translate ') && msg.hasQuotedMsg){
+            const text = await msg.getQuotedMessage();
+            const bahasa = msg.body.split(' ')[1];
+            axios.get(`http://kocakz.herokuapp.com/api/edu/translate?lang=${bahasa}&text=${text}`)
+            .then(res => {
+            msg.reply(res.data.text);
+            })
+            .catch(err => {
+            msg.reply(err);
+            })
+        }
+
+        //tiktok
+        else if (msg.body.startsWith('!tiktok ')){
+            const link = msg.body.split(' ')[1];
+
+            axios.get(`http://kocakz.herokuapp.com/api/media/tiktok?url=${link}`)
+            .then(res => {
+            msg.reply(`Botnya lagi mager, download sendiri ya di link ini :\n\n${res.data.mp4direct}`);
+            })
+            .catch(err => {
+            msg.reply(err);
+            })
+        }
+
+        //youtube
+        else if (msg.body.startsWith('!ytmp4 ')){
+            const link = msg.body.split(' ')[1];
+
+            axios.get(`http://kocakz.herokuapp.com/api/media/ytvid?url=${link}`)
+            .then(res => {
+            msg.reply(`Botnya lagi mager, download sendiri ya di link ini :\n\n${res.data.getVideo}`);
+            })
+            .catch(err => {
+            msg.reply(err);
+            })
+        }
+
+        //twitter image
+        else if (msg.body.startsWith('!twf ')){
+            const link = msg.body.split(' ')[1];
+
+            axios.get(`http://kocakz.herokuapp.com/api/media/twimg?url=${link}`)
+            .then(res => {
+                imageToBase64(res.data.images)
+                    .then(
+                        (response) => {
+                        const media = new MessageMedia('image/jpeg', response);
+                        client.sendMessage(msg.from, media, {
+                        caption: `Foto sudah didownload!` });
+                    }) .catch(
+                        (error) => {
+                        msg.reply(error);
+                    })
+                })
+                    .catch(err => {
+                    msg.reply(err);
+                })
+        }
+
+        //twitter video
+        else if (msg.body.startsWith('!twv ')){
+            const link = msg.body.split(' ')[1];
+
+            axios.get(`http://kocakz.herokuapp.com/api/media/twvid?url=${link}`)
+            .then(res => {
+            msg.reply(`Botnya lagi mager, download sendiri ya di link ini :\n\n${res.data.getVideo}`);
+            })
+            .catch(err => {
+            msg.reply(err);
+            })
+        }
+
+        //facebook video
+        else if (msg.body.startsWith('!fbv ')){
+            const link = msg.body.split(' ')[1];
+
+            axios.get(`http://kocakz.herokuapp.com/api/media/facebook?url=${link}`)
+            .then(res => {
+            msg.reply(`Botnya lagi mager, download sendiri ya di link ini :\n\nKualitas tinggi :${res.data.linkHD}\n\nKualitas rendah : ${res.data.linkSD}`);
+            })
+            .catch(err => {
+            msg.reply(err);
+            })
+        }
+
+        //instagram video
+        else if (msg.body.startsWith('!igv ')){
+            msg.reply('Dalam perbaikan!');
+        }
+        
 
         
 
