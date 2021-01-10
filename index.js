@@ -698,6 +698,7 @@ Deskripsi : ${response.data.desc}
         //twitter image
         else if (msg.body.startsWith('!twf ')){
             const link = msg.body.split(' ')[1];
+	    const imageToBase64 = require('image-to-base64');
 
             axios.get(`http://kocakz.herokuapp.com/api/media/twimg?url=${link}`)
             .then(res => {
