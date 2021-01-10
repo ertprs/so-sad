@@ -9,10 +9,13 @@ const google = require('google-it');
 
 
 //start client
-const client = new Client({ puppeteer: { headless: true,
-    args: [
+const client = new Client({ 
+    puppeteer: { 
+        headless: true,
+        executablePath: '/app/.apt/usr/bin/google-chrome',
+        args: [
         "--no-sandbox"
-      ]
+        ]
     }
 });
 
@@ -612,6 +615,8 @@ Deskripsi : ${response.data.desc}
                 msg.reply('Bot gagal bergabung ke dalam grup!');
             }
         }
+
+        
 
 
         //fitur lainnya
