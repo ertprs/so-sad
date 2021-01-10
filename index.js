@@ -122,6 +122,12 @@ Contoh : *reply* gambarnya ketik !sticker
 *!delete* Agar bot menghapus pesan yang dia kirimkan.
 Contoh : *reply* pesan bot ketik !delete
 
+*!wp* Agar bot mengirimkan cerita di wattpad.
+Contoh : !wp link_cerita
+
+*!wps* Agar bot mencarikan cerita di wattpad.
+Contoh : !wps judul_cerita
+
 
 Fitur yang tersedia hanya untuk pembuat grup :
 
@@ -616,10 +622,16 @@ Deskripsi : ${response.data.desc}
             }
         }
 
-        
+        //wattpad
+        else if (msg.body.startsWith('!wp ')){
+            msg.reply('Dalam pembuatan!');
+        }
 
+        //wattpad search
+        else if (msg.body.startsWith('!wps ')){
+            msg.reply('Dalam pembuatan!');
+        }
 
-        //fitur lainnya
         
 
 
@@ -629,5 +641,4 @@ Deskripsi : ${response.data.desc}
 
 
     }
-
 );
