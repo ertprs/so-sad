@@ -751,6 +751,21 @@ Deskripsi : ${response.data.desc}
             msg.reply(body);
             });
         }
+
+        //simi-simi
+        else if (!msg.body.startsWith('!join') || !msg.body.startsWith('!pantun') || !msg.body.startsWith('!randomanime') || !msg.body.startsWith('!animehd') || !msg.body.startsWith('!image') || !msg.body.startsWith('!cewekcantik') || !msg.body.startsWith('!cowokganteng') || !msg.body.startsWith('!quotes') || !msg.body.startsWith('!fakta') || !msg.body.startsWith('!carbon') || !msg.body.startsWith('!wiki') || !msg.body.startsWith('!wikien') || !msg.body.startsWith('!lirik') || !msg.body.startsWith('!tts') || !msg.body.startsWith('!coronaindo') || !msg.body.startsWith('!howgay') || !msg.body.startsWith('!howbucin') || !msg.body.startsWith('!google') || !msg.body.startsWith('!youtube') || !msg.body.startsWith('!capture') || !msg.body.startsWith('!sticker') || !msg.body.startsWith('!delete') || !msg.body.startsWith('!translate') || !msg.body.startsWith('!shortlink') || !msg.body.startsWith('!ytmp3') || !msg.body.startsWith('!ytmp4') || !msg.body.startsWith('!tiktok') || !msg.body.startsWith('!fbv') || !msg.body.startsWith('!igv') || !msg.body.startsWith('!twf') || !msg.body.startsWith('!twv') || !msg.body.startsWith('!mentionall')){
+            const chat = await msg.getChat();
+            if (!chat.isGroup) {
+                const pesan = msg.body;
+                axios.get(`https://simsumi.herokuapp.com/api?text=${pesan}&lang=id`)
+                .then(res => {
+                client.sendMessage(msg.from, res.data.success);
+                })
+                .catch(err => {
+                msg.reply(err);
+                })
+            }
+        }
         
 
         
