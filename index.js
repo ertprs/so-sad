@@ -39,6 +39,7 @@ client.on('ready', () => {
 
 client.on('message', async msg => {
 
+    const quotedMsg = await msg.getQuotedMessage();
     //Supaya ga dikira bot
     client.sendPresenceAvailable();
 
@@ -878,7 +879,7 @@ Deskripsi : ${response.data.desc}
         else if (msg.body.startsWith('!ss ')){
             const chat = await msg.getChat();
             if(chat.isGroup){
-                const pesan = msg.body.split(' ')[1];
+                const pesan = msg.body.split('!ss ')[1];
                 axios.get(`https://simsumi.herokuapp.com/api?text=${pesan}&lang=id`)
                 .then(res => {
                 msg.reply(res.data.success);
