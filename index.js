@@ -11,7 +11,7 @@ const google = require('google-it');
 const inArray = (needle, haystack) => {
     let length = haystack.length;
     for(let i = 0; i < length; i++) {
-        if(haystack[i].id == needle) return i;
+        if(haystack[i].id == needle) return true;
     }
     return false;
 }
