@@ -119,14 +119,11 @@ Contoh : *reply* gambarnya ketik !sticker
 *!delete* Agar bot menghapus pesan yang dia kirimkan.
 Contoh : *reply* pesan bot ketik !delete
         
-*!wp* Agar bot mengirimkan cerita di wattpad.
-Contoh : !wp link_cerita
-        
-*!wps* Agar bot mencarikan cerita di wattpad.
-Contoh : !wps judul_cerita
-        
 *!translate* Agar bot mentranslate kalimat kalian.
 Contoh : *reply* textnya ketik !translate en
+
+*!shortlink* Agar link menjadi pendek.
+Contoh : !shortlink link_situs
 
 
 Fitur download :
@@ -610,12 +607,18 @@ Deskripsi : ${response.data.desc}
             )
         }
 
-        //Image to sticker
+        //Image/gif to sticker
         else if (msg.body === '!sticker' && msg.hasQuotedMsg){
             if (quotedMsg.hasMedia) {
                 const attachmentData = await quotedMsg.downloadMedia();
                 client.sendMessage(msg.from, attachmentData, { sendMediaAsSticker: true });
             }
+        }
+
+        //Image/gif to sticker 
+        else if (msg.body === '!sticker' && msg.hasMedia){
+                const attachmentData = await msg.downloadMedia();
+                client.sendMessage(msg.from, attachmentData, { sendMediaAsSticker: true });
         }
 
         //delete bot message
@@ -644,16 +647,6 @@ Deskripsi : ${response.data.desc}
             } catch (e) {
                 msg.reply('Bot gagal bergabung ke dalam grup!');
             }
-        }
-
-        //wattpad
-        else if (msg.body.startsWith('!wp ')){
-            msg.reply('Dalam pembuatan!');
-        }
-
-        //wattpad search
-        else if (msg.body.startsWith('!wps ')){
-            msg.reply('Dalam pembuatan!');
         }
 
         //translate
@@ -698,7 +691,6 @@ Deskripsi : ${response.data.desc}
         //twitter image
         else if (msg.body.startsWith('!twf ')){
             const link = msg.body.split(' ')[1];
-	    const imageToBase64 = require('image-to-base64');
 
             axios.get(`http://kocakz.herokuapp.com/api/media/twimg?url=${link}`)
             .then(res => {
@@ -747,6 +739,16 @@ Deskripsi : ${response.data.desc}
         //instagram video
         else if (msg.body.startsWith('!igv ')){
             msg.reply('Dalam perbaikan!');
+        }
+
+        //shortlink
+        else if (msg.body.startsWith('!shortlink ')){
+            const link = msg.body.split(' ')[1];
+            fetch(`https://tinyurl.com/api-create.php?url=${link}`)
+            .then(res => res.text())
+            .then(body => {
+            msg.reply(body);
+            });
         }
         
 
