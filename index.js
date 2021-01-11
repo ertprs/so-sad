@@ -6,26 +6,6 @@ const urlencode = require("urlencode");
 const axios = require("axios");
 const google = require('google-it');
 
-
-//inArray
-const inArray = (needle, haystack) => {
-    let length = haystack.length;
-    for(let i = 0; i < length; i++) {
-        if(haystack[i].id == needle) return true;
-    }
-    return false;
-}
-
-//removeItemOnce
-function removeItemOnce(arr, value) {
-    var index = arr.indexOf(value);
-    if (index > -1) {
-      arr.splice(index, 1);
-    }
-}
-
-var list_group = [];
-
 //start client
 const client = new Client({ 
     puppeteer: { 
@@ -146,8 +126,8 @@ Contoh : *reply* textnya ketik !translate en
 *!shortlink* Agar link menjadi pendek.
 Contoh : !shortlink link_situs
 
-*!simisimi* Untuk mengaktifkan/menonaktifkan simi-simi di grup.
-Contoh : !simisimi on
+*!ss* Untuk mengobrol dengan simi-simi.
+Contoh : !ss Hay simi
 
 
 Fitur download :
@@ -776,8 +756,8 @@ Deskripsi : ${response.data.desc}
             });
         }
 
-        //simi-simi
-        else if (!msg.body.startsWith('!join') || !msg.body.startsWith('!pantun') || !msg.body.startsWith('!randomanime') || !msg.body.startsWith('!animehd') || !msg.body.startsWith('!image') || !msg.body.startsWith('!cewekcantik') || !msg.body.startsWith('!cowokganteng') || !msg.body.startsWith('!quotes') || !msg.body.startsWith('!fakta') || !msg.body.startsWith('!carbon') || !msg.body.startsWith('!wiki') || !msg.body.startsWith('!wikien') || !msg.body.startsWith('!lirik') || !msg.body.startsWith('!tts') || !msg.body.startsWith('!coronaindo') || !msg.body.startsWith('!howgay') || !msg.body.startsWith('!howbucin') || !msg.body.startsWith('!google') || !msg.body.startsWith('!youtube') || !msg.body.startsWith('!capture') || !msg.body.startsWith('!sticker') || !msg.body.startsWith('!delete') || !msg.body.startsWith('!translate') || !msg.body.startsWith('!shortlink') || !msg.body.startsWith('!ytmp3') || !msg.body.startsWith('!ytmp4') || !msg.body.startsWith('!tiktok') || !msg.body.startsWith('!fbv') || !msg.body.startsWith('!igv') || !msg.body.startsWith('!twf') || !msg.body.startsWith('!twv') || !msg.body.startsWith('!mentionall') || !msg.body.startsWith('!simisimi')){
+        //simi-simi di private chat
+        else if (!msg.body.startsWith('!join') || !msg.body.startsWith('!pantun') || !msg.body.startsWith('!randomanime') || !msg.body.startsWith('!animehd') || !msg.body.startsWith('!image') || !msg.body.startsWith('!cewekcantik') || !msg.body.startsWith('!cowokganteng') || !msg.body.startsWith('!quotes') || !msg.body.startsWith('!fakta') || !msg.body.startsWith('!carbon') || !msg.body.startsWith('!wiki') || !msg.body.startsWith('!wikien') || !msg.body.startsWith('!lirik') || !msg.body.startsWith('!tts') || !msg.body.startsWith('!coronaindo') || !msg.body.startsWith('!howgay') || !msg.body.startsWith('!howbucin') || !msg.body.startsWith('!google') || !msg.body.startsWith('!youtube') || !msg.body.startsWith('!capture') || !msg.body.startsWith('!sticker') || !msg.body.startsWith('!delete') || !msg.body.startsWith('!translate') || !msg.body.startsWith('!shortlink') || !msg.body.startsWith('!ytmp3') || !msg.body.startsWith('!ytmp4') || !msg.body.startsWith('!tiktok') || !msg.body.startsWith('!fbv') || !msg.body.startsWith('!igv') || !msg.body.startsWith('!twf') || !msg.body.startsWith('!twv') || !msg.body.startsWith('!mentionall') || !msg.body.startsWith('!ss')){
             const chat = await msg.getChat();
             if (!chat.isGroup) {
                 const pesan = msg.body;
@@ -788,37 +768,22 @@ Deskripsi : ${response.data.desc}
                 .catch(err => {
                 msg.reply(err);
                 })
-            } else if (chat.isGroup && inArray(chat.id, list_group)){
-                const pesan = msg.body;
+            }
+        }
+
+        //simi-simi di grup
+        else if (msg.body.startsWith('!ss ')){
+            const pesan = msg.body.split(' ')[1];
                 axios.get(`https://simsumi.herokuapp.com/api?text=${pesan}&lang=id`)
                 .then(res => {
-                client.sendMessage(msg.from, res.data.success);
+                msg.reply(res.data.success);
                 })
                 .catch(err => {
                 msg.reply(err);
                 })
-            }
         }
-
-        //simi-simi on/off
-        else if (msg.body.startsWith('!simisimi ')){
-            const on_off = msg.body.split(' ')[1];
-            const chat = await msg.getChat();
-            if (on_off === 'on'){
-                list_group.push(chat.id);
-            } else if (on_off === 'off'){
-                removeItemOnce(list_group, chat.id);
-            }
-        }
-        
-
-        
-
-
-        
-        
-        
-
+    
+        //next fitur
 
     }
 );
