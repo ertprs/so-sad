@@ -44,9 +44,6 @@ client.on('message', async msg => {
     //Supaya ga dikira bot
     client.sendPresenceAvailable();
 
-    //Supaya sider botnya
-    client.sendSeen();
-
     //detect spam
     console.log(`${msg.body} from ${msg.from.split('@')[0]}`);
 
@@ -773,7 +770,9 @@ Deskripsi : ${response.data.desc}
 
         //simi-simi di grup
         else if (msg.body.startsWith('!ss ')){
-            const pesan = msg.body.split(' ')[1];
+            const chat = await msg.getChat();
+            if(chat.isGroup){
+                const pesan = msg.body.split(' ')[1];
                 axios.get(`https://simsumi.herokuapp.com/api?text=${pesan}&lang=id`)
                 .then(res => {
                 msg.reply(res.data.success);
@@ -781,6 +780,7 @@ Deskripsi : ${response.data.desc}
                 .catch(err => {
                 msg.reply(err);
                 })
+            }
         }
     
         //next fitur
