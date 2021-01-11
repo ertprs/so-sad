@@ -38,7 +38,7 @@ client.on('ready', () => {
 
 
 client.on('message', async msg => {
-
+    const chat = await msg.getChat();
     const quotedMsg = await msg.getQuotedMessage();
     //Supaya ga dikira bot
     client.sendPresenceAvailable();
