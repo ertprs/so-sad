@@ -422,7 +422,7 @@ ${response.data.result}
 
         //text to mp3
         else if (msg.body.startsWith("!tts ")) {
-        const tts = require('node-gtts')(msg.body.slice(5));
+        const tts = require('node-gtts')(msg.body.split(' ')[1]);
         const dataText = msg.body.slice(8);
 	
           try {
@@ -782,7 +782,7 @@ Deskripsi : ${response.data.desc}
             }
         }
     
-        //next fitur
+        //PECAH PALA ARGHHHH ERROR TERUS
 
     }
 );
