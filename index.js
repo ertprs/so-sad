@@ -422,8 +422,8 @@ ${response.data.result}
 
         //text to mp3
         else if (msg.body.startsWith("!tts ")) {
-        const tts = require('node-gtts')(msg.body.split(' ')[1]);
-        const dataText = msg.body.split(' ')[2];
+        const tts = require('node-gtts')(msg.body.slice(5));
+        const dataText = msg.body.slice(8);
 	
           try {
             tts.save('./tts/tts.mp3', dataText, function () {
@@ -753,7 +753,7 @@ Deskripsi : ${response.data.desc}
         }
 
         //simi-simi di private chat
-        else if (!msg.body.startsWith('!join') || !msg.body.startsWith('!pantun') || !msg.body.startsWith('!randomanime') || !msg.body.startsWith('!animehd') || !msg.body.startsWith('!image') || !msg.body.startsWith('!cewekcantik') || !msg.body.startsWith('!cowokganteng') || !msg.body.startsWith('!quotes') || !msg.body.startsWith('!fakta') || !msg.body.startsWith('!carbon') || !msg.body.startsWith('!wiki') || !msg.body.startsWith('!wikien') || !msg.body.startsWith('!lirik') || !msg.body.startsWith('!tts') || !msg.body.startsWith('!coronaindo') || !msg.body.startsWith('!howgay') || !msg.body.startsWith('!howbucin') || !msg.body.startsWith('!google') || !msg.body.startsWith('!youtube') || !msg.body.startsWith('!capture') || !msg.body.startsWith('!sticker') || !msg.body.startsWith('!delete') || !msg.body.startsWith('!translate') || !msg.body.startsWith('!shortlink') || !msg.body.startsWith('!ytmp3') || !msg.body.startsWith('!ytmp4') || !msg.body.startsWith('!tiktok') || !msg.body.startsWith('!fbv') || !msg.body.startsWith('!igv') || !msg.body.startsWith('!twf') || !msg.body.startsWith('!twv') || !msg.body.startsWith('!mentionall') || !msg.body.startsWith('!ss')){
+        else if (!msg.body.startsWith('!join') || !msg.body.startsWith('!pantun') || !msg.body.startsWith('!randomanime') || !msg.body.startsWith('!animehd') || !msg.body.startsWith('!image') || !msg.body.startsWith('!cewekcantik') || !msg.body.startsWith('!cowokganteng') || !msg.body.startsWith('!quotes') || !msg.body.startsWith('!fakta') || !msg.body.startsWith('!carbon') || !msg.body.startsWith('!wiki') || !msg.body.startsWith('!wikien') || !msg.body.startsWith('!lirik') || !msg.body.startsWith('!tts') || !msg.body.startsWith('!coronaindo') || !msg.body.startsWith('!howgay') || !msg.body.startsWith('!howbucin') || !msg.body.startsWith('!google') || !msg.body.startsWith('!youtube') || !msg.body.startsWith('!capture') || !msg.body.startsWith('!sticker') || !msg.body.startsWith('!delete') || !msg.body.startsWith('!translate') || !msg.body.startsWith('!shortlink') || !msg.body.startsWith('!ytmp3') || !msg.body.startsWith('!ytmp4') || !msg.body.startsWith('!tiktok') || !msg.body.startsWith('!fbv') || !msg.body.startsWith('!igv') || !msg.body.startsWith('!twf') || !msg.body.startsWith('!twv') || !msg.body.startsWith('!mentionall') || !msg.body.startsWith('!simisimi')){
             const chat = await msg.getChat();
             if (!chat.isGroup) {
                 const pesan = msg.body;
@@ -768,10 +768,10 @@ Deskripsi : ${response.data.desc}
         }
 
         //simi-simi di grup
-        else if (msg.body.startsWith('!ss ')){
+        else if (msg.body.startsWith('!simisimi ')){
             const chat = await msg.getChat();
             if(chat.isGroup){
-                const pesan = msg.body.slice(4);
+                const pesan = msg.body.slice(10);
                 axios.get(`https://simsumi.herokuapp.com/api?text=${pesan}&lang=id`)
                 .then(res => {
                 client.sendMessage(msg.from, res.data.success);
