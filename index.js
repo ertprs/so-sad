@@ -49,7 +49,9 @@ client.on('message', async msg => {
 
     //detect message
     if (msg.body === '!help' || msg.body === '!menu') {
-        msg.reply(`Fitur random :
+        const chat = await msg.getChat();
+        if(chat.isGroup){
+            msg.reply(`Fitur random :
 
 *!join* Agar botnya bergabung ke dalam grup.
 Contoh : !join link_grup
@@ -156,6 +158,112 @@ Fitur yang tersedia hanya untuk pembuat grup :
 *!mentionall* Untuk mention semua member grup.
 Contoh : !mention absen
 `);
+        } else if (!chat.isGroup){
+            msg.reply(`Fitur random :
+
+*!join* Agar botnya bergabung ke dalam grup.
+Contoh : !join link_grup
+        
+*!pantun* Agar botnya berpantun. 
+Contoh : !pantun
+        
+*!randomanime* Agar botnya mengirimkan gambar anime secara random. 
+Contoh : !randomanime
+        
+*!animehd* Agar botnya mengirimkan gambar anime HD. 
+Contoh : !animehd
+        
+*!image* Agar botnya mencarikan gambar. 
+Contoh : !searchimage cowok indo
+        
+*!cewekcantik* Agar botnya mengirimkan gambar cewek cantik. 
+Contoh : !cewekcantik
+        
+*!cowokganteng* Agar botnya mengirimkan gambar cowok ganteng. 
+Contoh : !cowokganteng
+        
+*!quotes* Agar botnya mengirimkan quotes. 
+Contoh : !quotes
+        
+*!fakta* Agar botnya mengirimkan fakta. 
+Contoh : !fakta
+        
+*!carbon* Untuk membuat gambar kode kode gitu. 
+Contoh : !carbon Test
+        
+*!wiki* Untuk menampilkan wikipedia. 
+Contoh : !wiki soekarno
+        
+*!wikien* Untuk menampilkan wikipedia english. 
+Contoh : !wikien soekarno
+        
+*!lirik* Untuk menampilkan lirik. 
+Contoh : !lirik Artist Title
+        
+*!tts* Untuk mengubah text menjadi suara. 
+Contoh : !tts id Halo
+        
+*!coronaindo* Untuk menampilkan jumlah kasus corona di Indonesia. 
+Contoh : !coronaindo
+        
+*!howgay* Untuk mengetahui seberapa gay teman kalian. 
+Contoh : !howgay @sadbot
+        
+*!howbucin* Untuk mengetahui seberapa bucin teman kalian.
+Contoh : !howbucin @sadbot
+        
+*!google* Agar bot mencari ke google untuk kalian.
+Contoh : !google Test
+        
+*!youtube* Agar bot mencari ke youtube untuk kalian.
+Contoh : !youtube Test
+        
+*!capture* Agar bot mengirimkan screenshot halaman web.
+Contoh : !capture link_situs
+        
+*!sticker* Agar bot mengubah gambar/gif menjadi sticker.
+Contoh : *reply* gambarnya ketik !sticker
+        
+*!delete* Agar bot menghapus pesan yang dia kirimkan.
+Contoh : *reply* pesan bot ketik !delete
+        
+*!translate* Agar bot mentranslate kalimat kalian.
+Contoh : *reply* textnya ketik !translate en
+
+*!shortlink* Agar link menjadi pendek.
+Contoh : !shortlink link_situs
+
+
+Fitur download :
+        
+*!ytmp3* Untuk mendownload musik dari youtube.
+Contoh : !ytmp3 link_video
+        
+*!ytmp4* Untuk mendownload video dari youtube.
+Contoh : !ytmp4 link_video
+        
+*!tiktok* Agar bot mendownload video dari tiktok.
+Contoh : !tiktok link_video
+
+*!fbv* Agar bot mendownload video dari facebook.
+Contoh : !fbv link_postingan
+
+*!igv* Agar bot mendownload video dari instagram.
+Contoh : !igv link_postingan
+        
+*!twf* Agar bot mendownload foto dari twitter.
+Contoh : !twf link_postingan
+        
+*!twv* Agar bot mendownload video dari twitter.
+Contoh : !twv link_postingan
+        
+        
+Fitur yang tersedia hanya untuk pembuat grup :
+        
+*!mentionall* Untuk mention semua member grup.
+Contoh : !mention absen
+`);
+        }
     }
     
 
